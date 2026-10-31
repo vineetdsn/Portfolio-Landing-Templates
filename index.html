@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#081525" />
+  <meta name="description" content="Vineet — creative frontend developer crafting modern, interactive and high-performance digital experiences." />
+  <title>Vineet — Creative Frontend Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { color-scheme:dark; --ink:#f4f7fc; --muted:#a7b5c8; --blue:#168bce; --lav:#a88bff; --line:rgba(196,218,246,.12); --panel:rgba(12,28,48,.68); }
+    * { box-sizing:border-box }
+    html { scroll-behavior:smooth }
+    body { margin:0; min-width:320px; background:#081525; color:var(--ink); font-family:Manrope,system-ui,sans-serif; overflow-x:hidden }
+    a { color:inherit; text-decoration:none }
+    button { font:inherit }
+    .page { min-height:100vh; position:relative; isolation:isolate; overflow:hidden; background:radial-gradient(ellipse at 72% 52%,rgba(20,89,145,.15),transparent 44%),#081525 }
+    .page:before { content:""; position:absolute; inset:0; pointer-events:none; z-index:-1; opacity:.16; background-image:linear-gradient(rgba(165,195,232,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(165,195,232,.035) 1px,transparent 1px); background-size:72px 72px; mask-image:linear-gradient(to bottom,black,transparent 84%) }
+    .shell { width:min(1280px,calc(100% - 96px)); margin:auto }
+    header { height:96px; display:flex; align-items:center; justify-content:space-between; position:relative; z-index:5; border-bottom:1px solid rgba(195,216,241,.075) }
+    .brand { font-size:17px; font-weight:800; letter-spacing:.22em; display:flex; align-items:center; gap:11px }
+    .brand-mark { width:27px;height:27px; display:grid;place-items:center; border:1px solid rgba(117,190,255,.55); border-radius:8px; color:#9cd8ff; font-size:13px; letter-spacing:0; box-shadow:0 0 19px rgba(22,139,206,.15),inset 0 0 12px rgba(22,139,206,.1) }
+    nav { display:flex; gap:42px; align-items:center; color:#aab7c9; font-size:12px; font-weight:600; letter-spacing:.025em }
+    nav a { transition:color .2s ease } nav a:hover,nav a.active { color:white }
+    .nav-right { display:flex; align-items:center; gap:22px }
+    .availability { display:flex;align-items:center;gap:9px;color:#b7c4d5;font-size:11px }
+    .pulse { width:7px;height:7px;border-radius:50%;background:#69e0b1;box-shadow:0 0 0 4px rgba(105,224,177,.1),0 0 14px rgba(105,224,177,.8);animation:pulse 2s infinite }
+    .icon-btn { display:grid;place-items:center;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.025);color:#bdcbe0;cursor:pointer;transition:.2s }
+    .icon-btn:hover { border-color:rgba(168,139,255,.55);color:white;transform:rotate(12deg) }
+    .menu-btn {display:none}
+    .hero { min-height:calc(100vh - 96px); max-height:920px; display:grid;grid-template-columns: .87fr 1.13fr; align-items:center; position:relative; padding:30px 0 73px }
+    .copy { position:relative; z-index:3; max-width:590px; padding:17px 0 45px }
+    .eyebrow { display:flex;align-items:center;gap:13px;color:#83cfff;font:500 10px 'DM Mono',monospace;letter-spacing:.17em;text-transform:uppercase;margin-bottom:28px }
+    .eyebrow:before { content:"";width:27px;height:1px;background:linear-gradient(90deg,#168bce,#a88bff) }
+    h1 { font-size:clamp(48px,5.3vw,76px); line-height:1.09; letter-spacing:-.067em; font-weight:600; margin:0; max-width:650px }
+    h1 .accent { color:#91a5bd; font-weight:500 }
+    .intro { max-width:445px;color:#a7b5c8;font-size:14px;line-height:1.85;margin:25px 0 31px;letter-spacing:-.01em }
+    .actions {display:flex;align-items:center;gap:13px}
+    .button {height:48px;padding:0 20px;display:inline-flex;align-items:center;justify-content:center;gap:12px;border-radius:8px;font-size:12px;font-weight:700;transition:.22s ease}
+    .button svg {transition:transform .22s ease}.button:hover svg {transform:translateX(3px)}
+    .button.primary {color:#fff;background:linear-gradient(120deg,#157cba,#286ed2 58%,#7662cd);box-shadow:0 8px 28px rgba(25,111,202,.22),inset 0 1px rgba(255,255,255,.24)}
+    .button.primary:hover {transform:translateY(-2px);box-shadow:0 12px 34px rgba(25,111,202,.33)}
+    .button.secondary {border:1px solid rgba(184,209,239,.17);color:#d6e0ef;background:rgba(255,255,255,.025)}
+    .button.secondary:hover {background:rgba(255,255,255,.07);border-color:rgba(184,209,239,.33)}
+    .proof {display:flex;align-items:center;gap:19px;margin-top:49px}
+    .proof-item {display:flex;align-items:baseline;gap:8px}
+    .proof-item strong {font-size:18px;letter-spacing:-.05em;font-weight:700}
+    .proof-item span {font-size:10px;color:#8697ad;letter-spacing:.025em}
+    .proof-sep {width:1px;height:25px;background:rgba(195,216,241,.16)}
+    .visual { position:absolute; z-index:1; right:-7.5%; top:4%; width:68%; height:88%; pointer-events:none }
+    .visual:before { content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,#081525 0%,rgba(8,21,37,.82) 5%,rgba(8,21,37,.08) 34%,transparent 68%),linear-gradient(0deg,#081525 0%,transparent 20%,transparent 87%,#081525 100%); }
+    .visual:after { content:"";position:absolute;inset:4% 4% 4% 12%;z-index:1;background:radial-gradient(ellipse at 55% 58%,transparent 40%,rgba(8,21,37,.2) 83%,#081525 110%);mix-blend-mode:multiply }
+    .room { width:100%;height:100%;object-fit:cover;object-position:center;filter:saturate(.84) contrast(1.06);mask-image:linear-gradient(90deg,transparent 0%,black 17%,black 89%,transparent 100%);opacity:.93 }
+    .visual-glow {position:absolute;width:55%;height:45%;right:8%;bottom:1%;background:rgba(26,120,206,.2);filter:blur(80px);border-radius:50%}
+    .float {position:absolute;z-index:2;border:1px solid rgba(188,215,249,.18);background:linear-gradient(135deg,rgba(18,40,66,.82),rgba(11,24,43,.64));backdrop-filter:blur(14px);box-shadow:0 15px 42px rgba(0,0,0,.24),inset 0 1px rgba(255,255,255,.06);border-radius:11px;color:#dce8fa}
+    .stack {top:17%;right:2%;padding:12px 14px;display:flex;align-items:center;gap:12px;animation:drift 7s ease-in-out infinite}
+    .stack-label {font:9px 'DM Mono',monospace;color:#8194ab;letter-spacing:.12em;text-transform:uppercase}
+    .stack-icons {display:flex;gap:7px}.tech-icon {width:25px;height:25px;display:grid;place-items:center;border-radius:7px;background:rgba(255,255,255,.06);font:10px 'DM Mono',monospace;color:#a9cbff}.tech-icon:nth-child(2){color:#c5aaff}.tech-icon:nth-child(3){color:#84d9ff}
+    .snippet {left:6%;bottom:17%;width:198px;padding:13px 15px;animation:drift 8s ease-in-out -2s infinite}
+    .snippet-top {display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;color:#90a2b8;font:9px 'DM Mono',monospace}
+    .dots {display:flex;gap:4px}.dots i {width:4px;height:4px;border-radius:50%;background:#687e98}.dots i:first-child{background:#a88bff}
+    .code-line {height:4px;border-radius:8px;background:rgba(110,149,194,.25);margin:7px 0}.code-line:nth-child(2){width:69%;background:rgba(91,183,238,.62)}.code-line:nth-child(3){width:83%}.code-line:nth-child(4){width:52%;background:rgba(168,139,255,.52)}.code-line:nth-child(5){width:74%}
+    .scene-tag {position:absolute;right:15%;bottom:13%;z-index:2;font:9px 'DM Mono',monospace;letter-spacing:.15em;text-transform:uppercase;color:rgba(216,231,250,.64);display:flex;align-items:center;gap:9px}
+    .scene-tag:before {content:"";width:22px;height:1px;background:#82c8ff}
+    .scroll {position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:12px;color:#75869d;font:9px 'DM Mono',monospace;letter-spacing:.17em;text-transform:uppercase;z-index:3}
+    .scroll-line {height:25px;width:1px;background:linear-gradient(#168bce,rgba(22,139,206,0));position:relative;overflow:hidden}
+    .scroll-line:after {content:"";position:absolute;width:1px;height:10px;background:#b0dfff;animation:scroll 1.8s ease-in-out infinite}
+    .edge-note {position:absolute;right:0;top:45%;writing-mode:vertical-rl;color:#52657c;font:9px 'DM Mono',monospace;letter-spacing:.2em;text-transform:uppercase;display:flex;gap:12px;align-items:center}
+    .edge-note:before {content:"";height:33px;width:1px;background:#293d55}
+    .below {border-top:1px solid rgba(195,216,241,.08);padding:24px 0 30px;display:flex;justify-content:space-between;align-items:center;color:#7689a2;font:9px 'DM Mono',monospace;letter-spacing:.12em;text-transform:uppercase}
+    .below span:last-child {color:#98a9bd}
+    @keyframes pulse {50%{box-shadow:0 0 0 7px rgba(105,224,177,.03),0 0 17px rgba(105,224,177,.9)}}
+    @keyframes drift {50%{transform:translateY(-8px)}}
+    @keyframes scroll {0%{top:-10px}100%{top:30px}}
+    @media (min-width:1500px){.shell{width:min(1320px,calc(100% - 120px))}.visual{right:-4%;width:65%}}
+    @media (max-width:1050px){.shell{width:calc(100% - 64px)}header{height:82px}.hero{min-height:calc(100vh - 82px);grid-template-columns:1fr;padding-top:70px;align-items:start}.copy{padding-top:24px;max-width:520px}.visual{right:-21%;top:10%;width:82%;height:78%;opacity:.78}.visual:before{background:linear-gradient(90deg,#081525 0%,rgba(8,21,37,.7) 14%,rgba(8,21,37,.1) 60%,transparent),linear-gradient(0deg,#081525 0%,transparent 22%,transparent 85%,#081525)}.stack{right:3%;top:16%}.snippet{left:45%;bottom:16%}.scene-tag{right:8%;bottom:11%}}
+    @media (max-width:700px){.shell{width:calc(100% - 40px)}header{height:72px}.brand{font-size:15px}.brand-mark{width:25px;height:25px}.availability{display:none}nav{display:none;position:absolute;top:62px;left:0;right:0;padding:20px;background:rgba(8,21,37,.96);border:1px solid var(--line);border-radius:12px;flex-direction:column;gap:20px;align-items:flex-start;backdrop-filter:blur(18px)}nav.open{display:flex}.menu-btn{display:grid}.nav-right{gap:11px}.hero{min-height:calc(100svh - 72px);max-height:none;padding:38px 0 95px;display:block}.copy{padding:9px 0 0;max-width:480px}.eyebrow{font-size:9px;margin-bottom:22px}h1{font-size:clamp(43px,11.5vw,60px);line-height:1.07;max-width:520px}.intro{font-size:13px;line-height:1.75;max-width:370px;margin:19px 0 24px}.button{height:45px;padding:0 15px;font-size:11px}.proof{margin-top:31px;gap:13px}.proof-item{gap:6px}.proof-item strong{font-size:16px}.proof-item span{font-size:9px}.visual{top:auto;bottom:0;right:-32%;width:116%;height:53%;opacity:.73}.visual:before{background:linear-gradient(0deg,#081525 0%,rgba(8,21,37,.1) 28%,transparent 70%),linear-gradient(90deg,#081525 0%,rgba(8,21,37,.1) 32%,transparent 75%)}.room{object-position:center 54%}.stack{right:6%;top:16%;padding:9px 10px}.stack-label{display:none}.snippet{left:5%;bottom:13%;width:157px;padding:10px 12px}.scene-tag{right:5%;bottom:8%;font-size:8px}.scroll{bottom:22px;left:20px;transform:none}.edge-note{display:none}.below{padding:17px 0 22px;font-size:8px;letter-spacing:.07em}}
+    @media (max-width:390px){.shell{width:calc(100% - 32px)}h1{font-size:42px}.proof{gap:9px}.proof-item span{font-size:8px}.visual{right:-46%;width:135%}.snippet{bottom:12%}}
+    @media (prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+  </style>
+</head>
+<body>
+  <main class="page" id="home">
+    <div class="shell">
+      <header>
+        <a class="brand" href="#home" aria-label="Vineet home"><span class="brand-mark">V.</span><span>VINEET</span></a>
+        <nav id="navigation" aria-label="Main navigation"><a class="active" href="#home">Home</a><a href="#work">Work</a><a href="#about">About</a><a href="mailto:hello@vineet.dev">Contact</a></nav>
+        <div class="nav-right"><div class="availability"><i class="pulse"></i><span>Available for select projects</span></div><button class="icon-btn" aria-label="Toggle ambient lighting" id="light-toggle"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg></button><button class="icon-btn menu-btn" aria-label="Open menu" aria-expanded="false" id="menu-toggle"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button></div>
+      </header>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="copy">
+          <div class="eyebrow">Creative frontend developer</div>
+          <h1 id="hero-title">Building digital experiences <span class="accent">that feel different.</span></h1>
+          <p class="intro">I create modern, interactive and high-performance websites that turn thoughtful ideas into experiences people remember.</p>
+          <div class="actions"><a class="button primary" href="#work"><span>View projects</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a><a class="button secondary" href="mailto:hello@vineet.dev">Contact me</a></div>
+          <div class="proof"><div class="proof-item"><strong>4<span style="color:#a88bff">+</span></strong><span>years creating</span></div><i class="proof-sep"></i><div class="proof-item"><strong>28</strong><span>projects shipped</span></div><i class="proof-sep"></i><div class="proof-item"><strong>12</strong><span>happy teams</span></div></div>
+        </div>
+        <div class="visual" aria-label="A cinematic, blue-lit developer workspace" role="img"><div class="visual-glow"></div><img class="room" src="vineet-workspace.png" alt="" /><div class="float stack"><span class="stack-label">Current stack</span><div class="stack-icons"><span class="tech-icon">R</span><span class="tech-icon">JS</span><span class="tech-icon">⌘</span><span class="tech-icon">✳</span></div></div><div class="float snippet"><div class="snippet-top"><span>interface.tsx</span><span class="dots"><i></i><i></i><i></i></span></div><div class="code-line"></div><div class="code-line"></div><div class="code-line"></div><div class="code-line"></div></div><div class="scene-tag">Digital workspace · 01</div></div>
+        <div class="scroll"><i class="scroll-line"></i><span>Scroll to explore</span></div><div class="edge-note">Independent creative developer</div>
+      </section>
+      <div class="below" id="work"><span>Design-minded code · Built for the web</span><span id="about">Based everywhere&nbsp; / &nbsp;Working worldwide</span></div>
+    </div>
+  </main>
+  <script>
+    const menuButton=document.querySelector('#menu-toggle'),navigation=document.querySelector('#navigation');
+    menuButton.addEventListener('click',()=>{const open=navigation.classList.toggle('open');menuButton.setAttribute('aria-expanded',String(open));menuButton.setAttribute('aria-label',open?'Close menu':'Open menu')});
+    navigation.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{navigation.classList.remove('open');menuButton.setAttribute('aria-expanded','false')}));
+    document.querySelector('#light-toggle').addEventListener('click',()=>{document.body.classList.toggle('ambient');document.body.style.setProperty('--ambient',document.body.classList.contains('ambient')?'1':'0');document.querySelector('.page').style.background=document.body.classList.contains('ambient')?'radial-gradient(ellipse at 74% 45%,rgba(66,112,198,.25),transparent 50%),#0c1d32':'radial-gradient(ellipse at 72% 52%,rgba(20,89,145,.15),transparent 44%),#081525'});
+  </script>
+</body>
+</html>
