@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f4f3f0" />
+  <title>Vineet — Digital Space</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="wordmark" href="#top" aria-label="Vineet home">VINEET<span>.</span></a>
+      <div class="top-meta"><span class="availability"><i></i> AVAILABLE FOR SELECT PROJECTS</span><span class="top-slash">/</span><span class="role">CREATIVE FRONTEND DEVELOPER</span></div>
+      <button class="profile" aria-label="Vineet profile">v</button>
+    </header>
+
+    <section class="experience" id="top" aria-label="Interactive digital workspace">
+      <div class="showcase" id="showcase">
+        <div class="showcase-head"><span class="eyebrow"><b>01</b> / DIGITAL SHOWROOM</span><span class="scene-count"><span id="currentNum">01</span> — 04</span></div>
+        <div class="orb orb-back"></div><div class="orb orb-front"></div>
+        <div class="floor-grid"></div>
+        <div class="scene" id="scene" data-scene="workspace" aria-label="Interactive 3D computer workstation">
+          <canvas id="world" aria-label="Interactive 3D digital workspace"></canvas>
+          <div class="float-chip chip-a"><span>✳</span> CREATIVE CODE</div><div class="float-chip chip-b"><span class="pulse-dot"></span> 60 FPS</div><div class="float-chip chip-c">&lt; / &gt;</div>
+        </div>
+        <div class="hero-copy"><span class="eyebrow">THOUGHTFUL BY DESIGN. BUILT TO FEEL.</span><h1 id="heroTitle">Beyond the<br><span>Screen.</span></h1><p>I craft modern digital experiences through thoughtful interfaces, creative technology and interactive frontend engineering.</p><div class="hero-actions"><a class="button button-dark" href="#collection">Explore my work <span>↗</span></a><a class="text-link" href="mailto:hello@vineet.dev">Let’s connect <span>↗</span></a></div></div>
+        <div class="stage-caption"><span id="stageLabel">01 — THE EVERYDAY RITUAL</span><span>DRAG TO EXPLORE <b>↗</b></span></div>
+      </div>
+
+      <aside class="panel" id="collection">
+        <div class="panel-head"><div><span class="eyebrow">EXPLORE MY DIGITAL WORLD</span><h2>My Workspace<span>.</span></h2></div><button class="round-arrow" id="nextTop" aria-label="Next scene">↗</button></div>
+        <p class="panel-intro">A glimpse into the tools, ideas and experiments behind the interface.</p>
+        <div class="catalog-head"><span>ITEM</span><span>DETAILS</span><span>NO.</span></div><div class="collection" role="tablist" aria-label="Showcase categories">
+          <button class="collection-item active" data-index="0" role="tab" aria-selected="true"><span class="item-num">01</span><span class="item-copy"><strong>Workspace</strong><small>Where the ideas take shape</small></span><span class="thumb thumb-work"><i></i><b></b></span><span class="item-arrow">↗</span></button>
+          <button class="collection-item" data-index="1" role="tab" aria-selected="false"><span class="item-num">02</span><span class="item-copy"><strong>Hardware</strong><small>Tools with a little more soul</small></span><span class="thumb thumb-hardware"><i></i><b></b></span><span class="item-arrow">↗</span></button>
+          <button class="collection-item" data-index="2" role="tab" aria-selected="false"><span class="item-num">03</span><span class="item-copy"><strong>Development</strong><small>From first line to final polish</small></span><span class="thumb thumb-dev"><i></i><b></b></span><span class="item-arrow">↗</span></button>
+          <button class="collection-item" data-index="3" role="tab" aria-selected="false"><span class="item-num">04</span><span class="item-copy"><strong>Creative projects</strong><small>Ideas outside the usual frame</small></span><span class="thumb thumb-creative"><i></i><b></b></span><span class="item-arrow">↗</span></button>
+          <button class="collection-item" data-index="4" role="tab" aria-selected="false"><span class="item-num">05</span><span class="item-copy"><strong>Experiments</strong><small>Interactive explorations</small></span><span class="thumb thumb-experiment"><i></i><b></b></span><span class="item-arrow">↗</span></button>
+        </div>
+        <div class="panel-bottom"><span><i></i> A SMALL, EVOLVING UNIVERSE</span><span>SCROLL TO DISCOVER ↓</span></div>
+      </aside>
+
+      <nav class="toolbar" aria-label="Showcase controls"><div class="tool-categories"><button class="tool active" data-index="0" aria-label="Workspace view"><span>▦</span>Workspace</button><button class="tool" data-index="1" aria-label="Hardware view"><span>◈</span>Hardware</button><button class="tool" data-index="2" aria-label="Development view"><span>⌘</span>Development</button><button class="tool" data-index="3" aria-label="Creative view"><span>✳</span>Creative</button></div><div class="tool-divider"></div><button class="view-toggle" id="viewToggle"><span class="view-icon">◉</span><span>Orbit view</span></button><div class="tool-nav"><button id="prev" aria-label="Previous scene">←</button><button id="next" aria-label="Next scene">→</button></div><button class="toolbar-go" id="nextMain" aria-label="Next configuration">↗</button></nav>
+      <button class="details-toggle" id="detailsToggle" aria-label="Toggle workspace details">ⓘ <span>Details</span></button>
+    </section>
+    <footer class="footer"><span>DESIGNED TO THINK DIFFERENTLY <i>✳</i></span><span>INDEPENDENT BY NATURE · DIGITAL BY DEFAULT</span><span>© VINEET 2025—26</span></footer>
+  </main>
+  <div class="motion-note" aria-live="polite"><span class="note-dot"></span><span id="motionText">Scene transitions: 700ms ease · gentle elevation</span></div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

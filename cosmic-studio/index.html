@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#17153f" />
+  <title>Lost Beyond The Stars? — Cosmic Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--night:#10172f;--indigo:#17153f;--violet:#8656e8;--lav:#c7a9ff;--white:#f5f2ff;--coral:#ff9b91}
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%;}
+    body{min-height:100vh;display:grid;place-items:center;padding:44px 5vw;background:radial-gradient(ellipse at 17% 12%,rgba(209,169,255,.44),transparent 30%),radial-gradient(ellipse at 84% 88%,rgba(103,76,164,.55),transparent 33%),linear-gradient(135deg,#8060a8 0%,#6e579b 48%,#514577 100%);font-family:'Manrope',sans-serif;color:var(--white);overflow-x:hidden}
+    .stage{position:relative;width:min(1224px,100%);height:min(700px,calc(100vh - 88px));min-height:610px;border-radius:12px;overflow:hidden;background:linear-gradient(130deg,#191643 0%,#141a3c 48%,#10172f 100%);box-shadow:0 34px 90px rgba(24,13,50,.38),0 4px 18px rgba(19,12,44,.18);isolation:isolate}
+    .stage:before,.stage:after{content:"";position:absolute;pointer-events:none;z-index:-1}
+    .stage:before{inset:0;background:radial-gradient(ellipse at 50% 42%,rgba(94,69,160,.23),transparent 43%),radial-gradient(ellipse at 5% 95%,rgba(103,50,150,.31),transparent 34%),radial-gradient(ellipse at 94% 13%,rgba(74,83,168,.19),transparent 33%)}
+    .stage:after{inset:0;opacity:.17;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.19'/%3E%3C/svg%3E")}
+    .topbar{height:84px;padding:0 64px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:5}
+    .brand{display:flex;align-items:center;gap:11px;font:700 11px 'DM Sans',sans-serif;letter-spacing:.19em;color:#f5f2ff;text-decoration:none}
+    .brand-mark{width:24px;height:24px;border:1px solid rgba(199,169,255,.74);border-radius:50%;display:grid;place-items:center;position:relative}
+    .brand-mark:before{content:"";width:7px;height:7px;background:var(--coral);border-radius:50%;box-shadow:0 0 12px #ff9b91}
+    .brand-mark:after{content:"";position:absolute;width:30px;height:10px;border:1px solid rgba(199,169,255,.65);border-radius:50%;transform:rotate(-35deg)}
+    nav{display:flex;align-items:center;gap:36px}
+    nav a{font:500 11px 'Manrope',sans-serif;letter-spacing:.04em;color:rgba(245,242,255,.69);text-decoration:none;transition:color .2s}
+    nav a:hover{color:white}
+    nav .contact{color:#f5f2ff;border:1px solid rgba(199,169,255,.38);padding:10px 17px;border-radius:999px}
+    .scene{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+    .content{position:absolute;z-index:3;left:50%;top:48%;width:min(470px,44%);transform:translate(-50%,-50%);text-align:center}
+    .eyebrow{display:inline-flex;gap:9px;align-items:center;text-transform:uppercase;letter-spacing:.22em;font:600 9px 'DM Sans',sans-serif;color:#c7a9ff;margin-bottom:16px}
+    .eyebrow:before,.eyebrow:after{content:"";height:1px;width:22px;background:linear-gradient(90deg,transparent,#a78ae8)}
+    .eyebrow:after{transform:rotate(180deg)}
+    h1{font:700 clamp(112px,13.4vw,184px)/.78 'Space Grotesk',sans-serif;letter-spacing:-.095em;margin:0 0 25px;padding-right:.095em;color:#fbf9ff;text-shadow:0 5px 34px rgba(150,123,238,.22)}
+    h1 span{display:inline-block;background:linear-gradient(180deg,#fff 12%,#d5c2ff 76%,#ad8ff3 100%);background-clip:text;-webkit-background-clip:text;color:transparent}
+    h2{font:700 25px/1.25 'Manrope',sans-serif;letter-spacing:-.045em;margin:0 0 11px;color:#fff}
+    .description{max-width:355px;margin:0 auto;color:rgba(230,224,250,.73);font:400 12px/1.8 'Manrope',sans-serif}
+    .actions{display:flex;align-items:center;justify-content:center;gap:22px;margin-top:25px}
+    .primary{height:43px;padding:0 20px;display:inline-flex;align-items:center;gap:11px;border-radius:6px;background:linear-gradient(110deg,#9a69ed,#8050db);box-shadow:0 8px 22px rgba(113,71,205,.3),inset 0 1px rgba(255,255,255,.3);color:#fff;text-decoration:none;font:700 11px 'Manrope',sans-serif;transition:transform .2s,box-shadow .2s}
+    .primary:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(113,71,205,.42)}
+    .primary svg{width:14px;height:14px}
+    .secondary{color:#d5c5fa;text-decoration:none;font:500 10px 'DM Sans',sans-serif;letter-spacing:.03em;border-bottom:1px solid rgba(199,169,255,.35);padding:5px 0}
+    .secondary:hover{color:#fff;border-color:#fff}
+    .bottom{position:absolute;z-index:5;bottom:0;left:0;right:0;height:69px;padding:0 64px;display:flex;align-items:center;justify-content:space-between}
+    .socials{display:flex;align-items:center;gap:17px}
+    .socials a{width:16px;height:16px;color:rgba(224,217,245,.64);display:grid;place-items:center;transition:color .2s,transform .2s}
+    .socials a:hover{color:white;transform:translateY(-2px)}.socials svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+    .footnote{display:flex;align-items:center;gap:13px;color:rgba(213,197,250,.57);font:500 9px 'DM Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase}
+    .footnote i{display:block;width:31px;height:1px;background:linear-gradient(90deg,transparent,#c7a9ff)}
+    .scrollhint{position:absolute;right:25px;top:50%;transform:translateY(-50%);writing-mode:vertical-rl;display:flex;align-items:center;gap:10px;color:rgba(218,205,251,.39);font:500 8px 'DM Sans',sans-serif;letter-spacing:.2em;text-transform:uppercase;z-index:3}
+    .scrollhint:after{content:"";height:37px;width:1px;background:linear-gradient(#9b83d5,transparent)}
+    @media(max-width:760px){body{padding:16px}.stage{height:calc(100svh - 32px);min-height:650px}.topbar{height:72px;padding:0 24px}nav{gap:15px}nav a{font-size:10px}nav a:nth-child(1),nav a:nth-child(2){display:none}nav .contact{padding:8px 12px}.content{top:47%;width:82%}h1{font-size:clamp(112px,29vw,160px)}h2{font-size:22px}.description{font-size:11px}.bottom{padding:0 25px}.scrollhint{right:10px}.scene .planet-wrap{transform:translate(-40px,18px) scale(.82);transform-origin:150px 300px}.scene .astronaut-wrap{transform:translate(38px,70px) scale(.78);transform-origin:980px 390px}.scene .rocket-wrap{transform:translate(15px,25px) scale(.82);transform-origin:300px 170px}}
+    @media(max-width:420px){nav{gap:11px}nav a{font-size:9px}.brand{font-size:9px;letter-spacing:.14em}.content{top:49%}.actions{gap:15px}.bottom{height:57px}.footnote{font-size:7px}.scrollhint{display:none}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <main class="stage" aria-label="Cosmic Studio page not found">
+    <header class="topbar">
+      <a class="brand" href="#home" aria-label="Cosmic Studio home"><span class="brand-mark"></span><span>COSMIC STUDIO</span></a>
+      <nav aria-label="Main navigation"><a href="#about">About</a><a href="#portfolio">Portfolio</a><a href="#work">Work</a><a class="contact" href="mailto:hello@cosmic.studio">Contact</a></nav>
+    </header>
+
+    <svg class="scene" viewBox="0 0 1224 700" preserveAspectRatio="xMidYMid slice" role="img" aria-label="An astronaut drifting among planets, stars and a small satellite">
+      <defs>
+        <radialGradient id="nebula" cx="50%" cy="50%"><stop stop-color="#8c56d8" stop-opacity=".25"/><stop offset="1" stop-color="#8c56d8" stop-opacity="0"/></radialGradient>
+        <radialGradient id="planet" cx="30%" cy="27%"><stop stop-color="#ffbc9b"/><stop offset=".42" stop-color="#e47c91"/><stop offset=".78" stop-color="#8c4c9f"/><stop offset="1" stop-color="#3c326e"/></radialGradient>
+        <linearGradient id="ring" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#ffb999" stop-opacity=".25"/><stop offset=".42" stop-color="#f2a4da"/><stop offset=".62" stop-color="#b08be9"/><stop offset="1" stop-color="#ffb999" stop-opacity=".12"/></linearGradient>
+        <radialGradient id="moon" cx="32%" cy="27%"><stop stop-color="#e6dafa"/><stop offset=".68" stop-color="#9d92c2"/><stop offset="1" stop-color="#58557e"/></radialGradient>
+        <linearGradient id="suit" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff"/><stop offset=".53" stop-color="#d8d7f2"/><stop offset="1" stop-color="#9693c2"/></linearGradient>
+        <linearGradient id="visor" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#a4d6f4"/><stop offset=".32" stop-color="#554d8d"/><stop offset=".67" stop-color="#292749"/><stop offset="1" stop-color="#e7a7d4"/></linearGradient>
+        <linearGradient id="solar" x1="0" x2="1"><stop stop-color="#5471b5"/><stop offset=".5" stop-color="#293769"/><stop offset="1" stop-color="#8295cf"/></linearGradient>
+        <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <filter id="soft"><feGaussianBlur stdDeviation="18"/></filter>
+        <clipPath id="planetClip"><circle cx="145" cy="323" r="101"/></clipPath>
+      </defs>
+      <!-- atmospheric clouds and distant star map -->
+      <ellipse cx="80" cy="90" rx="250" ry="170" fill="url(#nebula)"/>
+      <ellipse cx="1160" cy="580" rx="255" ry="185" fill="url(#nebula)"/>
+      <ellipse cx="1020" cy="80" rx="190" ry="110" fill="#4e54a8" opacity=".1" filter="url(#soft)"/>
+      <g fill="#f5f2ff">
+        <circle cx="72" cy="176" r="1.2" opacity=".8"/><circle cx="216" cy="106" r="1" opacity=".68"/><circle cx="309" cy="222" r="1.1" opacity=".75"/><circle cx="447" cy="116" r=".9" opacity=".68"/><circle cx="522" cy="188" r="1.2" opacity=".72"/><circle cx="678" cy="117" r=".9" opacity=".7"/><circle cx="817" cy="188" r="1.2" opacity=".7"/><circle cx="1070" cy="192" r="1" opacity=".72"/><circle cx="1142" cy="279" r="1.1" opacity=".64"/><circle cx="1062" cy="502" r=".9" opacity=".75"/><circle cx="920" cy="612" r="1" opacity=".7"/><circle cx="716" cy="584" r="1.1" opacity=".64"/><circle cx="468" cy="637" r=".9" opacity=".65"/><circle cx="234" cy="545" r="1.1" opacity=".7"/><circle cx="79" cy="482" r=".9" opacity=".6"/><circle cx="1140" cy="83" r=".8" opacity=".8"/><circle cx="376" cy="563" r=".8" opacity=".55"/><circle cx="834" cy="70" r=".8" opacity=".7"/>
+      </g>
+      <g fill="#a78ce8" filter="url(#glow)"><circle cx="265" cy="279" r="1.5"/><circle cx="988" cy="295" r="1.4"/><circle cx="852" cy="531" r="1.5"/><circle cx="395" cy="451" r="1.1"/></g>
+      <g stroke="#ab9ad9" stroke-width=".7" opacity=".35" fill="none"><path d="M1040 231l25 26 31-12 22 25"/><path d="M1040 231l-17 33 42-7"/><circle cx="1040" cy="231" r="2" fill="#d6c7f6"/><circle cx="1065" cy="257" r="2" fill="#d6c7f6"/><circle cx="1096" cy="245" r="2" fill="#d6c7f6"/><circle cx="1118" cy="270" r="2" fill="#d6c7f6"/></g>
+      <!-- moon -->
+      <g transform="translate(1028 143)"><circle r="35" fill="#a99add" opacity=".13" filter="url(#soft)"/><circle r="26" fill="url(#moon)"/><path d="M-22-7q8-17 24-17 19 1 25 20-12-8-27-3-10 3-22 0" fill="#f1e8ff" opacity=".28"/><g fill="#645e8c" opacity=".48"><circle cx="-10" cy="-6" r="4"/><circle cx="9" cy="-13" r="2.5"/><circle cx="13" cy="8" r="5"/><circle cx="-7" cy="13" r="2.7"/><circle cx="-19" cy="7" r="1.8"/></g><g fill="#f5efff" opacity=".3"><circle cx="-11" cy="-7" r="2.2"/><circle cx="12" cy="6" r="2.8"/></g></g>
+      <!-- upper left rocket -->
+      <g class="rocket-wrap" transform="translate(280 171) rotate(-31)">
+        <path d="M-29 6Q-44 16-52 29q16-2 27-9" fill="#ff9b91" opacity=".83"/><path d="M-29 5Q-47 24-58 36" stroke="#ffbdad" stroke-width="2" opacity=".6" filter="url(#glow)"/>
+        <path d="M-26-8Q-7-25 22-17q12 22-2 42Q-8 33-26 11Z" fill="url(#suit)" stroke="#e9dfff" stroke-width="1"/>
+        <path d="M16-18q15-3 24 7L22-2" fill="#ed9eaa" stroke="#f3c6dc"/><path d="M-13-18l-9-12q-2 13 0 23M-12 18l-9 12q-2-13 1-23" fill="#8064c3" stroke="#bba9ec" stroke-width="2"/>
+        <path d="M6-16q7 8 3 18" fill="none" stroke="#9d8bd3" stroke-width="2"/><circle cx="-4" cy="-2" r="7" fill="url(#visor)" stroke="#f5f2ff" stroke-width="2"/><path d="M-9-5q3-4 7-3" stroke="#fff" stroke-width="1.2" opacity=".8"/>
+      </g>
+      <!-- ringed planet -->
+      <g class="planet-wrap">
+        <ellipse cx="151" cy="330" rx="142" ry="43" fill="none" stroke="url(#ring)" stroke-width="19" transform="rotate(-17 151 330)" opacity=".8"/>
+        <circle cx="145" cy="323" r="101" fill="url(#planet)"/>
+        <g clip-path="url(#planetClip)" opacity=".43" fill="none" stroke-linecap="round">
+          <path d="M35 282q72-28 166 1" stroke="#ffd3bd" stroke-width="12"/><path d="M27 302q88-24 216 10" stroke="#ffb2b3" stroke-width="7"/><path d="M42 335q67-20 191 9" stroke="#e79ed4" stroke-width="11"/><path d="M49 366q73-17 163 10" stroke="#ad81dc" stroke-width="14"/><path d="M82 405q42-13 112-1" stroke="#ffc1a7" stroke-width="8"/>
+        </g>
+        <ellipse cx="145" cy="323" rx="101" ry="101" fill="none" stroke="#ffd1ce" stroke-opacity=".36"/>
+        <path d="M43 339q98 46 201-9" fill="none" stroke="#f3b0e7" stroke-width="13" opacity=".72"/>
+        <ellipse cx="151" cy="330" rx="142" ry="43" fill="none" stroke="#ffd0b2" stroke-width="2" transform="rotate(-17 151 330)" opacity=".58"/>
+        <circle cx="115" cy="292" r="22" fill="#ffd9bf" opacity=".08"/>
+      </g>
+      <!-- distant satellite on right -->
+      <g transform="translate(1090 367) rotate(-18)">
+        <path d="M-12 0h24" stroke="#d7d5ee" stroke-width="2"/><rect x="-45" y="-12" width="29" height="24" rx="2" fill="url(#solar)" stroke="#b6b8e3" stroke-width="1"/><rect x="16" y="-12" width="29" height="24" rx="2" fill="url(#solar)" stroke="#b6b8e3" stroke-width="1"/><path d="M-35-12v24m9-24v24m10-24v24m32-24v24m9-24v24m10-24v24" stroke="#8e9bd0" stroke-width=".6" opacity=".75"/><rect x="-12" y="-9" width="24" height="18" rx="4" fill="#d8d3ef" stroke="#fff" stroke-width="1"/><path d="M-5-8L0-23 5-8" fill="#9182c6" stroke="#dad0fa"/><circle cy="0" r="4" fill="#f4a9ad"/><path d="M0 9v10m-7 0H7" stroke="#e2d8f8" stroke-width="1.2"/>
+      </g>
+      <!-- curved tether behind astronaut -->
+      <path d="M878 418C955 471 903 526 970 551s103-11 82-47" fill="none" stroke="#b2a7d8" stroke-width="2" opacity=".72"/>
+      <path d="M878 418C955 471 903 526 970 551" fill="none" stroke="#d6c7ff" stroke-width=".7" opacity=".7"/>
+      <!-- astronaut drifting diagonally -->
+      <g class="astronaut-wrap" transform="translate(902 417) rotate(28)">
+        <!-- rear leg -->
+        <path d="M-9 42q-5 29-26 47l11 15q31-13 46-45l4-21" fill="url(#suit)" stroke="#fbf8ff" stroke-width="2"/>
+        <path d="M-36 85l-10 16q12 12 29 3l9-12-9-12" fill="#827db2" stroke="#d6d2ee" stroke-width="2"/><path d="M-39 92l19 7" stroke="#a99ce0" stroke-width="3"/>
+        <!-- front leg -->
+        <path d="M14 39q14 28 2 55l14 12q24-25 23-55l-10-21" fill="url(#suit)" stroke="#fff" stroke-width="2"/>
+        <path d="M16 91l-2 17q15 10 30-2l6-13-11-9" fill="#7775a7" stroke="#dedaf1" stroke-width="2"/><path d="M19 98l18 6" stroke="#a89be1" stroke-width="3"/>
+        <!-- torso -->
+        <path d="M-23-1q-3-14 12-20l26-2q18 8 21 26l-6 39q-22 13-48 2l-10-20Z" fill="url(#suit)" stroke="#fff" stroke-width="2"/>
+        <path d="M-13-13q17 7 34 0l8 18q-24 10-49-1Z" fill="#a69acb" opacity=".57"/><path d="M-24 9l-9 18 10 8 11-18m39-17 13 13-9 11-13-13" fill="none" stroke="#b9a4f0" stroke-width="5" stroke-linecap="round"/>
+        <rect x="-10" y="5" width="21" height="17" rx="3" fill="#39385f" stroke="#c7a9ff" stroke-width="1.4"/><rect x="-6" y="9" width="13" height="8" rx="1" fill="#8ad7e7" opacity=".8"/><circle cx="7" cy="19" r="1.4" fill="#ff9b91"/>
+        <path d="M-18 28q15 8 35 3" fill="none" stroke="#7f70b8" stroke-width="2"/><circle cx="-17" cy="28" r="3" fill="#f4aaa9"/>
+        <!-- backpack -->
+        <path d="M21-11q15-3 20 10l1 25-13 9-8-10" fill="#918bb9" stroke="#eee9fa" stroke-width="2"/><path d="M31-4l9 2v18l-10 4" fill="#564f83"/><path d="M36 1v12" stroke="#c7a9ff" stroke-width="2"/>
+        <!-- arm reaching outward -->
+        <path d="M-20 0q-18-14-30-31l-11 7q9 28 31 43l14-4" fill="url(#suit)" stroke="#fff" stroke-width="2"/><path d="M-62-35l-13-5q-8 12 2 23l12 4 8-11" fill="#b7b2d6" stroke="#f5f2ff" stroke-width="1.7"/><path d="M-68-35l9 13" stroke="#9d83dc" stroke-width="3"/>
+        <!-- other arm bent -->
+        <path d="M17-3q19-8 33-24l11 8q-8 26-34 39L16 12" fill="url(#suit)" stroke="#fff" stroke-width="2"/><path d="M59-30l8-10q14 4 12 18l-9 10-12-8" fill="#b5afd7" stroke="#f5f2ff" stroke-width="1.7"/>
+        <!-- helmet -->
+        <path d="M-19-27q-1-32 27-38 32-6 42 21 5 20-10 34L4-4q-24-3-23-23" fill="url(#suit)" stroke="#fff" stroke-width="2.4"/>
+        <path d="M-9-41q8-19 29-17 23 2 27 25 1 11-7 19-19 8-37-2-13-8-12-25" fill="url(#visor)" stroke="#c4b7ed" stroke-width="2"/>
+        <path d="M-3-43q8-12 23-12 8 0 13 4-17 0-26 14-6 10-3 20-10-8-7-26" fill="#d9efff" opacity=".37"/><path d="M27-54q11 5 14 17" fill="none" stroke="#fff" stroke-width="2" opacity=".62"/><path d="M-17-22q8 10 19 11" fill="none" stroke="#8b79c4" stroke-width="2"/>
+        <circle cx="-20" cy="-23" r="4" fill="#ed9d9d" stroke="#fff" stroke-width="1"/>
+      </g>
+      <!-- tiny orbit arcs -->
+      <path d="M273 485q22-14 40-1" fill="none" stroke="#bc9df7" stroke-width="1" opacity=".35"/><circle cx="313" cy="484" r="2" fill="#ffb6ad"/><circle cx="970" cy="147" r="2" fill="#ffc8b7"/>
+    </svg>
+
+    <section class="content" aria-labelledby="title">
+      <div class="eyebrow">Signal lost · Page not found</div>
+      <h1 id="title"><span>404</span></h1>
+      <h2>Lost Beyond The Stars?</h2>
+      <p class="description">Looks like this page drifted into another galaxy. Let’s get you back on track.</p>
+      <div class="actions">
+        <a class="primary" href="/" aria-label="Return to home">Return Home <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M10 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="secondary" href="#universe">Explore the Universe</a>
+      </div>
+    </section>
+    <div class="scrollhint" aria-hidden="true">Keep wandering</div>
+    <footer class="bottom">
+      <div class="socials" aria-label="Social links">
+        <a href="#instagram" aria-label="Instagram"><svg viewBox="0 0 20 20"><rect x="3" y="3" width="14" height="14" rx="4"/><circle cx="10" cy="10" r="3.2"/><circle cx="14.5" cy="5.8" r=".8" fill="currentColor" stroke="none"/></svg></a>
+        <a href="#github" aria-label="GitHub"><svg viewBox="0 0 20 20"><path d="M7 15.8c-3.1.9-3.1-1.6-4.4-2m8.8 3.7v-2.4c0-.7.1-1.3-.4-1.8 3.2-.4 6.5-1.6 6.5-7.1a5.5 5.5 0 0 0-1.5-3.8A5.1 5.1 0 0 0 15.9.8s-1.2-.4-3.9 1.5a13.5 13.5 0 0 0-4 0C5.3.4 4.1.8 4.1.8a5.1 5.1 0 0 0-.1 3.6 5.5 5.5 0 0 0-1.5 3.8c0 5.5 3.3 6.7 6.5 7.1-.5.5-.5 1.1-.5 1.8v2.4" transform="translate(0 -1) scale(1 .95)"/></svg></a>
+        <a href="#linkedin" aria-label="LinkedIn"><svg viewBox="0 0 20 20"><path d="M4 7.5v9M4 4.4v.1M8 16.5v-9h3v1.3c.7-1.2 4.5-2 4.5 2v5.7M8 11c0-2 4.5-2.2 4.5 0v5.5"/><circle cx="4" cy="4.5" r="1"/></svg></a>
+        <a href="#dribbble" aria-label="Dribbble"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7.2"/><path d="M5 4.5c3.3 2.2 5.8 5.5 7.4 10.7M3 9.5c4.3.2 9.1-1.2 12.2-4M7 16c1.2-3.2 4.1-5.1 9.6-4.6"/></svg></a>
+      </div>
+      <div class="footnote"><span>Somewhere, out there</span><i></i><span>© 2026 Cosmic Studio</span></div>
+    </footer>
+  </main>
+</body>
+</html>

@@ -1,0 +1,18 @@
+VINEET — FRONTEND DEVELOPER
+Indore, India
+
+DESIGNING. DEVELOPING. DELIVERING.
+
+Frontend developer focused on thoughtful, high-performance digital experiences through clean code, purposeful design, and modern frontend technologies.
+
+EXPERIENCE
+Freelance Frontend Development | 2023—Now
+UI Developer Internship | 2022—2023
+
+EDUCATION
+Master of Computer Applications | 2022—2024
+
+TOOLS
+React, Next.js, TypeScript, JavaScript, Tailwind CSS, CSS3, HTML5, Git, GitHub, VS Code, Figma, REST APIs, Node.js, Framer Motion
+
+Contact: hello@vineet.dev
