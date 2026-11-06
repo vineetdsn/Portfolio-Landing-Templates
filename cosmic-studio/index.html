@@ -3,163 +3,1097 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#17153f" />
-  <title>Lost Beyond The Stars? — Cosmic Studio</title>
+  <meta name="theme-color" content="#5b277d" />
+  <title>404 — Why am I here? | Cosmic Studio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  <!-- Three.js & GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <style>
-    :root{--night:#10172f;--indigo:#17153f;--violet:#8656e8;--lav:#c7a9ff;--white:#f5f2ff;--coral:#ff9b91}
-    *{box-sizing:border-box}
-    html,body{margin:0;min-height:100%;}
-    body{min-height:100vh;display:grid;place-items:center;padding:44px 5vw;background:radial-gradient(ellipse at 17% 12%,rgba(209,169,255,.44),transparent 30%),radial-gradient(ellipse at 84% 88%,rgba(103,76,164,.55),transparent 33%),linear-gradient(135deg,#8060a8 0%,#6e579b 48%,#514577 100%);font-family:'Manrope',sans-serif;color:var(--white);overflow-x:hidden}
-    .stage{position:relative;width:min(1224px,100%);height:min(700px,calc(100vh - 88px));min-height:610px;border-radius:12px;overflow:hidden;background:linear-gradient(130deg,#191643 0%,#141a3c 48%,#10172f 100%);box-shadow:0 34px 90px rgba(24,13,50,.38),0 4px 18px rgba(19,12,44,.18);isolation:isolate}
-    .stage:before,.stage:after{content:"";position:absolute;pointer-events:none;z-index:-1}
-    .stage:before{inset:0;background:radial-gradient(ellipse at 50% 42%,rgba(94,69,160,.23),transparent 43%),radial-gradient(ellipse at 5% 95%,rgba(103,50,150,.31),transparent 34%),radial-gradient(ellipse at 94% 13%,rgba(74,83,168,.19),transparent 33%)}
-    .stage:after{inset:0;opacity:.17;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.19'/%3E%3C/svg%3E")}
-    .topbar{height:84px;padding:0 64px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:5}
-    .brand{display:flex;align-items:center;gap:11px;font:700 11px 'DM Sans',sans-serif;letter-spacing:.19em;color:#f5f2ff;text-decoration:none}
-    .brand-mark{width:24px;height:24px;border:1px solid rgba(199,169,255,.74);border-radius:50%;display:grid;place-items:center;position:relative}
-    .brand-mark:before{content:"";width:7px;height:7px;background:var(--coral);border-radius:50%;box-shadow:0 0 12px #ff9b91}
-    .brand-mark:after{content:"";position:absolute;width:30px;height:10px;border:1px solid rgba(199,169,255,.65);border-radius:50%;transform:rotate(-35deg)}
-    nav{display:flex;align-items:center;gap:36px}
-    nav a{font:500 11px 'Manrope',sans-serif;letter-spacing:.04em;color:rgba(245,242,255,.69);text-decoration:none;transition:color .2s}
-    nav a:hover{color:white}
-    nav .contact{color:#f5f2ff;border:1px solid rgba(199,169,255,.38);padding:10px 17px;border-radius:999px}
-    .scene{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
-    .content{position:absolute;z-index:3;left:50%;top:48%;width:min(470px,44%);transform:translate(-50%,-50%);text-align:center}
-    .eyebrow{display:inline-flex;gap:9px;align-items:center;text-transform:uppercase;letter-spacing:.22em;font:600 9px 'DM Sans',sans-serif;color:#c7a9ff;margin-bottom:16px}
-    .eyebrow:before,.eyebrow:after{content:"";height:1px;width:22px;background:linear-gradient(90deg,transparent,#a78ae8)}
-    .eyebrow:after{transform:rotate(180deg)}
-    h1{font:700 clamp(112px,13.4vw,184px)/.78 'Space Grotesk',sans-serif;letter-spacing:-.095em;margin:0 0 25px;padding-right:.095em;color:#fbf9ff;text-shadow:0 5px 34px rgba(150,123,238,.22)}
-    h1 span{display:inline-block;background:linear-gradient(180deg,#fff 12%,#d5c2ff 76%,#ad8ff3 100%);background-clip:text;-webkit-background-clip:text;color:transparent}
-    h2{font:700 25px/1.25 'Manrope',sans-serif;letter-spacing:-.045em;margin:0 0 11px;color:#fff}
-    .description{max-width:355px;margin:0 auto;color:rgba(230,224,250,.73);font:400 12px/1.8 'Manrope',sans-serif}
-    .actions{display:flex;align-items:center;justify-content:center;gap:22px;margin-top:25px}
-    .primary{height:43px;padding:0 20px;display:inline-flex;align-items:center;gap:11px;border-radius:6px;background:linear-gradient(110deg,#9a69ed,#8050db);box-shadow:0 8px 22px rgba(113,71,205,.3),inset 0 1px rgba(255,255,255,.3);color:#fff;text-decoration:none;font:700 11px 'Manrope',sans-serif;transition:transform .2s,box-shadow .2s}
-    .primary:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(113,71,205,.42)}
-    .primary svg{width:14px;height:14px}
-    .secondary{color:#d5c5fa;text-decoration:none;font:500 10px 'DM Sans',sans-serif;letter-spacing:.03em;border-bottom:1px solid rgba(199,169,255,.35);padding:5px 0}
-    .secondary:hover{color:#fff;border-color:#fff}
-    .bottom{position:absolute;z-index:5;bottom:0;left:0;right:0;height:69px;padding:0 64px;display:flex;align-items:center;justify-content:space-between}
-    .socials{display:flex;align-items:center;gap:17px}
-    .socials a{width:16px;height:16px;color:rgba(224,217,245,.64);display:grid;place-items:center;transition:color .2s,transform .2s}
-    .socials a:hover{color:white;transform:translateY(-2px)}.socials svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
-    .footnote{display:flex;align-items:center;gap:13px;color:rgba(213,197,250,.57);font:500 9px 'DM Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase}
-    .footnote i{display:block;width:31px;height:1px;background:linear-gradient(90deg,transparent,#c7a9ff)}
-    .scrollhint{position:absolute;right:25px;top:50%;transform:translateY(-50%);writing-mode:vertical-rl;display:flex;align-items:center;gap:10px;color:rgba(218,205,251,.39);font:500 8px 'DM Sans',sans-serif;letter-spacing:.2em;text-transform:uppercase;z-index:3}
-    .scrollhint:after{content:"";height:37px;width:1px;background:linear-gradient(#9b83d5,transparent)}
-    @media(max-width:760px){body{padding:16px}.stage{height:calc(100svh - 32px);min-height:650px}.topbar{height:72px;padding:0 24px}nav{gap:15px}nav a{font-size:10px}nav a:nth-child(1),nav a:nth-child(2){display:none}nav .contact{padding:8px 12px}.content{top:47%;width:82%}h1{font-size:clamp(112px,29vw,160px)}h2{font-size:22px}.description{font-size:11px}.bottom{padding:0 25px}.scrollhint{right:10px}.scene .planet-wrap{transform:translate(-40px,18px) scale(.82);transform-origin:150px 300px}.scene .astronaut-wrap{transform:translate(38px,70px) scale(.78);transform-origin:980px 390px}.scene .rocket-wrap{transform:translate(15px,25px) scale(.82);transform-origin:300px 170px}}
-    @media(max-width:420px){nav{gap:11px}nav a{font-size:9px}.brand{font-size:9px;letter-spacing:.14em}.content{top:49%}.actions{gap:15px}.bottom{height:57px}.footnote{font-size:7px}.scrollhint{display:none}}
-    @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+    :root {
+      --bg-gradient: radial-gradient(ellipse at 50% 40%, #76379c 0%, #582679 55%, #3f195a 100%);
+      --stage-bg: #0b133b;
+      --white: #ffffff;
+      --text-muted: #dcd3f8;
+      --cloud-back: #4d236d;
+      --cloud-mid: #72348f;
+      --cloud-front: #8f46a7;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background: var(--bg-gradient);
+      font-family: 'Nunito', 'Quicksand', sans-serif;
+      color: var(--white);
+      user-select: none;
+      cursor: default;
+    }
+
+    /* Outer stage container */
+    .stage {
+      position: relative;
+      width: min(1180px, 100%);
+      height: min(670px, calc(100vh - 40px));
+      min-height: 520px;
+      border-radius: 14px;
+      overflow: hidden;
+      background: linear-gradient(175deg, #0d1645 0%, #0a1138 48%, #080d2d 100%);
+      box-shadow: 0 32px 90px rgba(22, 6, 44, 0.55), 0 8px 25px rgba(0, 0, 0, 0.35);
+      isolation: isolate;
+    }
+
+    /* Three.js Canvas */
+    #webgl-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: auto;
+    }
+
+    /* Thruster Particle Canvas (for dynamic live rocket fire and smoke) */
+    #particles-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* 2D / SVG Layer for clouds, astronaut, rocket, tether and satellite */
+    #overlay-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    /* Top Navigation */
+    .topbar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 75px;
+      padding: 0 54px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 20;
+      pointer-events: auto;
+    }
+
+    .brand {
+      font-family: 'Quicksand', 'Nunito', sans-serif;
+      font-size: 21px;
+      font-weight: 700;
+      color: #ffffff;
+      text-decoration: none;
+      letter-spacing: -0.01em;
+      transition: transform 0.25s ease, opacity 0.2s;
+    }
+
+    .brand:hover {
+      opacity: 0.88;
+      transform: scale(1.04);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-size: 13.5px;
+      font-weight: 600;
+    }
+
+    .nav-links a {
+      color: #ffffff;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .nav-links a:hover {
+      opacity: 0.85;
+      transform: translateY(-2px);
+    }
+
+    .nav-links .sep {
+      color: rgba(255, 255, 255, 0.65);
+      font-weight: 700;
+      margin: 0 2px;
+      user-select: none;
+    }
+
+    .nav-contact {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .sparkle {
+      width: 11px;
+      height: 11px;
+      color: #ffffff;
+      animation: sparklePulse 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes sparklePulse {
+      0% { opacity: 0.35; transform: scale(0.7) rotate(0deg); }
+      100% { opacity: 1; transform: scale(1.2) rotate(45deg); filter: drop-shadow(0 0 4px #ffffff); }
+    }
+
+    /* Center 404 Text */
+    .content {
+      position: absolute;
+      z-index: 10;
+      left: 50%;
+      top: 48%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      pointer-events: none;
+      width: min(440px, 85%);
+    }
+
+    h1 {
+      font-family: 'Quicksand', 'Nunito', sans-serif;
+      font-size: clamp(86px, 10.5vw, 134px);
+      font-weight: 700;
+      line-height: 0.88;
+      letter-spacing: -0.04em;
+      color: #ffffff;
+      margin-bottom: 14px;
+      text-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    h2 {
+      font-family: 'Quicksand', 'Nunito', sans-serif;
+      font-size: clamp(22px, 2.6vw, 33px);
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+      margin-bottom: 11px;
+      text-shadow: 0 2px 14px rgba(0, 0, 0, 0.35);
+    }
+
+    .description {
+      font-size: clamp(12px, 1.2vw, 14px);
+      line-height: 1.5;
+      font-weight: 500;
+      color: var(--text-muted);
+      max-width: 320px;
+      margin: 0 auto;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+    }
+
+    /* Bottom Left Social Media Links */
+    .socials {
+      position: absolute;
+      bottom: 30px;
+      left: 54px;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      z-index: 25;
+      pointer-events: auto;
+    }
+
+    .social-btn {
+      width: 25px;
+      height: 25px;
+      border: 1.4px solid rgba(255, 255, 255, 0.45);
+      border-radius: 6px;
+      display: grid;
+      place-items: center;
+      color: rgba(255, 255, 255, 0.85);
+      text-decoration: none;
+      transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(4px);
+    }
+
+    .social-btn:hover {
+      color: #ffffff;
+      border-color: #ffffff;
+      transform: translateY(-3px) scale(1.1);
+      background: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 14px rgba(255, 255, 255, 0.25);
+    }
+
+    .social-btn svg {
+      width: 13px;
+      height: 13px;
+    }
+
+    /* Shockwave ring on click */
+    .shockwave {
+      position: absolute;
+      border: 2px solid rgba(220, 190, 255, 0.7);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 15;
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 1;
+    }
+
+    /* Responsive */
+    @media (max-width: 840px) {
+      .topbar { padding: 0 28px; height: 68px; }
+      .socials { bottom: 22px; left: 28px; }
+      .stage { height: calc(100svh - 32px); min-height: 500px; }
+    }
+
+    @media (max-width: 580px) {
+      .topbar { padding: 0 18px; }
+      .nav-links { gap: 6px; font-size: 11px; }
+      .brand { font-size: 17px; }
+      .socials { bottom: 18px; left: 18px; gap: 8px; }
+      h1 { font-size: 74px; }
+      h2 { font-size: 20px; }
+      .description { font-size: 12px; }
+    }
   </style>
 </head>
 <body>
-  <main class="stage" aria-label="Cosmic Studio page not found">
+  <main class="stage" id="stage" aria-label="Page not found">
+    <!-- WebGL Canvas for 3D Moon, 3D Planet & 3D Starfield -->
+    <canvas id="webgl-canvas"></canvas>
+
+    <!-- Canvas for Rocket Thruster Flame & Smoke Particles -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Top Navigation -->
     <header class="topbar">
-      <a class="brand" href="#home" aria-label="Cosmic Studio home"><span class="brand-mark"></span><span>COSMIC STUDIO</span></a>
-      <nav aria-label="Main navigation"><a href="#about">About</a><a href="#portfolio">Portfolio</a><a href="#work">Work</a><a class="contact" href="mailto:hello@cosmic.studio">Contact</a></nav>
+      <a class="brand" href="#home">Company</a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#about">About</a>
+        <span class="sep">.</span>
+        <a href="#portfolio">Portfolio</a>
+        <span class="sep">.</span>
+        <a href="#job">Job</a>
+        <span class="sep">.</span>
+        <a class="nav-contact" href="#contact">
+          Contact
+          <svg class="sparkle" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 0L9.4 6.6L16 8L9.4 9.4L8 16L6.6 9.4L0 8L6.6 6.6Z"/>
+          </svg>
+        </a>
+      </nav>
     </header>
 
-    <svg class="scene" viewBox="0 0 1224 700" preserveAspectRatio="xMidYMid slice" role="img" aria-label="An astronaut drifting among planets, stars and a small satellite">
+    <!-- Central 404 Text -->
+    <section class="content" id="hero-text" aria-labelledby="error-code">
+      <h1 id="error-code">404</h1>
+      <h2>Why am I here?</h2>
+      <p class="description">It seem like the page that you are looking for is no longer here</p>
+    </section>
+
+    <!-- SVG Layer for Parallax Clouds, Astronaut, Rocket, Tether and Satellite -->
+    <svg id="overlay-svg" viewBox="0 0 1200 680" preserveAspectRatio="xMidYMid slice" role="img">
       <defs>
-        <radialGradient id="nebula" cx="50%" cy="50%"><stop stop-color="#8c56d8" stop-opacity=".25"/><stop offset="1" stop-color="#8c56d8" stop-opacity="0"/></radialGradient>
-        <radialGradient id="planet" cx="30%" cy="27%"><stop stop-color="#ffbc9b"/><stop offset=".42" stop-color="#e47c91"/><stop offset=".78" stop-color="#8c4c9f"/><stop offset="1" stop-color="#3c326e"/></radialGradient>
-        <linearGradient id="ring" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#ffb999" stop-opacity=".25"/><stop offset=".42" stop-color="#f2a4da"/><stop offset=".62" stop-color="#b08be9"/><stop offset="1" stop-color="#ffb999" stop-opacity=".12"/></linearGradient>
-        <radialGradient id="moon" cx="32%" cy="27%"><stop stop-color="#e6dafa"/><stop offset=".68" stop-color="#9d92c2"/><stop offset="1" stop-color="#58557e"/></radialGradient>
-        <linearGradient id="suit" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff"/><stop offset=".53" stop-color="#d8d7f2"/><stop offset="1" stop-color="#9693c2"/></linearGradient>
-        <linearGradient id="visor" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#a4d6f4"/><stop offset=".32" stop-color="#554d8d"/><stop offset=".67" stop-color="#292749"/><stop offset="1" stop-color="#e7a7d4"/></linearGradient>
-        <linearGradient id="solar" x1="0" x2="1"><stop stop-color="#5471b5"/><stop offset=".5" stop-color="#293769"/><stop offset="1" stop-color="#8295cf"/></linearGradient>
-        <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-        <filter id="soft"><feGaussianBlur stdDeviation="18"/></filter>
-        <clipPath id="planetClip"><circle cx="145" cy="323" r="101"/></clipPath>
+        <linearGradient id="rocketBody" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#ffffff"/>
+          <stop offset="100%" stop-color="#dde1ec"/>
+        </linearGradient>
+        <linearGradient id="rocketRed" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#f04d5c"/>
+          <stop offset="100%" stop-color="#c92839"/>
+        </linearGradient>
+        <linearGradient id="flameGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#ffe65b"/>
+          <stop offset="45%" stop-color="#ff7b29"/>
+          <stop offset="100%" stop-color="#ea2d22" stop-opacity="0.1"/>
+        </linearGradient>
+        <linearGradient id="visorGrad" x1="0.2" y1="0.1" x2="0.8" y2="0.9">
+          <stop offset="0%" stop-color="#1e2547"/>
+          <stop offset="70%" stop-color="#0e1227"/>
+          <stop offset="100%" stop-color="#070918"/>
+        </linearGradient>
+        <linearGradient id="suitBlue" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#55cbf9"/>
+          <stop offset="100%" stop-color="#219cd1"/>
+        </linearGradient>
       </defs>
-      <!-- atmospheric clouds and distant star map -->
-      <ellipse cx="80" cy="90" rx="250" ry="170" fill="url(#nebula)"/>
-      <ellipse cx="1160" cy="580" rx="255" ry="185" fill="url(#nebula)"/>
-      <ellipse cx="1020" cy="80" rx="190" ry="110" fill="#4e54a8" opacity=".1" filter="url(#soft)"/>
-      <g fill="#f5f2ff">
-        <circle cx="72" cy="176" r="1.2" opacity=".8"/><circle cx="216" cy="106" r="1" opacity=".68"/><circle cx="309" cy="222" r="1.1" opacity=".75"/><circle cx="447" cy="116" r=".9" opacity=".68"/><circle cx="522" cy="188" r="1.2" opacity=".72"/><circle cx="678" cy="117" r=".9" opacity=".7"/><circle cx="817" cy="188" r="1.2" opacity=".7"/><circle cx="1070" cy="192" r="1" opacity=".72"/><circle cx="1142" cy="279" r="1.1" opacity=".64"/><circle cx="1062" cy="502" r=".9" opacity=".75"/><circle cx="920" cy="612" r="1" opacity=".7"/><circle cx="716" cy="584" r="1.1" opacity=".64"/><circle cx="468" cy="637" r=".9" opacity=".65"/><circle cx="234" cy="545" r="1.1" opacity=".7"/><circle cx="79" cy="482" r=".9" opacity=".6"/><circle cx="1140" cy="83" r=".8" opacity=".8"/><circle cx="376" cy="563" r=".8" opacity=".55"/><circle cx="834" cy="70" r=".8" opacity=".7"/>
-      </g>
-      <g fill="#a78ce8" filter="url(#glow)"><circle cx="265" cy="279" r="1.5"/><circle cx="988" cy="295" r="1.4"/><circle cx="852" cy="531" r="1.5"/><circle cx="395" cy="451" r="1.1"/></g>
-      <g stroke="#ab9ad9" stroke-width=".7" opacity=".35" fill="none"><path d="M1040 231l25 26 31-12 22 25"/><path d="M1040 231l-17 33 42-7"/><circle cx="1040" cy="231" r="2" fill="#d6c7f6"/><circle cx="1065" cy="257" r="2" fill="#d6c7f6"/><circle cx="1096" cy="245" r="2" fill="#d6c7f6"/><circle cx="1118" cy="270" r="2" fill="#d6c7f6"/></g>
-      <!-- moon -->
-      <g transform="translate(1028 143)"><circle r="35" fill="#a99add" opacity=".13" filter="url(#soft)"/><circle r="26" fill="url(#moon)"/><path d="M-22-7q8-17 24-17 19 1 25 20-12-8-27-3-10 3-22 0" fill="#f1e8ff" opacity=".28"/><g fill="#645e8c" opacity=".48"><circle cx="-10" cy="-6" r="4"/><circle cx="9" cy="-13" r="2.5"/><circle cx="13" cy="8" r="5"/><circle cx="-7" cy="13" r="2.7"/><circle cx="-19" cy="7" r="1.8"/></g><g fill="#f5efff" opacity=".3"><circle cx="-11" cy="-7" r="2.2"/><circle cx="12" cy="6" r="2.8"/></g></g>
-      <!-- upper left rocket -->
-      <g class="rocket-wrap" transform="translate(280 171) rotate(-31)">
-        <path d="M-29 6Q-44 16-52 29q16-2 27-9" fill="#ff9b91" opacity=".83"/><path d="M-29 5Q-47 24-58 36" stroke="#ffbdad" stroke-width="2" opacity=".6" filter="url(#glow)"/>
-        <path d="M-26-8Q-7-25 22-17q12 22-2 42Q-8 33-26 11Z" fill="url(#suit)" stroke="#e9dfff" stroke-width="1"/>
-        <path d="M16-18q15-3 24 7L22-2" fill="#ed9eaa" stroke="#f3c6dc"/><path d="M-13-18l-9-12q-2 13 0 23M-12 18l-9 12q-2-13 1-23" fill="#8064c3" stroke="#bba9ec" stroke-width="2"/>
-        <path d="M6-16q7 8 3 18" fill="none" stroke="#9d8bd3" stroke-width="2"/><circle cx="-4" cy="-2" r="7" fill="url(#visor)" stroke="#f5f2ff" stroke-width="2"/><path d="M-9-5q3-4 7-3" stroke="#fff" stroke-width="1.2" opacity=".8"/>
-      </g>
-      <!-- ringed planet -->
-      <g class="planet-wrap">
-        <ellipse cx="151" cy="330" rx="142" ry="43" fill="none" stroke="url(#ring)" stroke-width="19" transform="rotate(-17 151 330)" opacity=".8"/>
-        <circle cx="145" cy="323" r="101" fill="url(#planet)"/>
-        <g clip-path="url(#planetClip)" opacity=".43" fill="none" stroke-linecap="round">
-          <path d="M35 282q72-28 166 1" stroke="#ffd3bd" stroke-width="12"/><path d="M27 302q88-24 216 10" stroke="#ffb2b3" stroke-width="7"/><path d="M42 335q67-20 191 9" stroke="#e79ed4" stroke-width="11"/><path d="M49 366q73-17 163 10" stroke="#ad81dc" stroke-width="14"/><path d="M82 405q42-13 112-1" stroke="#ffc1a7" stroke-width="8"/>
+
+      <!-- ========================================== -->
+      <!-- TOP-LEFT BILLOWY NEBULA CLOUDS             -->
+      <!-- ========================================== -->
+      <g id="cloud-top-left">
+        <!-- Back Dark Violet Cloud Layer -->
+        <g fill="#4e236e" opacity="0.95">
+          <circle cx="40" cy="40" r="140"/>
+          <circle cx="150" cy="50" r="120"/>
+          <circle cx="250" cy="70" r="115"/>
+          <circle cx="340" cy="110" r="105"/>
+          <circle cx="405" cy="170" r="90"/>
+          <circle cx="380" cy="245" r="80"/>
+          <circle cx="305" cy="280" r="85"/>
+          <circle cx="220" cy="315" r="85"/>
+          <circle cx="140" cy="350" r="90"/>
+          <circle cx="50" cy="390" r="95"/>
+          <circle cx="0" cy="440" r="95"/>
         </g>
-        <ellipse cx="145" cy="323" rx="101" ry="101" fill="none" stroke="#ffd1ce" stroke-opacity=".36"/>
-        <path d="M43 339q98 46 201-9" fill="none" stroke="#f3b0e7" stroke-width="13" opacity=".72"/>
-        <ellipse cx="151" cy="330" rx="142" ry="43" fill="none" stroke="#ffd0b2" stroke-width="2" transform="rotate(-17 151 330)" opacity=".58"/>
-        <circle cx="115" cy="292" r="22" fill="#ffd9bf" opacity=".08"/>
+        <!-- Middle Purple Cloud Layer -->
+        <g fill="#73338f">
+          <circle cx="30" cy="30" r="125"/>
+          <circle cx="130" cy="40" r="105"/>
+          <circle cx="220" cy="60" r="100"/>
+          <circle cx="305" cy="95" r="95"/>
+          <circle cx="370" cy="150" r="80"/>
+          <circle cx="345" cy="220" r="75"/>
+          <circle cx="275" cy="255" r="75"/>
+          <circle cx="190" cy="290" r="80"/>
+          <circle cx="105" cy="330" r="80"/>
+          <circle cx="30" cy="365" r="85"/>
+        </g>
+        <!-- Front Vivid Violet-Lilac Cloud Layer -->
+        <g fill="#8e46a6">
+          <circle cx="15" cy="15" r="110"/>
+          <circle cx="105" cy="30" r="90"/>
+          <circle cx="190" cy="48" r="85"/>
+          <circle cx="265" cy="80" r="80"/>
+          <circle cx="325" cy="130" r="70"/>
+          <circle cx="305" cy="195" r="65"/>
+          <circle cx="235" cy="235" r="70"/>
+          <circle cx="155" cy="270" r="75"/>
+          <circle cx="75" cy="310" r="75"/>
+          <circle cx="0" cy="345" r="75"/>
+        </g>
       </g>
-      <!-- distant satellite on right -->
-      <g transform="translate(1090 367) rotate(-18)">
-        <path d="M-12 0h24" stroke="#d7d5ee" stroke-width="2"/><rect x="-45" y="-12" width="29" height="24" rx="2" fill="url(#solar)" stroke="#b6b8e3" stroke-width="1"/><rect x="16" y="-12" width="29" height="24" rx="2" fill="url(#solar)" stroke="#b6b8e3" stroke-width="1"/><path d="M-35-12v24m9-24v24m10-24v24m32-24v24m9-24v24m10-24v24" stroke="#8e9bd0" stroke-width=".6" opacity=".75"/><rect x="-12" y="-9" width="24" height="18" rx="4" fill="#d8d3ef" stroke="#fff" stroke-width="1"/><path d="M-5-8L0-23 5-8" fill="#9182c6" stroke="#dad0fa"/><circle cy="0" r="4" fill="#f4a9ad"/><path d="M0 9v10m-7 0H7" stroke="#e2d8f8" stroke-width="1.2"/>
+
+      <!-- ========================================== -->
+      <!-- FLYING ROCKET (Detailed Reference Redesign)-->
+      <!-- ========================================== -->
+      <g id="rocket-group" transform="translate(370, 245)">
+        <!-- Rich Multi-layered Rocket Flame -->
+        <g id="rocket-flame-core">
+          <!-- Outer fiery plume -->
+          <path d="M-18 -18 C-45 -45 -75 -65 -110 -95 C-70 -50 -40 -35 -14 -14 Z" fill="url(#flameGrad)"/>
+          <!-- Mid flame tongue -->
+          <path d="M-15 -15 C-38 -38 -60 -52 -85 -72 C-55 -40 -30 -25 -11 -11 Z" fill="#ffaa3b"/>
+          <!-- Inner super-hot core -->
+          <path d="M-12 -12 C-28 -28 -42 -38 -55 -48 C-38 -28 -22 -18 -8 -8 Z" fill="#fffba8"/>
+        </g>
+
+        <!-- Rocket Vessel angled downwards (~48 deg) -->
+        <g transform="rotate(48)">
+          <!-- Left Wing Fin -->
+          <path d="M-12 18 L-28 32 C-26 24 -24 10 -14 6 Z" fill="#d92534"/>
+          <path d="M-14 14 L-26 28 L-14 8 Z" fill="#f04353"/>
+
+          <!-- Right Wing Fin -->
+          <path d="M12 18 L28 32 C26 24 24 10 14 6 Z" fill="#b81b29"/>
+          <path d="M14 14 L26 28 L14 8 Z" fill="#e03646"/>
+
+          <!-- Center Dorsal Fin -->
+          <path d="M-2 18 L0 26 L2 18 L0 -10 Z" fill="#b01826"/>
+
+          <!-- Main Rocket Fuselage -->
+          <path d="M-14 20 C-17 4 -12 -18 0 -38 C12 -18 17 4 14 20 C8 23 -8 23 -14 20 Z" fill="#ffffff"/>
+          <!-- Fuselage 3D Shading -->
+          <path d="M0 -38 C12 -18 17 4 14 20 C8 23 3 23 0 22 C2 6 2 -16 0 -38 Z" fill="#dde4f2" opacity="0.85"/>
+
+          <!-- Crimson Red Nose Cone -->
+          <path d="M-11 -18 C-6 -28 -2 -34 0 -38 C2 -34 6 -28 11 -18 C6 -15 -6 -15 -11 -18 Z" fill="#e62e3f"/>
+          <path d="M0 -38 C2 -34 6 -28 11 -18 C5 -16 2 -17 0 -17 Z" fill="#c41c2c"/>
+          <!-- Nose Tip Highlight -->
+          <circle cx="-1" cy="-34" r="1.5" fill="#ffffff" opacity="0.85"/>
+
+          <!-- Large Porthole Window -->
+          <circle cx="0" cy="-3" r="7.5" fill="#202945" stroke="#ced7ea" stroke-width="2"/>
+          <circle cx="0" cy="-3" r="5.5" fill="#3b82f6"/>
+          <!-- Window Glass Glare -->
+          <path d="M-3.5 -5.5 C-1 -7 3 -7 4 -4 C2 -5 -1 -5 -3.5 -5.5 Z" fill="#ffffff" opacity="0.9"/>
+          <circle cx="2.5" cy="-1.5" r="1.2" fill="#ffffff" opacity="0.75"/>
+
+          <!-- Exhaust Nozzle Ring -->
+          <path d="M-10 20 L-12 25 L12 25 L10 20 Z" fill="#8792a8"/>
+          <ellipse cx="0" cy="24" rx="10" ry="2.5" fill="#ff7733"/>
+        </g>
       </g>
-      <!-- curved tether behind astronaut -->
-      <path d="M878 418C955 471 903 526 970 551s103-11 82-47" fill="none" stroke="#b2a7d8" stroke-width="2" opacity=".72"/>
-      <path d="M878 418C955 471 903 526 970 551" fill="none" stroke="#d6c7ff" stroke-width=".7" opacity=".7"/>
-      <!-- astronaut drifting diagonally -->
-      <g class="astronaut-wrap" transform="translate(902 417) rotate(28)">
-        <!-- rear leg -->
-        <path d="M-9 42q-5 29-26 47l11 15q31-13 46-45l4-21" fill="url(#suit)" stroke="#fbf8ff" stroke-width="2"/>
-        <path d="M-36 85l-10 16q12 12 29 3l9-12-9-12" fill="#827db2" stroke="#d6d2ee" stroke-width="2"/><path d="M-39 92l19 7" stroke="#a99ce0" stroke-width="3"/>
-        <!-- front leg -->
-        <path d="M14 39q14 28 2 55l14 12q24-25 23-55l-10-21" fill="url(#suit)" stroke="#fff" stroke-width="2"/>
-        <path d="M16 91l-2 17q15 10 30-2l6-13-11-9" fill="#7775a7" stroke="#dedaf1" stroke-width="2"/><path d="M19 98l18 6" stroke="#a89be1" stroke-width="3"/>
-        <!-- torso -->
-        <path d="M-23-1q-3-14 12-20l26-2q18 8 21 26l-6 39q-22 13-48 2l-10-20Z" fill="url(#suit)" stroke="#fff" stroke-width="2"/>
-        <path d="M-13-13q17 7 34 0l8 18q-24 10-49-1Z" fill="#a69acb" opacity=".57"/><path d="M-24 9l-9 18 10 8 11-18m39-17 13 13-9 11-13-13" fill="none" stroke="#b9a4f0" stroke-width="5" stroke-linecap="round"/>
-        <rect x="-10" y="5" width="21" height="17" rx="3" fill="#39385f" stroke="#c7a9ff" stroke-width="1.4"/><rect x="-6" y="9" width="13" height="8" rx="1" fill="#8ad7e7" opacity=".8"/><circle cx="7" cy="19" r="1.4" fill="#ff9b91"/>
-        <path d="M-18 28q15 8 35 3" fill="none" stroke="#7f70b8" stroke-width="2"/><circle cx="-17" cy="28" r="3" fill="#f4aaa9"/>
-        <!-- backpack -->
-        <path d="M21-11q15-3 20 10l1 25-13 9-8-10" fill="#918bb9" stroke="#eee9fa" stroke-width="2"/><path d="M31-4l9 2v18l-10 4" fill="#564f83"/><path d="M36 1v12" stroke="#c7a9ff" stroke-width="2"/>
-        <!-- arm reaching outward -->
-        <path d="M-20 0q-18-14-30-31l-11 7q9 28 31 43l14-4" fill="url(#suit)" stroke="#fff" stroke-width="2"/><path d="M-62-35l-13-5q-8 12 2 23l12 4 8-11" fill="#b7b2d6" stroke="#f5f2ff" stroke-width="1.7"/><path d="M-68-35l9 13" stroke="#9d83dc" stroke-width="3"/>
-        <!-- other arm bent -->
-        <path d="M17-3q19-8 33-24l11 8q-8 26-34 39L16 12" fill="url(#suit)" stroke="#fff" stroke-width="2"/><path d="M59-30l8-10q14 4 12 18l-9 10-12-8" fill="#b5afd7" stroke="#f5f2ff" stroke-width="1.7"/>
-        <!-- helmet -->
-        <path d="M-19-27q-1-32 27-38 32-6 42 21 5 20-10 34L4-4q-24-3-23-23" fill="url(#suit)" stroke="#fff" stroke-width="2.4"/>
-        <path d="M-9-41q8-19 29-17 23 2 27 25 1 11-7 19-19 8-37-2-13-8-12-25" fill="url(#visor)" stroke="#c4b7ed" stroke-width="2"/>
-        <path d="M-3-43q8-12 23-12 8 0 13 4-17 0-26 14-6 10-3 20-10-8-7-26" fill="#d9efff" opacity=".37"/><path d="M27-54q11 5 14 17" fill="none" stroke="#fff" stroke-width="2" opacity=".62"/><path d="M-17-22q8 10 19 11" fill="none" stroke="#8b79c4" stroke-width="2"/>
-        <circle cx="-20" cy="-23" r="4" fill="#ed9d9d" stroke="#fff" stroke-width="1"/>
+
+      <!-- ========================================== -->
+      <!-- BOTTOM-RIGHT BILLOWY NEBULA CLOUDS         -->
+      <!-- ========================================== -->
+      <g id="cloud-bottom-right">
+        <!-- Back Dark Violet Cloud -->
+        <g fill="#4a2267" opacity="0.95">
+          <circle cx="1200" cy="430" r="120"/>
+          <circle cx="1140" cy="490" r="115"/>
+          <circle cx="1075" cy="550" r="115"/>
+          <circle cx="1005" cy="615" r="120"/>
+          <circle cx="930" cy="680" r="130"/>
+          <circle cx="1200" cy="580" r="140"/>
+          <circle cx="1200" cy="680" r="160"/>
+        </g>
+        <!-- Middle Purple Cloud -->
+        <g fill="#6e3188">
+          <circle cx="1200" cy="460" r="100"/>
+          <circle cx="1150" cy="520" r="95"/>
+          <circle cx="1085" cy="585" r="95"/>
+          <circle cx="1015" cy="650" r="105"/>
+          <circle cx="1200" cy="600" r="120"/>
+        </g>
+        <!-- Front Vivid Violet-Lilac Cloud -->
+        <g fill="#8e46a6">
+          <circle cx="1200" cy="495" r="85"/>
+          <circle cx="1155" cy="555" r="85"/>
+          <circle cx="1090" cy="620" r="85"/>
+          <circle cx="1025" cy="680" r="95"/>
+        </g>
       </g>
-      <!-- tiny orbit arcs -->
-      <path d="M273 485q22-14 40-1" fill="none" stroke="#bc9df7" stroke-width="1" opacity=".35"/><circle cx="313" cy="484" r="2" fill="#ffb6ad"/><circle cx="970" cy="147" r="2" fill="#ffc8b7"/>
+
+      <!-- ========================================== -->
+      <!-- DYNAMIC SPRING-PHYSICS TETHER CABLE        -->
+      <!-- ========================================== -->
+      <path id="tether-path" d="" fill="none" stroke="#ffffff" stroke-width="2.3" stroke-linecap="round" opacity="0.95"/>
+
+      <!-- ========================================== -->
+      <!-- SATELLITE (Mid-Lower Right)                -->
+      <!-- ========================================== -->
+      <g id="satellite-group" transform="translate(805, 455) rotate(-38)">
+        <rect x="-44" y="-13" width="28" height="26" rx="2" fill="#84327e" stroke="#ffffff" stroke-width="1.2"/>
+        <line x1="-30" y1="-13" x2="-30" y2="13" stroke="#e9c8f0" stroke-width="1"/>
+        <line x1="-44" y1="-4" x2="-16" y2="-4" stroke="#e9c8f0" stroke-width="0.8"/>
+        <line x1="-44" y1="5" x2="-16" y2="5" stroke="#e9c8f0" stroke-width="0.8"/>
+        <rect x="16" y="-13" width="28" height="26" rx="2" fill="#84327e" stroke="#ffffff" stroke-width="1.2"/>
+        <line x1="30" y1="-13" x2="30" y2="13" stroke="#e9c8f0" stroke-width="1"/>
+        <line x1="16" y1="-4" x2="44" y2="-4" stroke="#e9c8f0" stroke-width="0.8"/>
+        <line x1="16" y1="5" x2="44" y2="5" stroke="#e9c8f0" stroke-width="0.8"/>
+        <rect x="-16" y="-2" width="32" height="4" fill="#a4adbe"/>
+        <rect x="-11" y="-11" width="22" height="22" rx="4" fill="#ffffff" stroke="#ced5e5" stroke-width="1"/>
+        <rect x="-8" y="-7" width="16" height="14" rx="2" fill="#eef2f9"/>
+        <path d="M0 -11 L-6 -22 L6 -22 Z" fill="#eb4960"/>
+        <circle cx="0" cy="-22" r="2.5" fill="#ffffff"/>
+      </g>
+
+      <!-- ========================================== -->
+      <!-- FLOATING ASTRONAUT (Exact Reference Redesign)-->
+      <!-- ========================================== -->
+      <g id="astronaut-group" transform="translate(280, 520) rotate(18)">
+        <!-- Oxygen Backpack / PLSS Unit -->
+        <g id="astro-backpack">
+          <rect x="-30" y="-34" width="20" height="50" rx="8" fill="#d2d9e8" stroke="#ffffff" stroke-width="2"/>
+          <rect x="-34" y="-26" width="6" height="32" rx="3" fill="#a4b0c6"/>
+          <!-- Dual Oxygen Tank Caps -->
+          <circle cx="-25" cy="-34" r="3.5" fill="#586582"/>
+          <circle cx="-15" cy="-34" r="3.5" fill="#586582"/>
+        </g>
+
+        <!-- Left Arm (Reaching in Zero-G) -->
+        <g id="astro-arm-left">
+          <!-- Upper Arm & Forearm -->
+          <path d="M-8 -16 C-24 -12 -36 0 -44 14 C-40 18 -32 20 -26 14 C-20 6 -12 -4 0 -8 Z" fill="#ffffff"/>
+          <path d="M-8 -16 C-24 -12 -36 0 -44 14 C-42 16 -36 17 -32 14 C-24 6 -14 -4 0 -8 Z" fill="#d5deec" opacity="0.75"/>
+          <!-- Cyan Wrist Cuff Band -->
+          <path d="M-42 11 L-34 19 L-30 16 L-38 8 Z" fill="url(#suitBlue)"/>
+          <!-- Mitten Glove -->
+          <circle cx="-42" cy="18" r="9" fill="#ffffff" stroke="#ced7ea" stroke-width="1.2"/>
+          <path d="M-48 16 C-52 20 -44 26 -40 22" fill="#ffffff"/>
+        </g>
+
+        <!-- Torso & Suit -->
+        <g id="astro-torso">
+          <!-- Main Chunky White Torso -->
+          <path d="M-18 -20 C14 -24 26 -8 26 14 C26 30 -2 36 -18 26 C-24 10 -22 -4 -18 -20 Z" fill="#ffffff"/>
+          <!-- Torso 3D Shading -->
+          <path d="M0 -22 C14 -24 26 -8 26 14 C26 30 10 34 2 28 C14 20 18 2 0 -22 Z" fill="#dde5f4" opacity="0.85"/>
+          <!-- Neck Collar Ring -->
+          <path d="M-18 -22 C-10 -28 10 -28 20 -20 C14 -16 -12 -16 -18 -22 Z" fill="#ced6e5"/>
+        </g>
+
+        <!-- Chest Control Panel Terminal -->
+        <g id="astro-chestpack" transform="translate(2, 2)">
+          <!-- Base console unit -->
+          <rect x="-8" y="-12" width="24" height="20" rx="4" fill="#edf2fa" stroke="#b4c0d6" stroke-width="1.5"/>
+          <!-- Cyan Screen -->
+          <rect x="-4" y="-9" width="16" height="7" rx="2" fill="#22d3ee" stroke="#0891b2" stroke-width="0.8"/>
+          <line x1="-2" y1="-5.5" x2="8" y2="-5.5" stroke="#ffffff" stroke-width="1" opacity="0.8"/>
+          <!-- Color Status LEDs -->
+          <circle cx="-3" cy="2.5" r="1.8" fill="#ef4444"/>
+          <circle cx="4" cy="2.5" r="1.8" fill="#eab308"/>
+          <circle cx="11" cy="2.5" r="1.8" fill="#22c55e"/>
+          <!-- Umbilical Cable Socket Port -->
+          <circle cx="12" cy="7" r="2.8" fill="#1e293b"/>
+          <circle cx="12" cy="7" r="1.6" fill="#0284c7"/>
+        </g>
+
+        <!-- Back Leg (Floating Backwards) -->
+        <g id="astro-leg-back">
+          <path d="M-16 18 C-24 38 -36 50 -44 62 L-30 68 C-20 54 -10 38 -4 24 Z" fill="#d8e1f0"/>
+          <!-- Chunky Boot -->
+          <path d="M-46 58 C-52 64 -46 76 -32 72 L-28 66 Z" fill="#ffffff" stroke="#c0ccdf" stroke-width="1.2"/>
+          <!-- Bright Cyan Sole -->
+          <path d="M-50 67 C-46 76 -34 76 -28 70" stroke="url(#suitBlue)" stroke-width="5" fill="none" stroke-linecap="round"/>
+        </g>
+
+        <!-- Front Leg (Floating with Bent Knee) -->
+        <g id="astro-leg-front">
+          <path d="M4 22 C8 42 4 58 -2 70 L14 74 C22 58 22 40 18 24 Z" fill="#ffffff"/>
+          <path d="M12 24 C16 40 16 58 10 72 L14 74 C22 58 22 40 18 24 Z" fill="#dde5f4" opacity="0.8"/>
+          <!-- Knee Patch Seam -->
+          <ellipse cx="6" cy="46" rx="6" ry="4" fill="#eef2f9" stroke="#b8c6dc" stroke-width="1"/>
+          <!-- Chunky Boot -->
+          <path d="M-4 66 C-8 74 2 82 14 76 L16 70 Z" fill="#ffffff" stroke="#c0ccdf" stroke-width="1.2"/>
+          <!-- Bright Cyan Sole -->
+          <path d="M-6 76 C2 83 14 82 16 73" stroke="url(#suitBlue)" stroke-width="5" fill="none" stroke-linecap="round"/>
+        </g>
+
+        <!-- Helmet & Glossy Visor -->
+        <g id="astro-head">
+          <!-- Round White Helmet Sphere -->
+          <circle cx="4" cy="-38" r="27" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+          <!-- Helmet 3D Shadow -->
+          <path d="M18 -52 C28 -40 28 -20 18 -15 C28 -22 30 -44 18 -52 Z" fill="#cbd5e1" opacity="0.6"/>
+          <!-- Deep Glossy Visor -->
+          <ellipse cx="6" cy="-37" rx="19" ry="17" fill="url(#visorGrad)"/>
+          <ellipse cx="6" cy="-37" rx="19" ry="17" fill="none" stroke="#38bdf8" stroke-width="1.2" opacity="0.65"/>
+          <!-- Visor Curved White Specular Shine -->
+          <path id="visor-glare" d="M-7 -46 C4 -50 18 -42 18 -42 C15 -37 3 -42 -7 -46 Z" fill="#ffffff" opacity="0.85"/>
+          <circle cx="17" cy="-33" r="1.8" fill="#ffffff" opacity="0.85"/>
+        </g>
+
+        <!-- Right Arm (Floating Foreward) -->
+        <g id="astro-arm-right">
+          <path d="M14 -10 C30 -4 42 6 48 18 C44 24 36 24 30 18 C22 10 14 0 6 -4 Z" fill="#ffffff"/>
+          <path d="M14 -10 C30 -4 42 6 48 18 C46 20 40 22 36 18 C26 10 18 0 8 -4 Z" fill="#dde5f4" opacity="0.75"/>
+          <!-- Cyan Wrist Cuff Band -->
+          <path d="M36 14 L44 20 L48 16 L40 10 Z" fill="url(#suitBlue)"/>
+          <!-- Mitten Glove -->
+          <circle cx="44" cy="22" r="9" fill="#ffffff" stroke="#ced7ea" stroke-width="1.2"/>
+          <path d="M38 24 C42 30 50 26 48 20" fill="#ffffff"/>
+        </g>
+      </g>
     </svg>
 
-    <section class="content" aria-labelledby="title">
-      <div class="eyebrow">Signal lost · Page not found</div>
-      <h1 id="title"><span>404</span></h1>
-      <h2>Lost Beyond The Stars?</h2>
-      <p class="description">Looks like this page drifted into another galaxy. Let’s get you back on track.</p>
-      <div class="actions">
-        <a class="primary" href="/" aria-label="Return to home">Return Home <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M10 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        <a class="secondary" href="#universe">Explore the Universe</a>
-      </div>
-    </section>
-    <div class="scrollhint" aria-hidden="true">Keep wandering</div>
-    <footer class="bottom">
-      <div class="socials" aria-label="Social links">
-        <a href="#instagram" aria-label="Instagram"><svg viewBox="0 0 20 20"><rect x="3" y="3" width="14" height="14" rx="4"/><circle cx="10" cy="10" r="3.2"/><circle cx="14.5" cy="5.8" r=".8" fill="currentColor" stroke="none"/></svg></a>
-        <a href="#github" aria-label="GitHub"><svg viewBox="0 0 20 20"><path d="M7 15.8c-3.1.9-3.1-1.6-4.4-2m8.8 3.7v-2.4c0-.7.1-1.3-.4-1.8 3.2-.4 6.5-1.6 6.5-7.1a5.5 5.5 0 0 0-1.5-3.8A5.1 5.1 0 0 0 15.9.8s-1.2-.4-3.9 1.5a13.5 13.5 0 0 0-4 0C5.3.4 4.1.8 4.1.8a5.1 5.1 0 0 0-.1 3.6 5.5 5.5 0 0 0-1.5 3.8c0 5.5 3.3 6.7 6.5 7.1-.5.5-.5 1.1-.5 1.8v2.4" transform="translate(0 -1) scale(1 .95)"/></svg></a>
-        <a href="#linkedin" aria-label="LinkedIn"><svg viewBox="0 0 20 20"><path d="M4 7.5v9M4 4.4v.1M8 16.5v-9h3v1.3c.7-1.2 4.5-2 4.5 2v5.7M8 11c0-2 4.5-2.2 4.5 0v5.5"/><circle cx="4" cy="4.5" r="1"/></svg></a>
-        <a href="#dribbble" aria-label="Dribbble"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7.2"/><path d="M5 4.5c3.3 2.2 5.8 5.5 7.4 10.7M3 9.5c4.3.2 9.1-1.2 12.2-4M7 16c1.2-3.2 4.1-5.1 9.6-4.6"/></svg></a>
-      </div>
-      <div class="footnote"><span>Somewhere, out there</span><i></i><span>© 2026 Cosmic Studio</span></div>
+    <!-- Social Media Links (Bottom-Left) -->
+    <footer class="socials" aria-label="Social media links">
+      <a class="social-btn" href="#instagram" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+        </svg>
+      </a>
+      <a class="social-btn" href="#twitter" aria-label="Twitter">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+        </svg>
+      </a>
+      <a class="social-btn" href="#youtube" aria-label="YouTube">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/>
+          <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor"/>
+        </svg>
+      </a>
+      <a class="social-btn" href="#dribbble" aria-label="Dribbble">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M19.13 5.09C15.22 9.14 10 10.44 2.25 10.94"/>
+          <path d="M21.75 12.84c-6.62-1.41-12.14 1-16.38 6.32"/>
+          <path d="M8.56 2.75c4.37 6 6 9.42 8 17.72"/>
+        </svg>
+      </a>
     </footer>
   </main>
+
+  <!-- ============================================== -->
+  <!-- HIGH-END THREE.JS & PHYSICS ANIMATION ENGINE   -->
+  <!-- ============================================== -->
+  <script>
+    (function initCinematicCosmicScene() {
+      const stage = document.getElementById('stage');
+      const canvas = document.getElementById('webgl-canvas');
+      const pCanvas = document.getElementById('particles-canvas');
+      const pCtx = pCanvas.getContext('2d');
+
+      // Adjust particle canvas resolution
+      function resizeParticleCanvas() {
+        pCanvas.width = stage.clientWidth;
+        pCanvas.height = stage.clientHeight;
+      }
+      resizeParticleCanvas();
+      window.addEventListener('resize', resizeParticleCanvas);
+
+      // Three.js Scene Setup
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(45, stage.clientWidth / stage.clientHeight, 0.1, 1000);
+      camera.position.z = 24;
+
+      const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+      renderer.setSize(stage.clientWidth, stage.clientHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      window.addEventListener('resize', () => {
+        camera.aspect = stage.clientWidth / stage.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(stage.clientWidth, stage.clientHeight);
+      });
+
+      // Ambient & Cinematic Lights
+      const ambientLight = new THREE.AmbientLight(0xffffff, 1.25);
+      scene.add(ambientLight);
+
+      const subtleSun = new THREE.DirectionalLight(0xffffff, 0.55);
+      subtleSun.position.set(-6, 8, 8);
+      scene.add(subtleSun);
+
+      // ==========================================
+      // 1. 3D MOON
+      // ==========================================
+      function createMoonTexture() {
+        const texCanvas = document.createElement('canvas');
+        texCanvas.width = 1024;
+        texCanvas.height = 512;
+        const ctx = texCanvas.getContext('2d');
+
+        const baseGrad = ctx.createLinearGradient(0, 0, 1024, 512);
+        baseGrad.addColorStop(0, '#fbfcfe');
+        baseGrad.addColorStop(0.5, '#edf0f7');
+        baseGrad.addColorStop(1, '#d8dee9');
+        ctx.fillStyle = baseGrad;
+        ctx.fillRect(0, 0, 1024, 512);
+
+        function stampCrater(x, y, r) {
+          ctx.save();
+          ctx.beginPath();
+          ctx.arc(x, y, r, 0, Math.PI * 2);
+          ctx.fillStyle = '#b3bdd2';
+          ctx.fill();
+
+          ctx.beginPath();
+          ctx.arc(x + r * 0.1, y + r * 0.1, r * 0.88, 0, Math.PI * 2);
+          const innerGrad = ctx.createRadialGradient(x, y, r * 0.2, x, y, r);
+          innerGrad.addColorStop(0, '#a5b0c7');
+          innerGrad.addColorStop(1, '#c0cadc');
+          ctx.fillStyle = innerGrad;
+          ctx.fill();
+
+          ctx.beginPath();
+          ctx.arc(x - r * 0.08, y - r * 0.08, r * 0.78, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
+          ctx.fill();
+
+          ctx.beginPath();
+          ctx.arc(x + r * 0.12, y + r * 0.12, r * 0.65, 0, Math.PI * 2);
+          ctx.fillStyle = '#9aa7c0';
+          ctx.fill();
+          ctx.restore();
+        }
+
+        const craters = [
+          [280, 160, 42], [360, 240, 52], [210, 280, 36],
+          [310, 350, 48], [430, 330, 38], [500, 190, 34],
+          [580, 270, 46], [660, 200, 40], [740, 300, 48],
+          [820, 230, 35], [900, 320, 50], [970, 210, 40],
+          [160, 380, 26], [540, 390, 28], [780, 380, 24],
+          [400, 130, 22], [630, 130, 25], [870, 150, 20]
+        ];
+
+        craters.forEach(([x, y, r]) => stampCrater(x, y, r));
+        return new THREE.CanvasTexture(texCanvas);
+      }
+
+      const moonGeo = new THREE.SphereGeometry(3.1, 64, 64);
+      const moonMat = new THREE.MeshLambertMaterial({ map: createMoonTexture() });
+      const moonMesh = new THREE.Mesh(moonGeo, moonMat);
+      moonMesh.position.set(6.6, 2.7, 0);
+      moonMesh.rotation.y = 0.5;
+      scene.add(moonMesh);
+
+      // ==========================================
+      // 2. 3D PEACH PLANET
+      // ==========================================
+      function createPlanetTexture() {
+        const texCanvas = document.createElement('canvas');
+        texCanvas.width = 512;
+        texCanvas.height = 256;
+        const ctx = texCanvas.getContext('2d');
+
+        const grad = ctx.createLinearGradient(0, 0, 0, 256);
+        grad.addColorStop(0, '#ffa877');
+        grad.addColorStop(0.3, '#f5905d');
+        grad.addColorStop(0.7, '#e06f45');
+        grad.addColorStop(1, '#b54724');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, 512, 256);
+
+        ctx.fillStyle = 'rgba(255, 185, 145, 0.45)';
+        for (let y = 30; y < 240; y += 45) {
+          ctx.beginPath();
+          ctx.moveTo(0, y);
+          for (let x = 0; x <= 512; x += 30) {
+            ctx.lineTo(x, y + Math.sin(x * 0.035) * 6);
+          }
+          ctx.lineTo(512, y + 20);
+          ctx.lineTo(0, y + 20);
+          ctx.closePath();
+          ctx.fill();
+        }
+        return new THREE.CanvasTexture(texCanvas);
+      }
+
+      const planetGeo = new THREE.SphereGeometry(1.65, 48, 48);
+      const planetMat = new THREE.MeshLambertMaterial({ map: createPlanetTexture() });
+      const planetMesh = new THREE.Mesh(planetGeo, planetMat);
+      planetMesh.position.set(-8.4, -0.6, -1);
+      planetMesh.rotation.z = 0.2;
+      scene.add(planetMesh);
+
+      // ==========================================
+      // 3. 3D STARFIELD & METEOR (Shooting Star)
+      // ==========================================
+      const starCount = 450;
+      const starGeo = new THREE.BufferGeometry();
+      const starPos = new Float32Array(starCount * 3);
+
+      for (let i = 0; i < starCount; i++) {
+        starPos[i * 3] = (Math.random() - 0.5) * 52;
+        starPos[i * 3 + 1] = (Math.random() - 0.5) * 34;
+        starPos[i * 3 + 2] = (Math.random() - 0.5) * 22 - 4;
+      }
+      starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+
+      const starMat = new THREE.PointsMaterial({
+        color: 0xffffff,
+        size: 0.17,
+        transparent: true,
+        opacity: 0.85,
+        blending: THREE.AdditiveBlending
+      });
+      const starField = new THREE.Points(starGeo, starMat);
+      scene.add(starField);
+
+      // Shooting Star (Meteor)
+      let meteor = { x: -100, y: -100, vx: 0, vy: 0, length: 0, active: false, opacity: 0 };
+      function spawnMeteor() {
+        const w = stage.clientWidth;
+        const h = stage.clientHeight;
+        meteor.x = Math.random() * (w * 0.7) + w * 0.2;
+        meteor.y = Math.random() * (h * 0.3);
+        const speed = Math.random() * 8 + 12;
+        meteor.vx = -speed * 1.2;
+        meteor.vy = speed * 0.8;
+        meteor.length = Math.random() * 60 + 50;
+        meteor.active = true;
+        meteor.opacity = 1;
+
+        // Schedule next meteor randomly (every 4 to 8 seconds)
+        setTimeout(spawnMeteor, Math.random() * 4000 + 4000);
+      }
+      setTimeout(spawnMeteor, 2500);
+
+      // ==========================================
+      // 4. ACTIVE THRUSTER PARTICLE ENGINE (Rocket Fire & Smoke)
+      // ==========================================
+      const particles = [];
+      function emitThrusterParticles(originX, originY) {
+        // Spawn 3-4 glowing spark & micro-smoke particles
+        for (let i = 0; i < 3; i++) {
+          const angle = Math.PI * 1.25 + (Math.random() - 0.5) * 0.35; // Streams backward (~225 deg)
+          const speed = Math.random() * 5 + 3;
+          particles.push({
+            x: originX + (Math.random() - 0.5) * 4,
+            y: originY + (Math.random() - 0.5) * 4,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            radius: Math.random() * 2.5 + 1.2,
+            maxRadius: Math.random() * 5 + 3,
+            life: 1,
+            decay: Math.random() * 0.035 + 0.025,
+            colorType: Math.random() > 0.35 ? 'fire' : 'smoke'
+          });
+        }
+      }
+
+      function updateParticles() {
+        pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
+
+        // Draw Meteor if active
+        if (meteor.active) {
+          pCtx.save();
+          pCtx.beginPath();
+          pCtx.moveTo(meteor.x, meteor.y);
+          pCtx.lineTo(meteor.x - (meteor.vx * meteor.length) * 0.06, meteor.y - (meteor.vy * meteor.length) * 0.06);
+          pCtx.strokeStyle = `rgba(255, 255, 255, ${meteor.opacity})`;
+          pCtx.lineWidth = 1.6;
+          pCtx.stroke();
+          pCtx.restore();
+
+          meteor.x += meteor.vx;
+          meteor.y += meteor.vy;
+          meteor.opacity -= 0.025;
+          if (meteor.opacity <= 0) meteor.active = false;
+        }
+
+        // Draw Thruster Spark Particles
+        for (let i = particles.length - 1; i >= 0; i--) {
+          const p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          p.radius += (p.maxRadius - p.radius) * 0.08;
+          p.life -= p.decay;
+
+          if (p.life <= 0) {
+            particles.splice(i, 1);
+            continue;
+          }
+
+          pCtx.save();
+          pCtx.beginPath();
+          pCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+
+          if (p.colorType === 'fire') {
+            pCtx.fillStyle = `rgba(255, ${Math.floor(180 + p.life * 75)}, ${Math.floor(p.life * 100)}, ${p.life * 0.9})`;
+            pCtx.shadowColor = '#ff9933';
+            pCtx.shadowBlur = 4;
+          } else {
+            pCtx.fillStyle = `rgba(185, 145, 230, ${p.life * 0.35})`;
+          }
+          pCtx.fill();
+          pCtx.restore();
+        }
+      }
+
+      // Keep Clouds & Elements visible immediately, no opacity 0
+      const cloudTL = document.getElementById('cloud-top-left');
+      const cloudBR = document.getElementById('cloud-bottom-right');
+      const astronaut = document.getElementById('astronaut-group');
+      const satellite = document.getElementById('satellite-group');
+      const rocket = document.getElementById('rocket-group');
+      const tetherPath = document.getElementById('tether-path');
+      const visorGlare = document.getElementById('visor-glare');
+      const heroText = document.getElementById('hero-text');
+      const armLeft = document.getElementById('astro-arm-left');
+      const armRight = document.getElementById('astro-arm-right');
+
+      // ==========================================
+      // 6. ZERO-GRAVITY INERTIA & SPRING PHYSICS
+      // ==========================================
+      let mouseX = 0, mouseY = 0;
+      let targetX = 0, targetY = 0;
+      let mouseVelX = 0, mouseVelY = 0;
+      let lastMouseX = 0, lastMouseY = 0;
+
+      stage.addEventListener('mousemove', (e) => {
+        const rect = stage.getBoundingClientRect();
+        const currentNormX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+        const currentNormY = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
+
+        mouseVelX = currentNormX - lastMouseX;
+        mouseVelY = currentNormY - lastMouseY;
+
+        lastMouseX = currentNormX;
+        lastMouseY = currentNormY;
+
+        mouseX = currentNormX;
+        mouseY = currentNormY;
+      });
+
+      stage.addEventListener('mouseleave', () => {
+        mouseX = 0;
+        mouseY = 0;
+      });
+
+      // Astronaut Physical State (Velocity & Momentum)
+      const astroPhysics = {
+        x: 280,
+        y: 520,
+        vx: 0,
+        vy: 0,
+        rot: 18,
+        vRot: 0,
+        tensionWave: 0
+      };
+
+      let time = 0;
+
+      function renderLoop() {
+        requestAnimationFrame(renderLoop);
+        time += 0.022;
+
+        // Smooth camera dampening with spring feel
+        targetX += (mouseX * 1.6 - targetX) * 0.045;
+        targetY += (mouseY * 1.1 - targetY) * 0.045;
+        camera.position.x = targetX * 1.25;
+        camera.position.y = targetY * 0.85;
+        camera.lookAt(0, 0, 0);
+
+        // 3D Moon continuous self-rotation + mouse tilt
+        moonMesh.rotation.y += 0.0018;
+        moonMesh.rotation.x = targetY * 0.22;
+        moonMesh.position.y = 2.7 + Math.sin(time * 0.75) * 0.14;
+
+        // 3D Peach Planet subtle rotation
+        planetMesh.rotation.y += 0.0028;
+        planetMesh.position.y = -0.6 + Math.cos(time * 0.65) * 0.12;
+
+        // Starfield drift
+        starField.rotation.y += 0.0003;
+
+        // Clouds organic parallax
+        if (cloudTL) {
+          cloudTL.style.transform = `translate(${targetX * 16}px, ${-targetY * 12}px)`;
+        }
+        if (cloudBR) {
+          cloudBR.style.transform = `translate(${-targetX * 20}px, ${targetY * 14}px)`;
+        }
+
+        // ==========================================
+        // ASTRONAUT ZERO-G MOMENTUM SIMULATION
+        // ==========================================
+        // Gravity attraction towards mouse with soft inertia
+        const targetAstroX = 280 + targetX * 36;
+        const targetAstroY = 520 + Math.sin(time) * 14 - targetY * 26;
+        const targetAstroRot = 18 + Math.sin(time * 0.8) * 5 + targetX * 12 + mouseVelX * 40;
+
+        // Spring acceleration
+        const ax = (targetAstroX - astroPhysics.x) * 0.045;
+        const ay = (targetAstroY - astroPhysics.y) * 0.045;
+        const aRot = (targetAstroRot - astroPhysics.rot) * 0.035;
+
+        astroPhysics.vx = (astroPhysics.vx + ax) * 0.92; // Damping
+        astroPhysics.vy = (astroPhysics.vy + ay) * 0.92;
+        astroPhysics.vRot = (astroPhysics.vRot + aRot) * 0.90;
+
+        astroPhysics.x += astroPhysics.vx;
+        astroPhysics.y += astroPhysics.vy;
+        astroPhysics.rot += astroPhysics.vRot;
+
+        if (astronaut) {
+          astronaut.setAttribute('transform', `translate(${astroPhysics.x}, ${astroPhysics.y}) rotate(${astroPhysics.rot})`);
+        }
+
+        // Astronaut limbs micro-articulation (Breathing & drift)
+        if (armLeft) {
+          const armWave = Math.sin(time * 1.5) * 3.5;
+          armLeft.setAttribute('transform', `rotate(${armWave} -18 -8)`);
+        }
+        if (armRight) {
+          const armWave = Math.cos(time * 1.3) * 4;
+          armRight.setAttribute('transform', `rotate(${armWave} 18 8)`);
+        }
+
+        // Visor glare dynamic tracking
+        if (visorGlare) {
+          visorGlare.setAttribute('transform', `translate(${targetX * 4}, ${targetY * 3})`);
+        }
+
+        // Satellite smooth orbital drift
+        const satBaseX = 805 - targetX * 16;
+        const satBaseY = 455 + Math.cos(time * 0.85) * 9 + targetY * 14;
+        const satRot = -38 + Math.cos(time * 0.65) * 3.5;
+        if (satellite) {
+          satellite.setAttribute('transform', `translate(${satBaseX}, ${satBaseY}) rotate(${satRot})`);
+        }
+
+        // Rocket Jet Thrust & Live Particle Emitter
+        if (rocket) {
+          const rX = 370 + targetX * 12 + (Math.random() - 0.5) * 1.2;
+          const rY = 245 - targetY * 9 + (Math.random() - 0.5) * 1.2;
+          rocket.setAttribute('transform', `translate(${rX}, ${rY})`);
+
+          // Project SVG coordinates to screen pixels for particle origin
+          const svgRect = stage.getBoundingClientRect();
+          const scaleX = svgRect.width / 1200;
+          const scaleY = svgRect.height / 680;
+          const nozzlePixelX = (rX - 16) * scaleX;
+          const nozzlePixelY = (rY - 16) * scaleY;
+
+          emitThrusterParticles(nozzlePixelX, nozzlePixelY);
+        }
+
+        // Update Particle System Canvas
+        updateParticles();
+
+        // ==========================================
+        // DYNAMIC ROPE/TETHER TENSION PHYSICS
+        // ==========================================
+        const startX = astroPhysics.x + 65;
+        const startY = astroPhysics.y - 5;
+        const endX = satBaseX - 15;
+        const endY = satBaseY + 25;
+
+        // Cable reacts dynamically to astronaut velocity (tension wave)
+        astroPhysics.tensionWave += (astroPhysics.vy * 4 - astroPhysics.tensionWave) * 0.08;
+
+        const ctrl1X = startX + 130 + Math.sin(time * 1.2) * 18 - astroPhysics.vx * 3;
+        const ctrl1Y = startY + 115 + Math.cos(time * 1.0) * 16 + astroPhysics.tensionWave;
+        const ctrl2X = endX - 85 + Math.cos(time * 1.1) * 18;
+        const ctrl2Y = endY + 140 + Math.sin(time * 1.3) * 16;
+
+        if (tetherPath) {
+          tetherPath.setAttribute('d', `M ${startX} ${startY} C ${ctrl1X} ${ctrl1Y}, ${ctrl2X} ${ctrl2Y}, ${endX} ${endY}`);
+        }
+
+        // Three.js Render
+        renderer.render(scene, camera);
+      }
+
+      renderLoop();
+
+      // ==========================================
+      // 7. INTERACTIVE GRAVITATIONAL SHOCKWAVE ON CLICK
+      // ==========================================
+      stage.addEventListener('click', (e) => {
+        const rect = stage.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+        const clickY = e.clientY - rect.top;
+
+        // Spawn visual shockwave ring
+        const wave = document.createElement('div');
+        wave.className = 'shockwave';
+        wave.style.left = clickX + 'px';
+        wave.style.top = clickY + 'px';
+        stage.appendChild(wave);
+
+        gsap.to(wave, {
+          width: 380,
+          height: 380,
+          opacity: 0,
+          duration: 0.85,
+          ease: "power2.out",
+          onComplete: () => wave.remove()
+        });
+
+        // Physical impulse on astronaut (pushes astronaut away with zero-g recoil)
+        const svgScaleX = 1200 / rect.width;
+        const svgScaleY = 680 / rect.height;
+        const astroSvgX = astroPhysics.x;
+        const astroSvgY = astroPhysics.y;
+        const clickSvgX = clickX * svgScaleX;
+        const clickSvgY = clickY * svgScaleY;
+
+        const dx = astroSvgX - clickSvgX;
+        const dy = astroSvgY - clickSvgY;
+        const dist = Math.hypot(dx, dy) || 1;
+
+        // Apply impulse velocity
+        const impulseForce = Math.min(1800 / dist, 18);
+        astroPhysics.vx += (dx / dist) * impulseForce;
+        astroPhysics.vy += (dy / dist) * impulseForce;
+        astroPhysics.vRot += (Math.random() - 0.5) * 14;
+
+        // GSAP slight shake on hero text
+        gsap.fromTo(heroText, { x: "-=5" }, { x: "+=5", duration: 0.08, repeat: 3, yoyo: true, ease: "none" });
+      });
+    })();
+  </script>
 </body>
 </html>
