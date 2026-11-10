@@ -17,7 +17,7 @@ export default function Home() {
   const [cvToast, setCvToast] = useState<string | null>(null);
 
   const handleDownloadCv = () => {
-    setCvToast("Preparing Shoaib_Hamza_Resume_2025.pdf download...");
+    setCvToast("Preparing Alex_Morgan_Resume_2025.pdf download...");
     // Simulate instantaneous resume download / open
     setTimeout(() => {
       setCvToast("Resume downloaded successfully! ✨");

@@ -54,7 +54,7 @@ export function Modals({
                   Message Sent!
                 </h3>
                 <p style={{ color: "#64748B", fontSize: 15 }}>
-                  Thank you for reaching out! Shoaib will get back to you within 24 hours.
+                  Thank you for reaching out! Alex will get back to you within 24 hours.
                 </p>
               </div>
             ) : (

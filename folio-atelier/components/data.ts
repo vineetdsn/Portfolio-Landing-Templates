@@ -38,16 +38,16 @@ export interface EducationItem {
 }
 
 export const PROFILE_DATA = {
-  name: "Shoaib Hamza",
+  name: "Alex Morgan",
   title: "Full-Stack Developer",
   pronouns: "He/Him",
   tagline: "I build digital products that are fast, scalable and thoughtfully designed.",
-  location: "Lahore, Pakistan · Available Worldwide",
-  email: "shoaib.hamza.dev@gmail.com",
-  website: "shoaibhamza.dev",
-  linkedin: "linkedin.com/in/shoaib-hamza",
-  github: "github.com/shoaib-hamza",
-  twitter: "x.com/shoaib_dev",
+  location: "San Francisco, CA · Available Worldwide",
+  email: "alex.morgan.dev@example.com",
+  website: "alexmorgan.dev",
+  linkedin: "linkedin.com/in/alexmorgan-dev",
+  github: "github.com/alexmorgan-dev",
+  twitter: "x.com/alexmorgan_dev",
   edition: "2025 Edition",
   bio: "I'm a full-stack developer who loves turning ideas into real-world web and mobile applications. I enjoy solving complex problems, writing clean resilient code, and creating smooth user experiences.",
   motto: "Code. Create. Elevate.",
@@ -103,7 +103,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
     tags: ["Next.js", "TypeScript", "Tailwind", "Supabase", "Zustand"],
     metrics: "42% faster task completion rate · 10k+ active users",
     previewUrl: "https://tasky-workspace.demo",
-    githubUrl: "https://github.com/shoaib-hamza/tasky",
+    githubUrl: "https://github.com/alexmorgan-dev/tasky",
   },
   {
     id: "shopease",
@@ -115,7 +115,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
     tags: ["React 19", "Node.js", "Stripe API", "PostgreSQL", "Redis"],
     metrics: "99.98% checkout uptime · 3.2x mobile conversion lift",
     previewUrl: "https://shopease-market.demo",
-    githubUrl: "https://github.com/shoaib-hamza/shopease",
+    githubUrl: "https://github.com/alexmorgan-dev/shopease",
   },
   {
     id: "fintrack",
@@ -127,7 +127,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
     tags: ["TypeScript", "Next.js", "Plaid API", "Chart.js", "Tailwind"],
     metrics: "$12M+ tracked volume · Zero security incidents",
     previewUrl: "https://fintrack-finance.demo",
-    githubUrl: "https://github.com/shoaib-hamza/fintrack",
+    githubUrl: "https://github.com/alexmorgan-dev/fintrack",
   },
   {
     id: "wanderly",
@@ -139,7 +139,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
     tags: ["React Native", "Mapbox GL", "Node.js", "OpenAI API", "Expo"],
     metrics: "4.9/5 App Store Rating · 25,000+ custom itineraries",
     previewUrl: "https://wanderly-travel.demo",
-    githubUrl: "https://github.com/shoaib-hamza/wanderly",
+    githubUrl: "https://github.com/alexmorgan-dev/wanderly",
   },
 ];
 
@@ -154,14 +154,14 @@ export const EXPERIENCE_DATA: ExperienceItem[] = [
   {
     period: "2022 — 2023",
     role: "Junior Developer",
-    company: "CodeWingz Technologies",
+    company: "Vortex Digital Labs",
     badgeColor: "#3B82F6", // blue
     description: "Developed frontend components in React/TypeScript, implemented responsive design systems, and authored REST endpoints with automated unit testing.",
   },
   {
     period: "2021",
     role: "Web Development Intern",
-    company: "DevHouse Studio",
+    company: "Pixelcraft Studio",
     badgeColor: "#EC4899", // pink
     description: "Collaborated on client e-commerce interfaces, tuned page speed by 45%, and optimized cross-browser CSS compatibility.",
   },
@@ -171,13 +171,13 @@ export const EDUCATION_DATA: EducationItem[] = [
   {
     period: "2022 — 2026",
     degree: "BS Software Engineering",
-    institution: "UMT Lahore",
+    institution: "Metropolitan Institute of Tech",
     details: "Focused on Distributed Systems, Cloud Architecture, Human-Computer Interaction, and Algorithms.",
   },
   {
     period: "2020 — 2022",
     degree: "FSc Pre-Engineering",
-    institution: "Punjab College",
+    institution: "St. Jude Academic College",
     details: "Graduated with High Distinction in Mathematics, Physics, and Analytical Logic.",
   },
 ];
