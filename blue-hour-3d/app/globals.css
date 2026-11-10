@@ -30,9 +30,9 @@ body{background:#111218}
 .stage-copy{top:11%;width:min(72%,650px)}
 .stage-eyebrow{color:#e5e5eca8;font-size:9px}
 .stage-eyebrow i{background:var(--accent);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent),transparent 72%),0 0 16px var(--accent)}
-.stage-copy h1{color:#f6f3ef;font-size:clamp(48px,5vw,72px);letter-spacing:-.075em}
+.stage-copy h1{color:#f6f3ef;font-size:clamp(36px,3.8vw,54px);line-height:1.06;letter-spacing:-.065em;margin:10px 0 6px}
 .stage-copy h1 em{color:#f2e9ff;text-shadow:0 0 36px color-mix(in srgb,var(--accent),transparent 42%)}
-.stage-copy p{color:#c4c4ced1;font-size:12px;max-width:390px}
+.stage-copy p{color:#c4c4ced1;font-size:11.5px;line-height:1.5;max-width:340px}
 .stage-cross{color:#e7e4f078}
 .scene-hint{color:#e2e0e6a6}
 .floating-spec{border-color:#ffffff25;background:#171a24d9;color:#f2f0f6;box-shadow:0 12px 32px #080a126b}

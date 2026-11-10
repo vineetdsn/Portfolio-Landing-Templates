@@ -682,7 +682,7 @@ function SceneRig({ selected, view }: Props) {
     : 'workspace';
 
   return (
-    <group ref={rigRef} position={[0, -0.15, 0]} scale={size.width < 500 ? 0.72 : size.width < 900 ? 0.88 : 1.05}>
+    <group ref={rigRef} position={[0, -0.32, 0]} scale={size.width < 500 ? 0.72 : size.width < 900 ? 0.88 : 1.05}>
       {/* SCENE 1: WORKSPACE */}
       {currentScene === 'workspace' && (
         <group>
