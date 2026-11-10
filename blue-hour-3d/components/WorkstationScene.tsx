@@ -1,89 +1,762 @@
 'use client'
+import React, { Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { Float, OrbitControls, RoundedBox, Sparkles } from '@react-three/drei'
-import { Suspense, useEffect, useMemo, useRef } from 'react'
+import { 
+  Float, 
+  OrbitControls, 
+  RoundedBox, 
+  Sparkles, 
+  ContactShadows 
+} from '@react-three/drei'
 import * as THREE from 'three'
 
-const palette={workspace:'#c8afff',hardware:'#ffab79',development:'#69c8ff',creative:'#f3add0',experiments:'#ced76b'}
-type Props={selected:string;view:'studio'|'orbit'}
-
-function Screen({large=false,creative=false}:{large?:boolean;creative?:boolean}){
- const artwork=useMemo(()=>{
-  const canvas=document.createElement('canvas');canvas.width=1200;canvas.height=700;const c=canvas.getContext('2d')!
-  const rr=(x:number,y:number,w:number,h:number,r:number,color:string)=>{c.fillStyle=color;c.beginPath();c.roundRect(x,y,w,h,r);c.fill()}
-  if(creative){
-   c.fillStyle='#f5f0f3';c.fillRect(0,0,1200,700);rr(0,0,1200,72,0,'#fffafd');c.fillStyle='#b28bd8';c.font='700 23px Arial';c.fillText('✳  form / study',30,46);c.fillStyle='#9b91a1';c.font='17px Arial';c.fillText('File    Edit    View    Object',240,45);rr(24,95,175,568,12,'#fffafd');c.fillStyle='#827b8c';c.font='16px Arial';['Layers','Frame 01','Moodboard','Typography','Color study'].forEach((t,i)=>c.fillText(t,48,145+i*51));rr(225,95,948,568,12,'#f0eaf0');c.fillStyle='#675b70';c.font='600 22px Arial';c.fillText('Soft geometry — visual exploration',262,139);rr(261,171,875,448,16,'#f8f3f4');const grad=c.createLinearGradient(300,200,1070,590);grad.addColorStop(0,'#edb1c9');grad.addColorStop(.52,'#c9b8f6');grad.addColorStop(1,'#91cbe3');c.fillStyle=grad;c.beginPath();c.roundRect(297,204,802,372,22);c.fill();c.fillStyle='#f6d3b8';c.beginPath();c.arc(640,386,124,0,Math.PI*2);c.fill();c.fillStyle='#9883db';c.beginPath();c.arc(745,366,93,0,Math.PI*2);c.fill();rr(834,278,196,166,18,'#fff9');c.fillStyle='#54485a';c.font='600 20px Arial';c.fillText('COLOR / 03',858,316);c.fillStyle='#786b80';c.font='15px Arial';c.fillText('Atmosphere in motion',858,349);rr(858,379,115,24,12,'#e0d3ec');
-  }else{
-   c.fillStyle='#101722';c.fillRect(0,0,1200,700);rr(0,0,1200,58,0,'#171f2c');['#ff7284','#f4bd68','#6bc9a4'].forEach((col,i)=>{c.fillStyle=col;c.beginPath();c.arc(28+i*25,29,7,0,Math.PI*2);c.fill()});c.fillStyle='#8d9baa';c.font='17px Arial';c.fillText('vineet / digital-space / app.tsx',125,35);c.fillStyle='#b7c2d1';c.font='15px Arial';c.fillText('⌕   ⌘   ◌',1080,35);rr(0,58,76,601,0,'#141d29');for(let i=0;i<7;i++){rr(26,101+i*58,24,24,6,i===1?'#2c3848':'#202b39');c.fillStyle=i===1?'#9bc5ff':'#718094';c.font='15px Arial';c.fillText(['⌂','◈','▤','⌘','◇','⚙','◉'][i],31,119+i*58)}rr(76,58,220,601,0,'#151e2b');c.fillStyle='#7f8b9b';c.font='14px Arial';c.fillText('EXPLORER',100,93);c.fillStyle='#a9b5c4';c.font='16px Arial';['⌄  DIGITAL SPACE','  ◇  app.tsx','  ◇  scene.tsx','  ◇  globals.css','⌄  COMPONENTS','  ◇  Workstation.tsx','  ◇  ProjectView.tsx','⌄  PUBLIC','  ◇  textures'].forEach((t,i)=>c.fillText(t,98,135+i*46));rr(296,58,904,49,0,'#1a2432');rr(315,68,154,39,7,'#252f3e');c.fillStyle='#8bbcff';c.font='14px Arial';c.fillText('◇  app.tsx',332,93);c.fillStyle='#8491a0';c.fillText('◇  scene.tsx       ◇  globals.css',493,93);c.fillStyle='#465464';c.fillRect(295,107,905,1);c.fillStyle='#7a8797';c.font='15px Arial';c.fillText('1',322,150);c.fillText('2',322,193);c.fillText('3',322,236);c.fillText('4',322,279);c.fillText('5',322,322);c.fillText('6',322,365);c.fillText('7',322,408);c.fillText('8',322,451);c.fillText('9',322,494);c.fillText('10',316,537);c.font='18px monospace';c.fillStyle='#c792ea';c.fillText('export default function',362,150);c.fillStyle='#83c7ed';c.fillText('DigitalSpace',575,150);c.fillStyle='#d0d8e4';c.fillText('() {',710,150);c.fillStyle='#7f8d9e';c.fillText('// a little room for big ideas',396,193);c.fillStyle='#c792ea';c.fillText('const',396,236);c.fillStyle='#8bd6b7';c.fillText('experience',462,236);c.fillStyle='#d0d8e4';c.fillText('= {',583,236);c.fillStyle='#e4c27a';c.fillText("focus: 'the details',",430,279);c.fillStyle='#e4c27a';c.fillText("motion: 'by intention',",430,322);c.fillStyle='#e4c27a';c.fillText("space: 'to explore'",430,365);c.fillStyle='#d0d8e4';c.fillText('};',396,408);c.fillStyle='#c792ea';c.fillText('return',396,451);c.fillStyle='#d0d8e4';c.fillText('(',470,451);c.fillStyle='#83c7ed';c.fillText('<Portfolio',500,451);c.fillStyle='#8bd6b7';c.fillText('interactive',620,451);c.fillStyle='#d0d8e4';c.fillText('/>',741,451);c.fillText(');',396,494);c.fillText('}',362,537);rr(866,127,302,219,12,'#1b2635');c.fillStyle='#8593a5';c.font='14px Arial';c.fillText('RENDER / 60 FPS',887,157);rr(887,179,258,113,8,'#222f40');const glow=c.createLinearGradient(887,179,1145,292);glow.addColorStop(0,'#a78be9');glow.addColorStop(1,'#72c5e8');c.fillStyle=glow;c.beginPath();c.moveTo(904,267);c.bezierCurveTo(952,204,996,286,1040,222);c.bezierCurveTo(1080,198,1100,250,1130,193);c.lineTo(1130,278);c.lineTo(904,278);c.fill();rr(887,306,118,25,5,'#252f3e');rr(1018,306,127,25,5,'#252f3e');rr(866,367,302,177,12,'#1b2635');c.fillStyle='#8290a1';c.font='14px Arial';c.fillText('COMPONENTS',887,396);for(let i=0;i<4;i++){rr(887+(i%2)*126,412+Math.floor(i/2)*49,114,38,6,'#253142');c.fillStyle=['#9b8be0','#67c7d4','#e2b975','#82c4a8'][i];c.beginPath();c.arc(903+(i%2)*126,431+Math.floor(i/2)*49,6,0,Math.PI*2);c.fill();c.fillStyle='#a8b5c4';c.font='12px Arial';c.fillText(['UI / 01','MOTION / 02','LAYOUT / 03','TYPE / 04'][i],918+(i%2)*126,436+Math.floor(i/2)*49)}
-   rr(296,660,904,40,0,'#171f2b');c.fillStyle='#91a0b0';c.font='13px Arial';c.fillText('◉ main     ⌘ app.tsx',320,686);c.fillStyle='#73d7ab';c.fillText('●  READY',1070,686)
-  }
-  const tex=new THREE.CanvasTexture(canvas);tex.colorSpace=THREE.SRGBColorSpace;tex.anisotropy=8;return tex
- },[creative])
- useEffect(()=>()=>artwork.dispose(),[artwork])
- return <group>
-  <RoundedBox args={[large?2.45:2.05,large?1.47:1.28,.13]} radius={.075} smoothness={4} position={[0,0,0]}><meshPhysicalMaterial color="#202631" metalness={.7} roughness={.25} clearcoat={.7}/></RoundedBox>
-  <mesh position={[0,0,.073]}><planeGeometry args={[large?2.32:1.93,large?1.34:1.14]}/><meshBasicMaterial map={artwork} toneMapped={false}/></mesh>
-  {creative?<>
-   <mesh position={[-.62,.1,.082]}><planeGeometry args={[.83,.72]}/><meshBasicMaterial color="#242b3a"/></mesh><mesh position={[-.62,.1,.085]}><planeGeometry args={[.73,.61]}/><meshBasicMaterial color="#a6b4fa"/></mesh><mesh position={[-.62,.1,.088]} rotation={[0,0,-.28]}><circleGeometry args={[.21,32]}/><meshBasicMaterial color="#f7b3c7"/></mesh><mesh position={[.48,.12,.083]}><planeGeometry args={[.8,.82]}/><meshBasicMaterial color="#f5edf4"/></mesh>
-   {[-.16,-.28,-.4].map((y,i)=><mesh key={i} position={[.48,y,.086]}><planeGeometry args={[.56-i*.08,.025]}/><meshBasicMaterial color="#a8a3b6"/></mesh>)}
-  </>:<>
-   <mesh position={[-.75,.49,.083]}><planeGeometry args={[.045,.045]}/><meshBasicMaterial color="#ff7282"/></mesh><mesh position={[-.65,.49,.083]}><planeGeometry args={[.045,.045]}/><meshBasicMaterial color="#ffc869"/></mesh><mesh position={[-.55,.49,.083]}><planeGeometry args={[.045,.045]}/><meshBasicMaterial color="#81d9ad"/></mesh>
-   {Array.from({length:8},(_,i)=><mesh key={i} position={[-.68+(i%4)*.36,.28-Math.floor(i/4)*.24,.083]}><planeGeometry args={[.2+(i%3)*.04,.026]}/><meshBasicMaterial color={['#c792ea','#70b8ee','#8ad6bb','#e6b976'][i%4]} transparent opacity={.88}/></mesh>)}
-   {[-.03,-.16,-.29,-.42].map((y,i)=><mesh key={i} position={[.55,y,.083]}><planeGeometry args={[.45+(i%2)*.13,.022]}/><meshBasicMaterial color={i===1?'#b8a0ef':'#7d91a6'} transparent opacity={.74}/></mesh>)}
-  </>}
-  <mesh position={[0,-(large?.91:.78),-.03]}><cylinderGeometry args={[.075,.12,large?.77:.65,24]}/><meshStandardMaterial color="#a9b3c0" metalness={.8} roughness={.25}/></mesh>
-  <RoundedBox args={[large?1.1:.96,.075,.48]} radius={.04} smoothness={4} position={[0,large?-1.27:-1.1,-.03]}><meshStandardMaterial color="#8995a5" metalness={.72} roughness={.31}/></RoundedBox>
- </group>
+const palette: Record<string, string> = {
+  workspace: '#a78bfa',   // Soft Purple / Lavender
+  hardware: '#fb923c',    // Cyber Amber / Orange
+  development: '#38bdf8', // Electric Cyan / Blue
+  creative: '#f472b6',    // Neon Magenta / Pink
+  experiments: '#a3e635'  // Radioactive Lime
 }
 
-function Keyboard(){return <group position={[0,-.77,.95]} rotation={[-.08,0,0]}><RoundedBox args={[1.85,.14,.62]} radius={.07} smoothness={4}><meshStandardMaterial color="#333b49" metalness={.55} roughness={.37}/></RoundedBox>{Array.from({length:45},(_,i)=><RoundedBox key={i} args={[.12,.035,.095]} radius={.016} smoothness={2} position={[-.78+(i%9)*.195,.089,-.21+Math.floor(i/9)*.125]}><meshStandardMaterial color={i%9===0?'#a390d2':'#aab2c0'} metalness={.25} roughness={.45}/></RoundedBox>)}</group>}
-function Mouse(){return <group position={[1.4,-.75,1.05]} rotation={[0,-.18,.06]}><mesh scale={[.28,.13,.42]}><sphereGeometry args={[1,32,24]}/><meshPhysicalMaterial color="#9ba8b8" metalness={.38} roughness={.28} clearcoat={.6}/></mesh><mesh position={[0,.122,-.05]} scale={[.018,.008,.11]}><boxGeometry args={[1,1,1]}/><meshBasicMaterial color="#344151"/></mesh></group>}
-
-function Fan({position,rate=1}:{position:[number,number,number];rate?:number}){
- const blades=useRef<THREE.Group>(null)
- useFrame((_,dt)=>{if(blades.current)blades.current.rotation.z+=dt*rate*1.65})
- return <group position={position}>
-  <mesh><torusGeometry args={[.135,.014,10,40]}/><meshStandardMaterial color="#bda2ff" metalness={.68} roughness={.2} emissive="#815ee8" emissiveIntensity={.38}/></mesh>
-  <mesh><circleGeometry args={[.118,32]}/><meshStandardMaterial color="#131d2b" metalness={.35} roughness={.38}/></mesh>
-  <group ref={blades}>{[0,1,2,3].map(i=><mesh key={i} position={[0,.056,.009]} rotation={[0,0,i*Math.PI/2]}><shapeGeometry args={[(()=>{const s=new THREE.Shape();s.moveTo(0,0);s.quadraticCurveTo(.045,.025,.025,.094);s.quadraticCurveTo(-.018,.085,-.03,.025);s.closePath();return s})()]}/><meshStandardMaterial color={i%2?'#4f6680':'#7389a6'} metalness={.62} roughness={.25} side={THREE.DoubleSide}/></mesh>)}</group>
-  <mesh position={[0,0,.025]}><circleGeometry args={[.028,20]}/><meshStandardMaterial color="#e0c3ff" metalness={.7} emissive="#aa7aff" emissiveIntensity={.55}/></mesh>
- </group>
-}
-function Tower({exploded=false}:{exploded?:boolean}){
- const x=exploded?0:1.62,y=exploded?.05:-.26,z=exploded?0:-.1
- return <group position={[x,y,z]} scale={exploded?1.12:.82}>
-  <RoundedBox args={[.95,1.52,.68]} radius={.08} smoothness={5}><meshPhysicalMaterial color="#202a38" metalness={.74} roughness={.24} clearcoat={.8}/></RoundedBox>
-  <mesh position={[0,0,.35]}><planeGeometry args={[.77,1.34]}/><meshPhysicalMaterial color="#334454" transparent opacity={.43} metalness={.35} roughness={.12} transmission={.18}/></mesh>
-  <mesh position={[-.21,.44,.37]}><boxGeometry args={[.28,.42,.1]}/><meshStandardMaterial color="#465468" metalness={.72} roughness={.25}/></mesh>
-  {[[-.18,.48],[.19,.48],[-.18,.05],[.19,.05]].map(([a,b],i)=><Fan key={i} position={[a,b,.43]} rate={i%2?-.8:1}/>) }
-  <mesh position={[.355,-.03,.405]} rotation={[0,0,-.12]}><planeGeometry args={[.09,1.05]}/><meshBasicMaterial color="#b8a2ff" transparent opacity={.32}/></mesh>
-  <mesh position={[-.34,-.43,.39]}><planeGeometry args={[.06,.18]}/><meshBasicMaterial color="#6fd5e5"/></mesh>
-  <RoundedBox args={[.25,.17,.08]} radius={.025} smoothness={3} position={[.1,-.37,.43]}><meshStandardMaterial color="#b4a1d1" metalness={.5} roughness={.3}/></RoundedBox>
- </group>
+type Props = {
+  selected: string;
+  view: 'studio' | 'orbit' | 'macro';
 }
 
-function Laptop(){return <group position={[0,-.5,.15]} rotation={[-.06,0,0]}><RoundedBox args={[1.9,.11,1.24]} radius={.07} smoothness={4} position={[0,0,.48]}><meshStandardMaterial color="#969eaa" metalness={.82} roughness={.24}/></RoundedBox><RoundedBox args={[1.82,.045,1.12]} radius={.035} smoothness={3} position={[0,.065,.48]}><meshStandardMaterial color="#272d38" metalness={.45}/></RoundedBox>{Array.from({length:30},(_,i)=><RoundedBox key={i} args={[.12,.02,.09]} radius={.014} smoothness={2} position={[-.68+(i%10)*.15,.102,.15+Math.floor(i/10)*.13]}><meshStandardMaterial color="#aeb8c5" metalness={.25}/></RoundedBox>)}<group position={[0,.06,-.11]} rotation={[-.12,0,0]}><RoundedBox args={[1.9,1.22,.1]} radius={.06} smoothness={4} position={[0,.59,-.48]}><meshStandardMaterial color="#9ca7b5" metalness={.84} roughness={.22}/></RoundedBox><Screen large/></group></group>}
+// =========================================================================
+// 1. WORKSPACE SCENE COMPONENTS: Studio Display, MacBook, Audio Monitors
+// =========================================================================
 
-function Workstation({selected,view}:{selected:string;view:'studio'|'orbit'}){
- const rig=useRef<THREE.Group>(null),transition=useRef(1),{size}=useThree()
- useEffect(()=>{if(rig.current){transition.current=0;rig.current.scale.setScalar(.84);rig.current.rotation.y=-.62}},[selected])
- useFrame(({clock},dt)=>{if(!rig.current)return;transition.current=Math.min(1,transition.current+dt/1.05);const ease=1-Math.pow(1-transition.current,3);const idle=Math.sin(clock.elapsedTime*.34)*.15+(view==='orbit'?.34:0);const enter=THREE.MathUtils.lerp(-.62,idle,ease);const fitScale=size.width<420?.7:size.width<650?.82:1.02;rig.current.rotation.y=enter;rig.current.rotation.x=.045+Math.sin(clock.elapsedTime*.42)*.024;rig.current.rotation.z=Math.sin(clock.elapsedTime*.27)*.016;rig.current.scale.setScalar(THREE.MathUtils.lerp(.74,fitScale,ease));rig.current.position.y=Math.sin(clock.elapsedTime*.72)*.055-.16})
- const desk=selected==='workspace',hardware=selected==='hardware',development=selected==='development',creative=selected==='creative',experiments=selected==='experiments'
- return <group ref={rig}>
-  <mesh position={[0,-1.42,-.2]} rotation={[-Math.PI/2,0,0]}><circleGeometry args={[2.95,64]}/><meshBasicMaterial color="#5b4788" transparent opacity={.095}/></mesh>
-  {desk&&<group><mesh position={[0,-1.02,-.18]}><boxGeometry args={[4.2,.16,2.1]}/><meshStandardMaterial color="#d1d4dc" metalness={.28} roughness={.38}/></mesh><mesh position={[-1.55,-1.55,-.1]}><boxGeometry args={[.13,1.05,.13]}/><meshStandardMaterial color="#929cac" metalness={.64}/></mesh><mesh position={[1.55,-1.55,-.1]}><boxGeometry args={[.13,1.05,.13]}/><meshStandardMaterial color="#929cac" metalness={.64}/></mesh><group position={[-.25,.27,-.42]}><Screen/></group><Tower/><Keyboard/><Mouse/></group>}
-  {hardware&&<group><Tower exploded/>
-   <Float speed={1.05} floatIntensity={.1}><group position={[-1.3,.24,-.02]} rotation={[.08,-.14,-.12]}><RoundedBox args={[.68,.14,.5]} radius={.045} smoothness={3}><meshStandardMaterial color="#47596b" metalness={.73} roughness={.26}/></RoundedBox><mesh position={[0,.09,0]}><boxGeometry args={[.27,.12,.25]}/><meshStandardMaterial color="#77cde1" metalness={.66} roughness={.2} emissive="#277b91" emissiveIntensity={.45}/></mesh>{[-.25,.25].map((x,i)=><mesh key={i} position={[x,.08,-.1]}><boxGeometry args={[.09,.08,.12]}/><meshStandardMaterial color={i?'#baa1ed':'#d6a671'} metalness={.6}/></mesh>)}<mesh position={[0,.18,0]}><torusGeometry args={[.3,.018,8,40]}/><meshStandardMaterial color="#be9cff" metalness={.7} emissive="#7556ca" emissiveIntensity={.5}/></mesh></group></Float>
-   <Float speed={1.3} floatIntensity={.13}><group position={[1.22,.55,.08]} rotation={[.18,.38,.56]}><RoundedBox args={[1.16,.19,.32]} radius={.055} smoothness={4}><meshStandardMaterial color="#343e50" metalness={.85} roughness={.2}/></RoundedBox><mesh position={[0,.105,0]}><boxGeometry args={[.76,.035,.2]}/><meshStandardMaterial color="#8b97a9" metalness={.92} roughness={.18}/></mesh><Fan position={[-.37,.12,0]} rate={1.4}/><Fan position={[.37,.12,0]} rate={-1.1}/></group></Float>
-   <Float speed={1.6} floatIntensity={.18}><group position={[-1.23,.55,.15]} rotation={[.2,-.3,-.2]}>{[-.12,.12].map((x,i)=><group key={i} position={[x,0,0]}><RoundedBox args={[.12,.7,.12]} radius={.035} smoothness={3}><meshStandardMaterial color={i?'#8e7fd3':'#81b4cf'} metalness={.64} roughness={.24} emissive={i?'#493a8e':'#225e79'} emissiveIntensity={.3}/></RoundedBox><mesh position={[0,.34,0]}><boxGeometry args={[.085,.045,.1]}/><meshStandardMaterial color="#c0c5d2" metalness={.7}/></mesh></group>)}</group></Float>
-   <Float speed={1.1} floatIntensity={.16}><group position={[1.1,-.63,.48]} rotation={[.1,.15,.24]}><RoundedBox args={[.52,.13,.32]} radius={.04} smoothness={4}><meshStandardMaterial color="#252e3d" metalness={.78} roughness={.22}/></RoundedBox><mesh position={[0,.08,0]}><planeGeometry args={[.36,.2]}/><meshStandardMaterial color="#68778b" metalness={.72} emissive="#5f86b7" emissiveIntensity={.22}/></mesh><mesh position={[0,.09,.02]}><circleGeometry args={[.055,24]}/><meshBasicMaterial color="#a9d5ff"/></mesh></group></Float>
-   <Float speed={1.6} floatIntensity={.16}><mesh position={[-1.15,-.9,.35]}><torusGeometry args={[.4,.07,12,32]}/><meshStandardMaterial color="#f5a271" metalness={.55} roughness={.3}/></mesh></Float>
-  </group>}
-  {development&&<group><group position={[0,.25,-.1]} scale={1.32}><Screen large/></group><group position={[0,-1.25,.58]}><Keyboard/></group><mesh position={[1.48,-1.04,.72]}><boxGeometry args={[.09,.11,.3]}/><meshStandardMaterial color="#c7d1dd" metalness={.6}/></mesh><mesh position={[-1.45,.2,-.5]}><torusGeometry args={[.22,.045,10,32]}/><meshStandardMaterial color="#75c9ff" metalness={.65} emissive="#2586b1" emissiveIntensity={.4}/></mesh><Sparkles count={18} scale={[3.7,2.8,1.8]} size={2.2} speed={.25} color="#a8dcff"/></group>}
-  {creative&&<group><Laptop/><group position={[1.52,-.54,-.12]} rotation={[-.14,-.28,.04]}><RoundedBox args={[.7,.07,.88]} radius={.055} smoothness={4}><meshStandardMaterial color="#e3d9e2" metalness={.56} roughness={.3}/></RoundedBox><mesh position={[0,.045,0]}><planeGeometry args={[.56,.73]}/><meshStandardMaterial color="#e99fba" emissive="#9d486c" emissiveIntensity={.3}/></mesh><mesh position={[0,.05,.02]}><circleGeometry args={[.19,32]}/><meshBasicMaterial color="#8f84dd"/></mesh></group><Float speed={1.2}><mesh position={[-1.5,.65,.15]} rotation={[.3,.4,.15]}><icosahedronGeometry args={[.22,1]}/><meshStandardMaterial color="#f7c16e" metalness={.62} roughness={.24}/></mesh></Float></group>}
-  {experiments&&<group><Float speed={1.05} rotationIntensity={.18} floatIntensity={.18}><mesh position={[-.72,.18,0]} rotation={[.35,.55,.2]}><torusKnotGeometry args={[.63,.18,120,16,2,5]}/><meshPhysicalMaterial color="#aea0f5" metalness={.68} roughness={.19} clearcoat={1}/></mesh></Float><Float speed={1.45} floatIntensity={.25}><mesh position={[.95,.27,-.18]}><icosahedronGeometry args={[.7,1]}/><meshPhysicalMaterial color="#71d1e4" metalness={.75} roughness={.18} clearcoat={.8}/></mesh></Float><Float speed={1.1}><mesh position={[.05,-.84,.5]} rotation={[.5,.3,0]}><octahedronGeometry args={[.45,0]}/><meshPhysicalMaterial color="#f1a87c" metalness={.5} roughness={.24}/></mesh></Float><mesh position={[0,.08,-.5]}><torusGeometry args={[1.65,.012,8,80]}/><meshBasicMaterial color="#a9a0db" transparent opacity={.6}/></mesh><Sparkles count={36} scale={[3.7,3,2.5]} size={2.5} speed={.4} color={palette[selected as keyof typeof palette]}/></group>}
-  {(hardware||development)&&<mesh position={[0,-1.37,0]} rotation={[-Math.PI/2,0,0]}><circleGeometry args={[2.25,64]}/><meshBasicMaterial color="#26384d" transparent opacity={.055}/></mesh>}
- </group>
+// High-Fidelity IDE Screen Texture
+function useCodeTexture() {
+  return useMemo(() => {
+    if (typeof document === 'undefined') return null;
+    const canvas = document.createElement('canvas');
+    canvas.width = 1024;
+    canvas.height = 640;
+    const ctx = canvas.getContext('2d')!;
+
+    // Dark sleek editor background
+    ctx.fillStyle = '#0f141c';
+    ctx.fillRect(0, 0, 1024, 640);
+
+    // Titlebar
+    ctx.fillStyle = '#161d28';
+    ctx.fillRect(0, 0, 1024, 48);
+
+    // Window control dots
+    const dots = ['#ef4444', '#f59e0b', '#10b981'];
+    dots.forEach((color, i) => {
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.arc(28 + i * 22, 24, 6, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    // File tab
+    ctx.fillStyle = '#212a38';
+    ctx.beginPath();
+    ctx.roundRect(110, 8, 220, 34, 6);
+    ctx.fill();
+
+    ctx.fillStyle = '#38bdf8';
+    ctx.font = 'bold 14px "DM Mono", monospace';
+    ctx.fillText('⚡ StudioEngine.tsx', 130, 30);
+
+    // Line Numbers & Code Lines
+    ctx.font = '15px "DM Mono", monospace';
+    const lines = [
+      { num: '01', text: '// Realtime Three.js Spatial Engine', color: '#64748b' },
+      { num: '02', text: 'import { Canvas, useFrame } from "@react-three/fiber";', color: '#c084fc' },
+      { num: '03', text: 'import { GlassRefraction, Bloom } from "./shaders";', color: '#c084fc' },
+      { num: '04', text: '', color: '' },
+      { num: '05', text: 'export async function buildSpatialShowroom() {', color: '#38bdf8' },
+      { num: '06', text: '  const hardware = await detectGPUCapabilities();', color: '#f1f5f9' },
+      { num: '07', text: '  const targetFPS = hardware.tier >= 3 ? 120 : 60;', color: '#f59e0b' },
+      { num: '08', text: '  return initializeZeroLatencyPipeline({', color: '#4ade80' },
+      { num: '09', text: '    fidelity: "ULTRA_HIGH",', color: '#fb923c' },
+      { num: '10', text: '    particles: 10_000,', color: '#fb923c' },
+      { num: '11', text: '    tactileFeedback: true', color: '#fb923c' },
+      { num: '12', text: '  });', color: '#4ade80' },
+      { num: '13', text: '}', color: '#38bdf8' },
+      { num: '14', text: '// System Status: ● READY (0.4ms latency)', color: '#10b981' }
+    ];
+
+    lines.forEach((line, i) => {
+      const y = 85 + i * 36;
+      ctx.fillStyle = '#475569';
+      ctx.fillText(line.num, 30, y);
+      if (line.text) {
+        ctx.fillStyle = line.color || '#e2e8f0';
+        ctx.fillText(line.text, 80, y);
+      }
+    });
+
+    const tex = new THREE.CanvasTexture(canvas);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    return tex;
+  }, []);
 }
 
-export default function WorkstationScene({selected,view}:Props){return <Canvas dpr={[1,1.35]} camera={{position:[0,1.1,6.8],fov:36}} gl={{alpha:true,antialias:true,powerPreference:'low-power'}}><ambientLight intensity={1.05}/><hemisphereLight color="#fff8f2" groundColor="#69667b" intensity={1.25}/><directionalLight position={[-4,7,5]} intensity={2.5} color="#fff5e9"/><directionalLight position={[4,3,-3]} intensity={1.15} color="#abbcff"/><pointLight position={[3,2.5,3]} intensity={36} color={palette[selected as keyof typeof palette]} distance={9}/><pointLight position={[-3,-1,-3]} intensity={20} color="#9b8cff" distance={8}/><Suspense fallback={null}><Workstation selected={selected} view={view}/></Suspense><OrbitControls enablePan={false} enableZoom={false} enableDamping dampingFactor={.08} minPolarAngle={Math.PI*.32} maxPolarAngle={Math.PI*.63} rotateSpeed={.42}/></Canvas>}
+// Studio Display (Ultra-thin monitor with beveled stand and rear ambient light)
+function StudioDisplay({ texture }: { texture: THREE.CanvasTexture | null }) {
+  return (
+    <group position={[0, 0.45, -0.1]}>
+      {/* Aluminum Chassis */}
+      <RoundedBox args={[3.2, 2.0, 0.08]} radius={0.06} smoothness={4}>
+        <meshPhysicalMaterial color="#1a202c" metalness={0.85} roughness={0.2} clearcoat={0.6} />
+      </RoundedBox>
+
+      {/* Screen Glass Bezel & Display */}
+      <mesh position={[0, 0, 0.045]}>
+        <planeGeometry args={[3.08, 1.88]} />
+        {texture ? (
+          <meshBasicMaterial map={texture} toneMapped={false} />
+        ) : (
+          <meshBasicMaterial color="#0f141c" />
+        )}
+      </mesh>
+
+      {/* Rear Ambient Lightbar Glow */}
+      <pointLight position={[0, 0, -0.3]} intensity={14} color="#818cf8" distance={4} />
+
+      {/* Elegant Display Stand */}
+      <mesh position={[0, -1.15, -0.18]} rotation={[0.15, 0, 0]}>
+        <cylinderGeometry args={[0.07, 0.12, 0.85, 24]} />
+        <meshStandardMaterial color="#94a3b8" metalness={0.88} roughness={0.25} />
+      </mesh>
+      <RoundedBox args={[1.3, 0.04, 0.8]} radius={0.02} smoothness={3} position={[0, -1.48, -0.05]}>
+        <meshStandardMaterial color="#94a3b8" metalness={0.88} roughness={0.25} />
+      </RoundedBox>
+    </group>
+  );
+}
+
+// Open MacBook Pro Beside Monitor
+function MacBook() {
+  return (
+    <group position={[-1.75, -0.5, 0.7]} rotation={[0.08, 0.45, -0.04]}>
+      {/* Bottom Aluminum Base */}
+      <RoundedBox args={[1.4, 0.05, 0.95]} radius={0.03} smoothness={3}>
+        <meshStandardMaterial color="#64748b" metalness={0.82} roughness={0.28} />
+      </RoundedBox>
+
+      {/* Keyboard Well */}
+      <RoundedBox args={[1.25, 0.015, 0.52]} radius={0.015} smoothness={2} position={[0, 0.03, -0.12]}>
+        <meshStandardMaterial color="#0f172a" metalness={0.3} roughness={0.7} />
+      </RoundedBox>
+
+      {/* Glass Trackpad */}
+      <RoundedBox args={[0.5, 0.01, 0.32]} radius={0.02} smoothness={2} position={[0, 0.028, 0.24]}>
+        <meshStandardMaterial color="#475569" metalness={0.7} roughness={0.3} />
+      </RoundedBox>
+
+      {/* Tilted Open Display Lid */}
+      <group position={[0, 0.03, -0.46]} rotation={[-0.32, 0, 0]}>
+        <RoundedBox args={[1.4, 0.92, 0.035]} radius={0.025} smoothness={3} position={[0, 0.44, 0]}>
+          <meshStandardMaterial color="#64748b" metalness={0.85} roughness={0.25} />
+        </RoundedBox>
+        {/* Screen */}
+        <mesh position={[0, 0.44, 0.02]}>
+          <planeGeometry args={[1.32, 0.84]} />
+          <meshBasicMaterial color="#1e1b4b" />
+        </mesh>
+        {/* Floating Code Glyph on Laptop Screen */}
+        <mesh position={[0, 0.44, 0.025]}>
+          <planeGeometry args={[0.9, 0.5]} />
+          <meshBasicMaterial color="#818cf8" transparent opacity={0.65} />
+        </mesh>
+      </group>
+    </group>
+  );
+}
+
+// Studio Audio Monitors (Pair of Bronze Woofers)
+function AudioMonitors() {
+  return (
+    <>
+      {[-2.0, 2.0].map((x, idx) => (
+        <group key={idx} position={[x, 0.25, -0.35]} rotation={[0, x > 0 ? -0.35 : 0.35, 0]}>
+          {/* Wooden / Dark Matte Speaker Cabinet */}
+          <RoundedBox args={[0.65, 1.1, 0.65]} radius={0.04} smoothness={3}>
+            <meshStandardMaterial color="#181c24" metalness={0.3} roughness={0.4} />
+          </RoundedBox>
+
+          {/* Bronze Woofer Cone */}
+          <mesh position={[0, -0.15, 0.33]} rotation={[Math.PI / 2, 0, 0]}>
+            <cylinderGeometry args={[0.22, 0.06, 0.08, 32]} />
+            <meshStandardMaterial color="#d97706" metalness={0.75} roughness={0.25} />
+          </mesh>
+          <mesh position={[0, -0.15, 0.37]}>
+            <sphereGeometry args={[0.07, 16, 16]} />
+            <meshStandardMaterial color="#1e293b" metalness={0.9} roughness={0.15} />
+          </mesh>
+
+          {/* Silk Dome Tweeter */}
+          <mesh position={[0, 0.28, 0.33]}>
+            <sphereGeometry args={[0.08, 20, 20]} />
+            <meshStandardMaterial color="#0f172a" metalness={0.85} roughness={0.2} />
+          </mesh>
+        </group>
+      ))}
+    </>
+  );
+}
+
+// Custom 75% Mechanical Keyboard
+function MechanicalKeyboard() {
+  return (
+    <group position={[0.2, -0.85, 0.95]} rotation={[-0.08, 0.05, 0]}>
+      {/* Heavy Anodized Aluminum Chassis */}
+      <RoundedBox args={[2.0, 0.12, 0.72]} radius={0.05} smoothness={3}>
+        <meshStandardMaterial color="#1e2530" metalness={0.8} roughness={0.3} />
+      </RoundedBox>
+      {/* RGB Underglow Acrylic Layer */}
+      <mesh position={[0, -0.04, 0]}>
+        <boxGeometry args={[1.96, 0.03, 0.68]} />
+        <meshBasicMaterial color="#a78bfa" transparent opacity={0.65} />
+      </mesh>
+      {/* Sculpted Keycaps Grid */}
+      {Array.from({ length: 48 }, (_, i) => {
+        const col = i % 12;
+        const row = Math.floor(i / 12);
+        const isAccent = col === 0 || col === 11 || (row === 3 && col === 5);
+        return (
+          <RoundedBox
+            key={i}
+            args={[0.13, 0.04, 0.11]}
+            radius={0.015}
+            smoothness={2}
+            position={[-0.82 + col * 0.15, 0.075, -0.22 + row * 0.14]}
+          >
+            <meshStandardMaterial
+              color={isAccent ? '#c084fc' : '#334155'}
+              metalness={0.2}
+              roughness={0.5}
+            />
+          </RoundedBox>
+        );
+      })}
+      {/* Brass Volume Rotary Knob */}
+      <mesh position={[0.88, 0.1, -0.24]}>
+        <cylinderGeometry args={[0.055, 0.055, 0.08, 24]} />
+        <meshStandardMaterial color="#f59e0b" metalness={0.9} roughness={0.2} />
+      </mesh>
+    </group>
+  );
+}
+
+// Ceramic Coffee Mug with Steam
+function CoffeeMug() {
+  return (
+    <group position={[1.75, -0.82, 0.65]}>
+      {/* Ceramic Mug Body */}
+      <mesh position={[0, 0.14, 0]}>
+        <cylinderGeometry args={[0.13, 0.11, 0.28, 24]} />
+        <meshStandardMaterial color="#f1f5f9" roughness={0.15} />
+      </mesh>
+      {/* Dark Espresso Surface */}
+      <mesh position={[0, 0.26, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <circleGeometry args={[0.115, 24]} />
+        <meshStandardMaterial color="#2d1a0c" roughness={0.25} />
+      </mesh>
+      {/* Handle */}
+      <mesh position={[0.15, 0.14, 0]} rotation={[0, 0, Math.PI / 2]}>
+        <torusGeometry args={[0.09, 0.025, 12, 24, Math.PI]} />
+        <meshStandardMaterial color="#f1f5f9" roughness={0.15} />
+      </mesh>
+      {/* Steam Wisps */}
+      <Sparkles count={8} scale={[0.2, 0.5, 0.2]} position={[0, 0.45, 0]} size={1.5} speed={0.4} color="#f8fafc" />
+    </group>
+  );
+}
+
+// =========================================================================
+// 2. HARDWARE SCENE: Exploded Quantum GPU / Cyber Processor
+// =========================================================================
+function HardwareShowcase() {
+  const fanGroup1 = useRef<THREE.Group>(null);
+  const fanGroup2 = useRef<THREE.Group>(null);
+
+  useFrame(({ clock }) => {
+    const t = clock.elapsedTime;
+    if (fanGroup1.current) fanGroup1.current.rotation.z = t * 6.0;
+    if (fanGroup2.current) fanGroup2.current.rotation.z = -t * 6.0;
+  });
+
+  return (
+    <group position={[0, 0.1, 0]}>
+      {/* Central Monolithic Silicon Die */}
+      <Float speed={1.2} rotationIntensity={0.15} floatIntensity={0.2}>
+        <group position={[0, 0.25, 0]}>
+          {/* Mirror Anodized Substrate */}
+          <RoundedBox args={[1.5, 0.15, 1.5]} radius={0.06} smoothness={4}>
+            <meshStandardMaterial color="#1e293b" metalness={0.92} roughness={0.18} />
+          </RoundedBox>
+
+          {/* Golden Array Grid Pins */}
+          <mesh position={[0, -0.09, 0]}>
+            <boxGeometry args={[1.35, 0.02, 1.35]} />
+            <meshStandardMaterial color="#fbbf24" metalness={0.95} roughness={0.1} />
+          </mesh>
+
+          {/* Iridescent Quantum Glass Heat Spreader */}
+          <RoundedBox args={[1.1, 0.1, 1.1]} radius={0.04} smoothness={3} position={[0, 0.1, 0]}>
+            <meshPhysicalMaterial 
+              color="#fb923c" 
+              metalness={0.75} 
+              roughness={0.12} 
+              transparent
+              opacity={0.85}
+              clearcoat={1.0}
+              emissive="#ea580c"
+              emissiveIntensity={0.6}
+            />
+          </RoundedBox>
+
+          {/* Holographic Logo / Core Laser Engraving */}
+          <mesh position={[0, 0.16, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+            <circleGeometry args={[0.32, 32]} />
+            <meshBasicMaterial color="#ffffff" transparent opacity={0.7} />
+          </mesh>
+        </group>
+      </Float>
+
+      {/* Floating Finned Heat Pipe Assembly (Exploded View) */}
+      <Float speed={1.5} rotationIntensity={0.2} floatIntensity={0.25}>
+        <group position={[0, 1.15, 0.3]} rotation={[0.2, -0.15, 0.1]}>
+          {/* Finned Aluminum Block */}
+          {Array.from({ length: 18 }, (_, i) => (
+            <mesh key={i} position={[-0.8 + i * 0.095, 0, 0]}>
+              <boxGeometry args={[0.025, 0.75, 1.4]} />
+              <meshStandardMaterial color="#cbd5e1" metalness={0.95} roughness={0.15} />
+            </mesh>
+          ))}
+          {/* Dual Copper Heatpipes */}
+          {[-0.3, 0.3].map((z, idx) => (
+            <mesh key={idx} position={[0, 0, z]} rotation={[0, 0, Math.PI / 2]}>
+              <cylinderGeometry args={[0.04, 0.04, 1.9, 24]} />
+              <meshStandardMaterial color="#b45309" metalness={0.92} roughness={0.2} />
+            </mesh>
+          ))}
+        </group>
+      </Float>
+
+      {/* Dual Holographic High-Speed Turbine Fans */}
+      <Float speed={1.3} floatIntensity={0.18}>
+        <group position={[0, -0.75, 0.35]} rotation={[-0.15, 0.1, 0]}>
+          <RoundedBox args={[2.8, 0.14, 1.4]} radius={0.06} smoothness={3}>
+            <meshStandardMaterial color="#0f172a" metalness={0.8} roughness={0.3} />
+          </RoundedBox>
+
+          {/* Left Fan */}
+          <group position={[-0.7, 0.08, 0]}>
+            <mesh>
+              <torusGeometry args={[0.55, 0.03, 12, 36]} />
+              <meshBasicMaterial color="#38bdf8" />
+            </mesh>
+            <group ref={fanGroup1}>
+              {Array.from({ length: 9 }, (_, i) => (
+                <mesh key={i} rotation={[0, (i * Math.PI * 2) / 9, 0.35]}>
+                  <boxGeometry args={[0.48, 0.02, 0.12]} />
+                  <meshStandardMaterial color="#334155" metalness={0.7} roughness={0.25} />
+                </mesh>
+              ))}
+            </group>
+          </group>
+
+          {/* Right Fan */}
+          <group position={[0.7, 0.08, 0]}>
+            <mesh>
+              <torusGeometry args={[0.55, 0.03, 12, 36]} />
+              <meshBasicMaterial color="#f97316" />
+            </mesh>
+            <group ref={fanGroup2}>
+              {Array.from({ length: 9 }, (_, i) => (
+                <mesh key={i} rotation={[0, (i * Math.PI * 2) / 9, -0.35]}>
+                  <boxGeometry args={[0.48, 0.02, 0.12]} />
+                  <meshStandardMaterial color="#334155" metalness={0.7} roughness={0.25} />
+                </mesh>
+              ))}
+            </group>
+          </group>
+        </group>
+      </Float>
+
+      {/* Floating DDR5 RAM Sticks on Sides */}
+      {[-1.85, 1.85].map((x, idx) => (
+        <Float key={idx} speed={1.6 + idx * 0.3} floatIntensity={0.22}>
+          <group position={[x, 0.3, -0.2]} rotation={[0.2, idx ? -0.3 : 0.3, idx ? 0.35 : -0.35]}>
+            <RoundedBox args={[0.15, 1.6, 0.45]} radius={0.03} smoothness={3}>
+              <meshStandardMaterial color="#1e293b" metalness={0.85} roughness={0.25} />
+            </RoundedBox>
+            {/* Top RGB Light Diffuser */}
+            <mesh position={[0, 0.82, 0]}>
+              <boxGeometry args={[0.14, 0.06, 0.44]} />
+              <meshBasicMaterial color={idx ? '#38bdf8' : '#fb923c'} />
+            </mesh>
+          </group>
+        </Float>
+      ))}
+
+      <Sparkles count={40} scale={[4.5, 3.5, 3]} size={3} speed={0.5} color="#fb923c" />
+    </group>
+  );
+}
+
+// =========================================================================
+// 3. DEVELOPMENT SCENE: Holographic Terminal & 3D Code Matrix
+// =========================================================================
+function DevelopmentShowcase() {
+  const ring1 = useRef<THREE.Mesh>(null);
+  const ring2 = useRef<THREE.Mesh>(null);
+  const coreRef = useRef<THREE.Group>(null);
+
+  useFrame(({ clock }) => {
+    const t = clock.elapsedTime;
+    if (ring1.current) {
+      ring1.current.rotation.x = t * 0.45;
+      ring1.current.rotation.y = t * 0.3;
+    }
+    if (ring2.current) {
+      ring2.current.rotation.z = t * 0.55;
+    }
+    if (coreRef.current) {
+      coreRef.current.rotation.y = t * 0.35;
+    }
+  });
+
+  const techBadges = [
+    { label: 'React 18', color: '#38bdf8', pos: [1.7, 0.85, 0] },
+    { label: 'TypeScript', color: '#60a5fa', pos: [-1.8, 0.75, 0.4] },
+    { label: 'Next.js 14', color: '#f8fafc', pos: [1.5, -0.85, 0.5] },
+    { label: 'Three.js', color: '#c084fc', pos: [-1.6, -0.8, -0.3] },
+    { label: 'GLSL Shaders', color: '#fbbf24', pos: [0, 1.55, -0.4] }
+  ];
+
+  return (
+    <group position={[0, 0.1, 0]}>
+      {/* Central Holographic IDE Core Cube */}
+      <group ref={coreRef}>
+        <Float speed={1.2} floatIntensity={0.2}>
+          <RoundedBox args={[1.5, 1.5, 1.5]} radius={0.1} smoothness={4}>
+            <meshStandardMaterial 
+              color="#0369a1" 
+              metalness={0.8} 
+              roughness={0.15} 
+              emissive="#0284c7"
+              emissiveIntensity={0.4}
+              transparent
+              opacity={0.85}
+            />
+          </RoundedBox>
+
+          {/* Internal Wireframe Glowing Matrix */}
+          <mesh>
+            <boxGeometry args={[1.2, 1.2, 1.2]} />
+            <meshBasicMaterial color="#38bdf8" wireframe />
+          </mesh>
+
+          {/* Inner Pulsing Core Crystal */}
+          <mesh>
+            <octahedronGeometry args={[0.5, 0]} />
+            <meshStandardMaterial color="#67e8f9" emissive="#0284c7" emissiveIntensity={1.5} />
+          </mesh>
+        </Float>
+      </group>
+
+      {/* Orbiting Gyroscope Rings */}
+      <mesh ref={ring1}>
+        <torusGeometry args={[2.2, 0.04, 16, 80]} />
+        <meshStandardMaterial color="#38bdf8" emissive="#0284c7" emissiveIntensity={1.2} />
+      </mesh>
+      <mesh ref={ring2} rotation={[Math.PI / 3, 0, 0]}>
+        <torusGeometry args={[2.6, 0.035, 16, 80]} />
+        <meshStandardMaterial color="#818cf8" emissive="#4f46e5" emissiveIntensity={1.0} />
+      </mesh>
+
+      {/* Floating 3D Technology Badges */}
+      {techBadges.map((badge, idx) => (
+        <Float key={idx} speed={1.5 + idx * 0.2} floatIntensity={0.25} rotationIntensity={0.2}>
+          <group position={badge.pos as [number, number, number]}>
+            <RoundedBox args={[1.0, 0.4, 0.1]} radius={0.04} smoothness={3}>
+              <meshStandardMaterial 
+                color="#0f172a" 
+                metalness={0.85} 
+                roughness={0.2} 
+                emissive={badge.color}
+                emissiveIntensity={0.3}
+              />
+            </RoundedBox>
+            {/* Glowing Accent Border */}
+            <mesh position={[0, 0, 0.055]}>
+              <planeGeometry args={[0.9, 0.3]} />
+              <meshBasicMaterial color={badge.color} transparent opacity={0.6} />
+            </mesh>
+          </group>
+        </Float>
+      ))}
+
+      <Sparkles count={55} scale={[4.5, 4, 3.5]} size={3} speed={0.5} color="#38bdf8" />
+    </group>
+  );
+}
+
+// =========================================================================
+// 4. CREATIVE SCENE: Kinetic Chromatic Glass Sculpture
+// =========================================================================
+function CreativeShowcase() {
+  const knotRef = useRef<THREE.Mesh>(null);
+  const ringRef = useRef<THREE.Group>(null);
+
+  useFrame(({ clock }, dt) => {
+    if (knotRef.current) {
+      knotRef.current.rotation.x = clock.elapsedTime * 0.32;
+      knotRef.current.rotation.y = clock.elapsedTime * 0.45;
+    }
+    if (ringRef.current) {
+      ringRef.current.rotation.z += dt * 0.3;
+      ringRef.current.rotation.x += dt * 0.2;
+    }
+  });
+
+  return (
+    <group position={[0, 0.1, 0]}>
+      {/* Masterpiece Kinetic Chromatic Torus Knot */}
+      <Float speed={1.2} floatIntensity={0.25}>
+        <mesh ref={knotRef}>
+          <torusKnotGeometry args={[1.05, 0.28, 180, 32, 2, 5]} />
+          <meshPhysicalMaterial 
+            color="#f472b6" 
+            metalness={0.75} 
+            roughness={0.06} 
+            transparent
+            opacity={0.8}
+            clearcoat={1.0}
+            clearcoatRoughness={0.05}
+          />
+        </mesh>
+      </Float>
+
+      {/* Orbiting Golden Brass Orbital Frame */}
+      <group ref={ringRef}>
+        <mesh>
+          <torusGeometry args={[2.4, 0.025, 12, 80]} />
+          <meshStandardMaterial color="#fbbf24" metalness={0.95} roughness={0.15} />
+        </mesh>
+        <mesh rotation={[Math.PI / 2, 0, 0]}>
+          <torusGeometry args={[2.2, 0.02, 12, 80]} />
+          <meshStandardMaterial color="#f472b6" metalness={0.8} roughness={0.2} />
+        </mesh>
+      </group>
+
+      {/* Floating Refractive Polyhedra Surrounding the Knot */}
+      <Float speed={1.6} floatIntensity={0.3} rotationIntensity={0.4}>
+        <mesh position={[-1.75, 1.1, 0.3]}>
+          <icosahedronGeometry args={[0.38, 0]} />
+          <meshStandardMaterial color="#f472b6" metalness={0.85} roughness={0.15} />
+        </mesh>
+      </Float>
+
+      <Float speed={1.4} floatIntensity={0.25} rotationIntensity={0.3}>
+        <mesh position={[1.8, -0.9, 0.2]}>
+          <dodecahedronGeometry args={[0.42, 0]} />
+          <meshPhysicalMaterial 
+            color="#a78bfa" 
+            metalness={0.8} 
+            roughness={0.1} 
+            transparent
+            opacity={0.75}
+            clearcoat={1.0} 
+          />
+        </mesh>
+      </Float>
+
+      <Float speed={1.8} floatIntensity={0.35}>
+        <mesh position={[1.6, 1.0, -0.4]} rotation={[0.4, 0.2, 0]}>
+          <octahedronGeometry args={[0.32, 0]} />
+          <meshStandardMaterial color="#38bdf8" metalness={0.9} roughness={0.2} />
+        </mesh>
+      </Float>
+
+      <Sparkles count={60} scale={[5, 4.5, 4]} size={3} speed={0.4} color="#f472b6" />
+    </group>
+  );
+}
+
+// =========================================================================
+// 5. EXPERIMENTS SCENE: Quantum Singularity & Gravity Anomaly
+// =========================================================================
+function ExperimentsShowcase() {
+  const accretionRing1 = useRef<THREE.Mesh>(null);
+  const accretionRing2 = useRef<THREE.Mesh>(null);
+  const coreRef = useRef<THREE.Mesh>(null);
+
+  useFrame(({ clock }) => {
+    const t = clock.elapsedTime;
+    if (accretionRing1.current) accretionRing1.current.rotation.z = t * 0.9;
+    if (accretionRing2.current) accretionRing2.current.rotation.z = -t * 0.65;
+    if (coreRef.current) {
+      const s = 1 + Math.sin(t * 3.0) * 0.08;
+      coreRef.current.scale.set(s, s, s);
+    }
+  });
+
+  return (
+    <group position={[0, 0.1, 0]}>
+      {/* Central Singularity Sphere */}
+      <mesh ref={coreRef}>
+        <sphereGeometry args={[0.85, 48, 48]} />
+        <meshStandardMaterial 
+          color="#1e293b" 
+          emissive="#a3e635" 
+          emissiveIntensity={1.2}
+          roughness={0.2}
+          metalness={0.8}
+        />
+      </mesh>
+
+      {/* Surrounding Glowing Gravitational Event Horizon */}
+      <mesh>
+        <sphereGeometry args={[1.05, 32, 32]} />
+        <meshBasicMaterial color="#bef264" wireframe transparent opacity={0.4} />
+      </mesh>
+
+      {/* Accretion Disk Ring 1 (Tilted Energy Ribbon) */}
+      <mesh ref={accretionRing1} rotation={[1.1, 0.4, 0]}>
+        <torusGeometry args={[1.9, 0.12, 16, 100]} />
+        <meshStandardMaterial 
+          color="#a3e635" 
+          emissive="#65a30d" 
+          emissiveIntensity={1.6}
+          roughness={0.15}
+        />
+      </mesh>
+
+      {/* Accretion Disk Ring 2 (Secondary Outer Dust Field) */}
+      <mesh ref={accretionRing2} rotation={[-0.8, -0.3, 0]}>
+        <torusGeometry args={[2.5, 0.045, 12, 90]} />
+        <meshStandardMaterial color="#38bdf8" emissive="#0284c7" emissiveIntensity={1.0} />
+      </mesh>
+
+      {/* Levitating Anti-Gravity Crystal Shards */}
+      {[-1.5, -0.8, 0.9, 1.6].map((x, i) => (
+        <Float key={i} speed={1.2 + i * 0.3} floatIntensity={0.35} rotationIntensity={0.4}>
+          <mesh position={[x, (i % 2 === 0 ? 0.9 : -0.9), (i % 3 - 1) * 0.5]} rotation={[i, i * 0.5, 0]}>
+            <octahedronGeometry args={[0.3 + (i % 2) * 0.08, 0]} />
+            <meshStandardMaterial 
+              color={i % 2 === 0 ? '#a3e635' : '#22d3ee'} 
+              metalness={0.85} 
+              roughness={0.15} 
+              emissive={i % 2 === 0 ? '#4d7c0f' : '#0891b2'}
+              emissiveIntensity={0.5}
+            />
+          </mesh>
+        </Float>
+      ))}
+
+      <Sparkles count={80} scale={[5, 4.5, 4]} size={3.5} speed={0.8} color="#a3e635" />
+    </group>
+  );
+}
+
+// =========================================================================
+// MASTER WORKSTATION SCENE RIG
+// =========================================================================
+function SceneRig({ selected, view }: Props) {
+  const rigRef = useRef<THREE.Group>(null);
+  const texture = useCodeTexture();
+  const { size } = useThree();
+
+  // Mouse Parallax & Dynamic Responsiveness
+  useFrame(({ pointer, clock }, dt) => {
+    if (!rigRef.current) return;
+    const targetRotY = pointer.x * 0.35 + (view === 'orbit' ? clock.elapsedTime * 0.15 : 0);
+    const targetRotX = -pointer.y * 0.2 + (view === 'macro' ? 0.2 : 0);
+    rigRef.current.rotation.y = THREE.MathUtils.damp(rigRef.current.rotation.y, targetRotY, 3, dt);
+    rigRef.current.rotation.x = THREE.MathUtils.damp(rigRef.current.rotation.x, targetRotX, 3, dt);
+  });
+
+  const currentScene = ['workspace', 'hardware', 'development', 'creative', 'experiments'].includes(selected)
+    ? selected
+    : 'workspace';
+
+  return (
+    <group ref={rigRef} position={[0, -0.15, 0]} scale={size.width < 500 ? 0.72 : size.width < 900 ? 0.88 : 1.05}>
+      {/* SCENE 1: WORKSPACE */}
+      {currentScene === 'workspace' && (
+        <group>
+          <StudioDisplay texture={texture} />
+          <MacBook />
+          <AudioMonitors />
+          <MechanicalKeyboard />
+          <CoffeeMug />
+        </group>
+      )}
+
+      {/* SCENE 2: HARDWARE */}
+      {currentScene === 'hardware' && <HardwareShowcase />}
+
+      {/* SCENE 3: DEVELOPMENT */}
+      {currentScene === 'development' && <DevelopmentShowcase />}
+
+      {/* SCENE 4: CREATIVE */}
+      {currentScene === 'creative' && <CreativeShowcase />}
+
+      {/* SCENE 5: EXPERIMENTS */}
+      {currentScene === 'experiments' && <ExperimentsShowcase />}
+
+      {/* Photorealistic Ground Contact Shadows */}
+      <ContactShadows 
+        position={[0, -1.5, 0]} 
+        opacity={0.7} 
+        scale={9} 
+        blur={2.4} 
+        far={4.5} 
+        color="#030712" 
+      />
+    </group>
+  );
+}
+
+export default function WorkstationScene({ selected, view }: Props) {
+  const cameraPos: [number, number, number] = 
+    view === 'macro' ? [0, 0.4, 4.2] : view === 'orbit' ? [0, 1.2, 6.2] : [0, 0.8, 5.8];
+
+  return (
+    <div className="workstation-3d-canvas" style={{ width: '100%', height: '100%' }}>
+      <Canvas
+        dpr={[1, 1.75]}
+        camera={{ position: cameraPos, fov: 40 }}
+        gl={{ alpha: true, antialias: true, powerPreference: 'high-performance' }}
+      >
+        {/* Balanced High-End Studio Lighting */}
+        <ambientLight intensity={0.85} />
+        <hemisphereLight color="#ffffff" groundColor="#1e293b" intensity={0.9} />
+        <directionalLight position={[-4, 7, 5]} intensity={2.6} color="#ffffff" />
+        <directionalLight position={[4, 2, -3]} intensity={1.2} color="#93c5fd" />
+        <pointLight 
+          position={[0, 3, 2.5]} 
+          intensity={22} 
+          color={palette[selected] || '#a78bfa'} 
+          distance={9} 
+        />
+        <pointLight position={[-3, -1, -2]} intensity={14} color="#6366f1" distance={7} />
+
+        <Suspense fallback={null}>
+          <SceneRig selected={selected} view={view} />
+        </Suspense>
+
+        <OrbitControls 
+          enablePan={false} 
+          enableZoom={view === 'orbit'} 
+          enableDamping 
+          dampingFactor={0.07} 
+          minPolarAngle={Math.PI * 0.25} 
+          maxPolarAngle={Math.PI * 0.65} 
+          rotateSpeed={0.55}
+        />
+      </Canvas>
+    </div>
+  );
+}
