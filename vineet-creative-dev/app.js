@@ -61,42 +61,78 @@ function playCyberSound(type = 'click') {
 }
 
 // ========================================================
-// 3D MOUSE PARALLAX TILT ON WORKSPACE CARD
+// 3D MOUSE PARALLAX TILT ON FULL-SCREEN WORKSPACE STAGE
 // ========================================================
-const viewport3D = document.getElementById('workspace-viewport');
+const heroStage = document.getElementById('home');
 const card3D = document.getElementById('workspace-card');
 const coordsTracker = document.getElementById('coords-hud');
+const hotspotMon1 = document.getElementById('hotspot-mon1');
+const hotspotMon2 = document.getElementById('hotspot-mon2');
 
-if (viewport3D && card3D) {
-  let bounds = viewport3D.getBoundingClientRect();
+if (heroStage && card3D) {
+  let targetRotX = 0;
+  let targetRotY = 0;
+  let curRotX = 0;
+  let curRotY = 0;
+  let animId = null;
 
-  window.addEventListener('resize', () => {
-    bounds = viewport3D.getBoundingClientRect();
-  });
+  function updateStage() {
+    curRotX += (targetRotX - curRotX) * 0.08;
+    curRotY += (targetRotY - curRotY) * 0.08;
+    card3D.style.transform = `rotateX(${curRotX.toFixed(2)}deg) rotateY(${curRotY.toFixed(2)}deg) scale3d(1.02, 1.02, 1.02)`;
+    if (Math.abs(targetRotX - curRotX) > 0.01 || Math.abs(targetRotY - curRotY) > 0.01) {
+      animId = requestAnimationFrame(updateStage);
+    } else {
+      animId = null;
+    }
+  }
 
-  viewport3D.addEventListener('mousemove', (e) => {
-    const mouseX = e.clientX - bounds.left;
-    const mouseY = e.clientY - bounds.top;
+  window.addEventListener('mousemove', (e) => {
+    const rect = heroStage.getBoundingClientRect();
+    if (rect.bottom < 0 || rect.top > window.innerHeight) return;
 
-    const xPct = mouseX / bounds.width - 0.5;
-    const yPct = mouseY / bounds.height - 0.5;
+    const xPct = (e.clientX / window.innerWidth) - 0.5;
+    const yPct = ((e.clientY - rect.top) / rect.height) - 0.5;
 
-    const rotateX = -yPct * 18;
-    const rotateY = xPct * 22;
+    targetRotX = -yPct * 10;
+    targetRotY = xPct * 14;
 
-    card3D.style.transform = `rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(1.02, 1.02, 1.02)`;
+    if (!animId) {
+      animId = requestAnimationFrame(updateStage);
+    }
 
     if (coordsTracker) {
-      coordsTracker.textContent = `X:${(xPct * 100).toFixed(0)} Y:${(yPct * 100).toFixed(0)} · 60FPS`;
+      coordsTracker.textContent = `X:${Math.round(xPct * 100)} Y:${Math.round(yPct * 100)} · 60FPS · 3D ACTIVE`;
     }
   });
 
-  viewport3D.addEventListener('mouseleave', () => {
-    card3D.style.transform = 'rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+  window.addEventListener('mouseleave', () => {
+    targetRotX = 0;
+    targetRotY = 0;
+    if (!animId) {
+      animId = requestAnimationFrame(updateStage);
+    }
     if (coordsTracker) {
-      coordsTracker.textContent = 'COORDS: IDLE · 60FPS';
+      coordsTracker.textContent = 'COORDS: IDLE · 60FPS · 3D ACTIVE';
     }
   });
+
+  // Hotspots interaction with audio feedback
+  if (hotspotMon1) {
+    hotspotMon1.addEventListener('mouseenter', () => playCyberSound('hover'));
+    hotspotMon1.addEventListener('click', () => {
+      playCyberSound('success');
+      showToast('Display 01: Core architecture active in React 19 & WebGL');
+    });
+  }
+
+  if (hotspotMon2) {
+    hotspotMon2.addEventListener('mouseenter', () => playCyberSound('hover'));
+    hotspotMon2.addEventListener('click', () => {
+      playCyberSound('success');
+      showToast('Skyline Ambience: Synchronized with Bangalore Tech Hub & Remote Teams');
+    });
+  }
 }
 
 // ========================================================

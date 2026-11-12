@@ -46,90 +46,136 @@
        HERO SECTION WITH 3D WORKSPACE CENTERPIECE
   ======================================================== -->
   <main>
+    <!-- ========================================================
+         HERO SECTION: FULL-SCREEN IMMERSIVE 3D WORKSPACE
+    ======================================================== -->
     <section class="hero-stage" id="home">
-      <div class="wrap">
-        <div class="hero-layout-grid">
-          <!-- Left Column: High-Impact Narrative -->
-          <div class="hero-narrative">
-            <span class="hero-eyebrow">Creative Frontend Developer &amp; 3D Technologist</span>
-            <h1 class="hero-title">
-              Building digital experiences <span class="accent-text">that feel</span> <em>different.</em>
-            </h1>
-            <p class="hero-bio">
-              I architect modern, interactive and high-performance 3D web applications that turn ambitious visions into unforgettable digital realities.
-            </p>
+      <!-- Full-Screen 3D Workspace Stage -->
+      <div class="workspace-panoramic-viewport" id="workspace-viewport">
+        <div class="workspace-stage-layer" id="workspace-card">
+          <!-- Preserved High-Res Signature Workspace Image -->
+          <img
+            src="vineet-workspace.png"
+            alt="Vineet's Creative Developer Panoramic Workstation with Dual Displays & City Skyline"
+            class="workspace-hero-img"
+          />
 
-            <div class="hero-actions">
-              <a href="#work" class="btn-primary">
-                <span>View 3D Works</span>
-                <span>↗</span>
-              </a>
-              <a href="#terminal" class="btn-ghost">
-                <span>Open Terminal</span>
-                <span>⌨</span>
-              </a>
-            </div>
+          <!-- Atmospheric Cinematic Scrims & Shading -->
+          <div class="workspace-ambient-overlay"></div>
+          <div class="workspace-radial-vignette"></div>
+          <div class="workspace-bottom-fade"></div>
 
-            <div class="hero-stats-row">
-              <div class="stat-box">
-                <strong>4<span>+</span></strong>
-                <small>Years Creating</small>
-              </div>
-              <div class="stat-divider"></div>
-              <div class="stat-box">
-                <strong>28</strong>
-                <small>Projects Shipped</small>
-              </div>
-              <div class="stat-divider"></div>
-              <div class="stat-box">
-                <strong>12</strong>
-                <small>Happy Teams</small>
-              </div>
+          <!-- Interactive Workspace Monitor Hotspot 01 -->
+          <button class="monitor-hotspot hotspot-screen1" id="hotspot-mon1" title="Primary Code Display" aria-label="Inspect Primary Display">
+            <span class="hotspot-ping"></span>
+            <span class="hotspot-dot"></span>
+            <span class="hotspot-card">
+              <span class="hotspot-title">DISPLAY 01 // ARCHITECTURE</span>
+              <span class="hotspot-desc">React 19 · WebGL Canvas · GLSL</span>
+            </span>
+          </button>
+
+          <!-- Interactive Workspace Skyline Hotspot 02 -->
+          <button class="monitor-hotspot hotspot-screen2" id="hotspot-mon2" title="Panoramic Skyline View" aria-label="Inspect Skyline View">
+            <span class="hotspot-ping"></span>
+            <span class="hotspot-dot"></span>
+            <span class="hotspot-card">
+              <span class="hotspot-title">PANORAMIC SKYLINE // AMBIENCE</span>
+              <span class="hotspot-desc">Bangalore Tech Hub · Remote Sync</span>
+            </span>
+          </button>
+
+          <!-- Floating Holographic Badge 1: Tech Stack -->
+          <div class="holo-badge holo-stack-badge">
+            <span class="holo-stack-label">ACTIVE STACK</span>
+            <div class="holo-stack-chips">
+              <span class="stack-chip">React 19</span>
+              <span class="stack-chip">WebGL</span>
+              <span class="stack-chip">Three.js</span>
+              <span class="stack-chip">GLSL</span>
+              <span class="stack-chip">TS</span>
             </div>
           </div>
 
-          <!-- Right Column: Interactive 3D Perspective Workspace -->
-          <div class="workspace-3d-viewport" id="workspace-viewport">
-            <div class="workspace-3d-card" id="workspace-card">
-              <!-- Preserved Original Signature Workspace Image -->
-              <div class="workspace-img-frame">
-                <img src="vineet-workspace.png" alt="Vineet's Creative Developer Workspace with Dual Monitors" />
+          <!-- Floating Holographic Badge 2: Interface Snippet -->
+          <div class="holo-badge holo-code-badge">
+            <div class="code-badge-top">
+              <span>workspace.tsx</span>
+              <div class="code-dots">
+                <span></span>
+                <span></span>
+                <span></span>
               </div>
+            </div>
+            <div class="code-line-bar l1"></div>
+            <div class="code-line-bar l2"></div>
+            <div class="code-line-bar l3"></div>
+          </div>
 
-              <!-- Floating Holographic Badge 1: Tech Stack -->
-              <div class="holo-badge holo-stack-badge">
-                <span class="holo-stack-label">Active Stack</span>
-                <div class="holo-stack-chips">
-                  <span class="stack-chip">React 19</span>
-                  <span class="stack-chip">WebGL</span>
-                  <span class="stack-chip">TS</span>
-                  <span class="stack-chip">GLSL</span>
-                </div>
-              </div>
+          <!-- Real-time Coords HUD -->
+          <div class="hud-coords-tracker" id="coords-hud">
+            COORDS: X:0 Y:0 · 60FPS · 3D ACTIVE
+          </div>
+        </div>
+      </div>
 
-              <!-- Floating Holographic Badge 2: Interface Snippet -->
-              <div class="holo-badge holo-code-badge">
-                <div class="code-badge-top">
-                  <span>interface.tsx</span>
-                  <div class="code-dots">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                  </div>
-                </div>
-                <div class="code-line-bar l1"></div>
-                <div class="code-line-bar l2"></div>
-                <div class="code-line-bar l3"></div>
-              </div>
+      <!-- Foreground Narrative Cockpit Overlay -->
+      <div class="wrap hero-content-wrap">
+        <div class="hero-cockpit">
+          <div class="hero-eyebrow-pill">
+            <span class="eyebrow-dot"></span>
+            <span>Creative Frontend Developer &amp; 3D Technologist</span>
+          </div>
 
-              <!-- Real-time Coords HUD -->
-              <div class="hud-coords-tracker" id="coords-hud">
-                COORDS: IDLE · 60FPS
-              </div>
+          <h1 class="hero-title">
+            Building digital experiences <br />
+            <span class="accent-text">that feel</span> <em>different.</em>
+          </h1>
+
+          <p class="hero-bio">
+            I architect immersive, interactive 3D web applications and high-performance creative interfaces that turn ambitious visions into unforgettable digital realities.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#work" class="btn-primary">
+              <span>Explore 3D Works</span>
+              <span>↗</span>
+            </a>
+            <a href="#terminal" class="btn-ghost">
+              <span>Open Terminal</span>
+              <span>⌨</span>
+            </a>
+          </div>
+
+          <div class="hero-stats-row">
+            <div class="stat-box">
+              <strong>4<span>+</span></strong>
+              <small>Years Creating</small>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-box">
+              <strong>28</strong>
+              <small>Projects Shipped</small>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-box">
+              <strong>12</strong>
+              <small>Happy Teams</small>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-box">
+              <strong>60<span>FPS</span></strong>
+              <small>WebGL Motion</small>
             </div>
           </div>
         </div>
       </div>
+
+      <!-- Bottom Scroll Exploration Cue -->
+      <a href="#work" class="hero-scroll-cue" aria-label="Scroll down to 3D works">
+        <span>EXPLORE 3D WORKS</span>
+        <span class="scroll-arrow-anim">↓</span>
+      </a>
     </section>
 
     <!-- ========================================================
