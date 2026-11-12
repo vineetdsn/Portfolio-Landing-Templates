@@ -3,111 +3,400 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#081525" />
-  <meta name="description" content="Vineet — creative frontend developer crafting modern, interactive and high-performance digital experiences." />
-  <title>Vineet — Creative Frontend Developer</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    :root { color-scheme:dark; --ink:#f4f7fc; --muted:#a7b5c8; --blue:#168bce; --lav:#a88bff; --line:rgba(196,218,246,.12); --panel:rgba(12,28,48,.68); }
-    * { box-sizing:border-box }
-    html { scroll-behavior:smooth }
-    body { margin:0; min-width:320px; background:#081525; color:var(--ink); font-family:Manrope,system-ui,sans-serif; overflow-x:hidden }
-    a { color:inherit; text-decoration:none }
-    button { font:inherit }
-    .page { min-height:100vh; position:relative; isolation:isolate; overflow:hidden; background:radial-gradient(ellipse at 72% 52%,rgba(20,89,145,.15),transparent 44%),#081525 }
-    .page:before { content:""; position:absolute; inset:0; pointer-events:none; z-index:-1; opacity:.16; background-image:linear-gradient(rgba(165,195,232,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(165,195,232,.035) 1px,transparent 1px); background-size:72px 72px; mask-image:linear-gradient(to bottom,black,transparent 84%) }
-    .shell { width:min(1280px,calc(100% - 96px)); margin:auto }
-    header { height:96px; display:flex; align-items:center; justify-content:space-between; position:relative; z-index:5; border-bottom:1px solid rgba(195,216,241,.075) }
-    .brand { font-size:17px; font-weight:800; letter-spacing:.22em; display:flex; align-items:center; gap:11px }
-    .brand-mark { width:27px;height:27px; display:grid;place-items:center; border:1px solid rgba(117,190,255,.55); border-radius:8px; color:#9cd8ff; font-size:13px; letter-spacing:0; box-shadow:0 0 19px rgba(22,139,206,.15),inset 0 0 12px rgba(22,139,206,.1) }
-    nav { display:flex; gap:42px; align-items:center; color:#aab7c9; font-size:12px; font-weight:600; letter-spacing:.025em }
-    nav a { transition:color .2s ease } nav a:hover,nav a.active { color:white }
-    .nav-right { display:flex; align-items:center; gap:22px }
-    .availability { display:flex;align-items:center;gap:9px;color:#b7c4d5;font-size:11px }
-    .pulse { width:7px;height:7px;border-radius:50%;background:#69e0b1;box-shadow:0 0 0 4px rgba(105,224,177,.1),0 0 14px rgba(105,224,177,.8);animation:pulse 2s infinite }
-    .icon-btn { display:grid;place-items:center;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.025);color:#bdcbe0;cursor:pointer;transition:.2s }
-    .icon-btn:hover { border-color:rgba(168,139,255,.55);color:white;transform:rotate(12deg) }
-    .menu-btn {display:none}
-    .hero { min-height:calc(100vh - 96px); max-height:920px; display:grid;grid-template-columns: .87fr 1.13fr; align-items:center; position:relative; padding:30px 0 73px }
-    .copy { position:relative; z-index:3; max-width:590px; padding:17px 0 45px }
-    .eyebrow { display:flex;align-items:center;gap:13px;color:#83cfff;font:500 10px 'DM Mono',monospace;letter-spacing:.17em;text-transform:uppercase;margin-bottom:28px }
-    .eyebrow:before { content:"";width:27px;height:1px;background:linear-gradient(90deg,#168bce,#a88bff) }
-    h1 { font-size:clamp(48px,5.3vw,76px); line-height:1.09; letter-spacing:-.067em; font-weight:600; margin:0; max-width:650px }
-    h1 .accent { color:#91a5bd; font-weight:500 }
-    .intro { max-width:445px;color:#a7b5c8;font-size:14px;line-height:1.85;margin:25px 0 31px;letter-spacing:-.01em }
-    .actions {display:flex;align-items:center;gap:13px}
-    .button {height:48px;padding:0 20px;display:inline-flex;align-items:center;justify-content:center;gap:12px;border-radius:8px;font-size:12px;font-weight:700;transition:.22s ease}
-    .button svg {transition:transform .22s ease}.button:hover svg {transform:translateX(3px)}
-    .button.primary {color:#fff;background:linear-gradient(120deg,#157cba,#286ed2 58%,#7662cd);box-shadow:0 8px 28px rgba(25,111,202,.22),inset 0 1px rgba(255,255,255,.24)}
-    .button.primary:hover {transform:translateY(-2px);box-shadow:0 12px 34px rgba(25,111,202,.33)}
-    .button.secondary {border:1px solid rgba(184,209,239,.17);color:#d6e0ef;background:rgba(255,255,255,.025)}
-    .button.secondary:hover {background:rgba(255,255,255,.07);border-color:rgba(184,209,239,.33)}
-    .proof {display:flex;align-items:center;gap:19px;margin-top:49px}
-    .proof-item {display:flex;align-items:baseline;gap:8px}
-    .proof-item strong {font-size:18px;letter-spacing:-.05em;font-weight:700}
-    .proof-item span {font-size:10px;color:#8697ad;letter-spacing:.025em}
-    .proof-sep {width:1px;height:25px;background:rgba(195,216,241,.16)}
-    .visual { position:absolute; z-index:1; right:-7.5%; top:4%; width:68%; height:88%; pointer-events:none }
-    .visual:before { content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,#081525 0%,rgba(8,21,37,.82) 5%,rgba(8,21,37,.08) 34%,transparent 68%),linear-gradient(0deg,#081525 0%,transparent 20%,transparent 87%,#081525 100%); }
-    .visual:after { content:"";position:absolute;inset:4% 4% 4% 12%;z-index:1;background:radial-gradient(ellipse at 55% 58%,transparent 40%,rgba(8,21,37,.2) 83%,#081525 110%);mix-blend-mode:multiply }
-    .room { width:100%;height:100%;object-fit:cover;object-position:center;filter:saturate(.84) contrast(1.06);mask-image:linear-gradient(90deg,transparent 0%,black 17%,black 89%,transparent 100%);opacity:.93 }
-    .visual-glow {position:absolute;width:55%;height:45%;right:8%;bottom:1%;background:rgba(26,120,206,.2);filter:blur(80px);border-radius:50%}
-    .float {position:absolute;z-index:2;border:1px solid rgba(188,215,249,.18);background:linear-gradient(135deg,rgba(18,40,66,.82),rgba(11,24,43,.64));backdrop-filter:blur(14px);box-shadow:0 15px 42px rgba(0,0,0,.24),inset 0 1px rgba(255,255,255,.06);border-radius:11px;color:#dce8fa}
-    .stack {top:17%;right:2%;padding:12px 14px;display:flex;align-items:center;gap:12px;animation:drift 7s ease-in-out infinite}
-    .stack-label {font:9px 'DM Mono',monospace;color:#8194ab;letter-spacing:.12em;text-transform:uppercase}
-    .stack-icons {display:flex;gap:7px}.tech-icon {width:25px;height:25px;display:grid;place-items:center;border-radius:7px;background:rgba(255,255,255,.06);font:10px 'DM Mono',monospace;color:#a9cbff}.tech-icon:nth-child(2){color:#c5aaff}.tech-icon:nth-child(3){color:#84d9ff}
-    .snippet {left:6%;bottom:17%;width:198px;padding:13px 15px;animation:drift 8s ease-in-out -2s infinite}
-    .snippet-top {display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;color:#90a2b8;font:9px 'DM Mono',monospace}
-    .dots {display:flex;gap:4px}.dots i {width:4px;height:4px;border-radius:50%;background:#687e98}.dots i:first-child{background:#a88bff}
-    .code-line {height:4px;border-radius:8px;background:rgba(110,149,194,.25);margin:7px 0}.code-line:nth-child(2){width:69%;background:rgba(91,183,238,.62)}.code-line:nth-child(3){width:83%}.code-line:nth-child(4){width:52%;background:rgba(168,139,255,.52)}.code-line:nth-child(5){width:74%}
-    .scene-tag {position:absolute;right:15%;bottom:13%;z-index:2;font:9px 'DM Mono',monospace;letter-spacing:.15em;text-transform:uppercase;color:rgba(216,231,250,.64);display:flex;align-items:center;gap:9px}
-    .scene-tag:before {content:"";width:22px;height:1px;background:#82c8ff}
-    .scroll {position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:12px;color:#75869d;font:9px 'DM Mono',monospace;letter-spacing:.17em;text-transform:uppercase;z-index:3}
-    .scroll-line {height:25px;width:1px;background:linear-gradient(#168bce,rgba(22,139,206,0));position:relative;overflow:hidden}
-    .scroll-line:after {content:"";position:absolute;width:1px;height:10px;background:#b0dfff;animation:scroll 1.8s ease-in-out infinite}
-    .edge-note {position:absolute;right:0;top:45%;writing-mode:vertical-rl;color:#52657c;font:9px 'DM Mono',monospace;letter-spacing:.2em;text-transform:uppercase;display:flex;gap:12px;align-items:center}
-    .edge-note:before {content:"";height:33px;width:1px;background:#293d55}
-    .below {border-top:1px solid rgba(195,216,241,.08);padding:24px 0 30px;display:flex;justify-content:space-between;align-items:center;color:#7689a2;font:9px 'DM Mono',monospace;letter-spacing:.12em;text-transform:uppercase}
-    .below span:last-child {color:#98a9bd}
-    @keyframes pulse {50%{box-shadow:0 0 0 7px rgba(105,224,177,.03),0 0 17px rgba(105,224,177,.9)}}
-    @keyframes drift {50%{transform:translateY(-8px)}}
-    @keyframes scroll {0%{top:-10px}100%{top:30px}}
-    @media (min-width:1500px){.shell{width:min(1320px,calc(100% - 120px))}.visual{right:-4%;width:65%}}
-    @media (max-width:1050px){.shell{width:calc(100% - 64px)}header{height:82px}.hero{min-height:calc(100vh - 82px);grid-template-columns:1fr;padding-top:70px;align-items:start}.copy{padding-top:24px;max-width:520px}.visual{right:-21%;top:10%;width:82%;height:78%;opacity:.78}.visual:before{background:linear-gradient(90deg,#081525 0%,rgba(8,21,37,.7) 14%,rgba(8,21,37,.1) 60%,transparent),linear-gradient(0deg,#081525 0%,transparent 22%,transparent 85%,#081525)}.stack{right:3%;top:16%}.snippet{left:45%;bottom:16%}.scene-tag{right:8%;bottom:11%}}
-    @media (max-width:700px){.shell{width:calc(100% - 40px)}header{height:72px}.brand{font-size:15px}.brand-mark{width:25px;height:25px}.availability{display:none}nav{display:none;position:absolute;top:62px;left:0;right:0;padding:20px;background:rgba(8,21,37,.96);border:1px solid var(--line);border-radius:12px;flex-direction:column;gap:20px;align-items:flex-start;backdrop-filter:blur(18px)}nav.open{display:flex}.menu-btn{display:grid}.nav-right{gap:11px}.hero{min-height:calc(100svh - 72px);max-height:none;padding:38px 0 95px;display:block}.copy{padding:9px 0 0;max-width:480px}.eyebrow{font-size:9px;margin-bottom:22px}h1{font-size:clamp(43px,11.5vw,60px);line-height:1.07;max-width:520px}.intro{font-size:13px;line-height:1.75;max-width:370px;margin:19px 0 24px}.button{height:45px;padding:0 15px;font-size:11px}.proof{margin-top:31px;gap:13px}.proof-item{gap:6px}.proof-item strong{font-size:16px}.proof-item span{font-size:9px}.visual{top:auto;bottom:0;right:-32%;width:116%;height:53%;opacity:.73}.visual:before{background:linear-gradient(0deg,#081525 0%,rgba(8,21,37,.1) 28%,transparent 70%),linear-gradient(90deg,#081525 0%,rgba(8,21,37,.1) 32%,transparent 75%)}.room{object-position:center 54%}.stack{right:6%;top:16%;padding:9px 10px}.stack-label{display:none}.snippet{left:5%;bottom:13%;width:157px;padding:10px 12px}.scene-tag{right:5%;bottom:8%;font-size:8px}.scroll{bottom:22px;left:20px;transform:none}.edge-note{display:none}.below{padding:17px 0 22px;font-size:8px;letter-spacing:.07em}}
-    @media (max-width:390px){.shell{width:calc(100% - 32px)}h1{font-size:42px}.proof{gap:9px}.proof-item span{font-size:8px}.visual{right:-46%;width:135%}.snippet{bottom:12%}}
-    @media (prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
-  </style>
+  <meta name="theme-color" content="#070F1E" />
+  <meta name="description" content="Vineet — Creative Frontend Developer &amp; 3D Technologist crafting modern interactive web experiences." />
+  <title>Vineet — Creative Frontend Developer &amp; 3D Technologist</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <main class="page" id="home">
-    <div class="shell">
-      <header>
-        <a class="brand" href="#home" aria-label="Vineet home"><span class="brand-mark">V.</span><span>VINEET</span></a>
-        <nav id="navigation" aria-label="Main navigation"><a class="active" href="#home">Home</a><a href="#work">Work</a><a href="#about">About</a><a href="mailto:hello@vineet.dev">Contact</a></nav>
-        <div class="nav-right"><div class="availability"><i class="pulse"></i><span>Available for select projects</span></div><button class="icon-btn" aria-label="Toggle ambient lighting" id="light-toggle"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg></button><button class="icon-btn menu-btn" aria-label="Open menu" aria-expanded="false" id="menu-toggle"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button></div>
-      </header>
-      <section class="hero" aria-labelledby="hero-title">
-        <div class="copy">
-          <div class="eyebrow">Creative frontend developer</div>
-          <h1 id="hero-title">Building digital experiences <span class="accent">that feel different.</span></h1>
-          <p class="intro">I create modern, interactive and high-performance websites that turn thoughtful ideas into experiences people remember.</p>
-          <div class="actions"><a class="button primary" href="#work"><span>View projects</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a><a class="button secondary" href="mailto:hello@vineet.dev">Contact me</a></div>
-          <div class="proof"><div class="proof-item"><strong>4<span style="color:#a88bff">+</span></strong><span>years creating</span></div><i class="proof-sep"></i><div class="proof-item"><strong>28</strong><span>projects shipped</span></div><i class="proof-sep"></i><div class="proof-item"><strong>12</strong><span>happy teams</span></div></div>
-        </div>
-        <div class="visual" aria-label="A cinematic, blue-lit developer workspace" role="img"><div class="visual-glow"></div><img class="room" src="vineet-workspace.png" alt="" /><div class="float stack"><span class="stack-label">Current stack</span><div class="stack-icons"><span class="tech-icon">R</span><span class="tech-icon">JS</span><span class="tech-icon">⌘</span><span class="tech-icon">✳</span></div></div><div class="float snippet"><div class="snippet-top"><span>interface.tsx</span><span class="dots"><i></i><i></i><i></i></span></div><div class="code-line"></div><div class="code-line"></div><div class="code-line"></div><div class="code-line"></div></div><div class="scene-tag">Digital workspace · 01</div></div>
-        <div class="scroll"><i class="scroll-line"></i><span>Scroll to explore</span></div><div class="edge-note">Independent creative developer</div>
-      </section>
-      <div class="below" id="work"><span>Design-minded code · Built for the web</span><span id="about">Based everywhere&nbsp; / &nbsp;Working worldwide</span></div>
+  <!-- ========================================================
+       TOPBAR & CONTROLS HUD
+  ======================================================== -->
+  <header class="topbar">
+    <a href="#home" class="brand" aria-label="Vineet home">
+      <span class="brand-badge">V.</span>
+      <span>VINEET</span>
+    </a>
+
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="#home" class="active">Home</a>
+      <a href="#work">Work</a>
+      <a href="#stack">Tech Radar</a>
+      <a href="#journey">Journey</a>
+      <a href="#terminal">Terminal</a>
+    </nav>
+
+    <div class="topbar-actions">
+      <div class="status-pill">
+        <span class="status-dot"></span>
+        <span>Available for select projects</span>
+      </div>
+
+      <button id="sound-toggle-btn" class="icon-control-btn" title="Toggle Synthesizer Sound FX" aria-label="Toggle sound">
+        🔊
+      </button>
+
+      <button id="theme-toggle-btn" class="icon-control-btn" title="Cycle Ambient Lighting Mode" aria-label="Toggle ambient theme">
+        💡
+      </button>
     </div>
+  </header>
+
+  <!-- ========================================================
+       HERO SECTION WITH 3D WORKSPACE CENTERPIECE
+  ======================================================== -->
+  <main>
+    <section class="hero-stage" id="home">
+      <div class="wrap">
+        <div class="hero-layout-grid">
+          <!-- Left Column: High-Impact Narrative -->
+          <div class="hero-narrative">
+            <span class="hero-eyebrow">Creative Frontend Developer &amp; 3D Technologist</span>
+            <h1 class="hero-title">
+              Building digital experiences <span class="accent-text">that feel</span> <em>different.</em>
+            </h1>
+            <p class="hero-bio">
+              I architect modern, interactive and high-performance 3D web applications that turn ambitious visions into unforgettable digital realities.
+            </p>
+
+            <div class="hero-actions">
+              <a href="#work" class="btn-primary">
+                <span>View 3D Works</span>
+                <span>↗</span>
+              </a>
+              <a href="#terminal" class="btn-ghost">
+                <span>Open Terminal</span>
+                <span>⌨</span>
+              </a>
+            </div>
+
+            <div class="hero-stats-row">
+              <div class="stat-box">
+                <strong>4<span>+</span></strong>
+                <small>Years Creating</small>
+              </div>
+              <div class="stat-divider"></div>
+              <div class="stat-box">
+                <strong>28</strong>
+                <small>Projects Shipped</small>
+              </div>
+              <div class="stat-divider"></div>
+              <div class="stat-box">
+                <strong>12</strong>
+                <small>Happy Teams</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Interactive 3D Perspective Workspace -->
+          <div class="workspace-3d-viewport" id="workspace-viewport">
+            <div class="workspace-3d-card" id="workspace-card">
+              <!-- Preserved Original Signature Workspace Image -->
+              <div class="workspace-img-frame">
+                <img src="vineet-workspace.png" alt="Vineet's Creative Developer Workspace with Dual Monitors" />
+              </div>
+
+              <!-- Floating Holographic Badge 1: Tech Stack -->
+              <div class="holo-badge holo-stack-badge">
+                <span class="holo-stack-label">Active Stack</span>
+                <div class="holo-stack-chips">
+                  <span class="stack-chip">React 19</span>
+                  <span class="stack-chip">WebGL</span>
+                  <span class="stack-chip">TS</span>
+                  <span class="stack-chip">GLSL</span>
+                </div>
+              </div>
+
+              <!-- Floating Holographic Badge 2: Interface Snippet -->
+              <div class="holo-badge holo-code-badge">
+                <div class="code-badge-top">
+                  <span>interface.tsx</span>
+                  <div class="code-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
+                </div>
+                <div class="code-line-bar l1"></div>
+                <div class="code-line-bar l2"></div>
+                <div class="code-line-bar l3"></div>
+              </div>
+
+              <!-- Real-time Coords HUD -->
+              <div class="hud-coords-tracker" id="coords-hud">
+                COORDS: IDLE · 60FPS
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         SECTION 01: 3D WORK / PROJECT SHOWCASE
+    ======================================================== -->
+    <section class="section-wrap" id="work">
+      <div class="wrap">
+        <div class="section-header-row">
+          <div>
+            <span class="section-kicker">01 / SELECTED EXPEDITIONS</span>
+            <h2 class="section-title">
+              Crafted with <em>precision</em> &amp; code.
+            </h2>
+          </div>
+
+          <div class="category-filter-tabs">
+            <button class="filter-tab active" data-filter="all">All</button>
+            <button class="filter-tab" data-filter="3d-webgl">3D &amp; WebGL</button>
+            <button class="filter-tab" data-filter="full-stack">Full-Stack</button>
+            <button class="filter-tab" data-filter="mobile">Mobile</button>
+          </div>
+        </div>
+
+        <div class="projects-3d-grid" id="projects-container">
+          <!-- Dynamically populated via app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         SECTION 02: 3D TECH RADAR / SKILLS MATRIX
+    ======================================================== -->
+    <section class="section-wrap" id="stack">
+      <div class="wrap">
+        <div class="section-header-row">
+          <div>
+            <span class="section-kicker">02 / CORE CAPABILITIES</span>
+            <h2 class="section-title">
+              Interactive <em>tech radar.</em>
+            </h2>
+          </div>
+          <p style="color: var(--text-muted); max-width: 380px; font-size: 14px; line-height: 1.6;">
+            Continuously advancing in GPU computing, real-time spatial physics, and accessible enterprise design systems.
+          </p>
+        </div>
+
+        <div class="skills-radar-grid">
+          <!-- Card 1 -->
+          <div class="skill-matrix-card">
+            <div class="skill-icon-wrap">⚛️</div>
+            <h3 class="skill-cat-title">Frontend Engineering</h3>
+            <div class="skill-bar-item">
+              <div class="skill-bar-top"><span>React 19 / Next.js 15</span><span>98%</span></div>
+              <div class="skill-progress-track"><div class="skill-progress-fill" style="width: 98%;"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-bar-top"><span>TypeScript &amp; ESNext</span><span>95%</span></div>
+              <div class="skill-progress-track"><div class="skill-progress-fill" style="width: 95%;"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-bar-top"><span>Tailwind &amp; Modern CSS</span><span>96%</span></div>
+              <div class="skill-progress-track"><div class="skill-progress-fill" style="width: 96%;"></div></div>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="skill-matrix-card">
+            <div class="skill-icon-wrap">🔮</div>
+            <h3 class="skill-cat-title">3D, WebGL &amp; Canvas</h3>
+            <div class="skill-bar-item">
+              <div class="skill-bar-top"><span>Three.js &amp; WebGL</span><span>92%</span></div>
+              <div class="skill-progress-track"><div class="skill-progress-fill" style="width: 92%;"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-bar-top"><span>GLSL Shaders &amp; Post-FX</span><span>88%</span></div>
+              <div class="skill-progress-track"><div class="skill-progress-fill" style="width: 88%;"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-bar-top"><span>Web Audio API Synthesizer</span><span>90%</span></div>
+              <div class="skill-progress-track"><div class="skill-progress-fill" style="width: 90%;"></div></div>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="skill-matrix-card">
+            <div class="skill-icon-wrap">⚡</div>
+            <h3 class="skill-cat-title">Backend &amp; Cloud</h3>
+            <div class="skill-bar-item">
+              <div class="skill-bar-top"><span>Node.js &amp; Microservices</span><span>90%</span></div>
+              <div class="skill-progress-track"><div class="skill-progress-fill" style="width: 90%;"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-bar-top"><span>PostgreSQL &amp; Redis Cache</span><span>87%</span></div>
+              <div class="skill-progress-track"><div class="skill-progress-fill" style="width: 87%;"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-bar-top"><span>WebSockets &amp; Telemetry</span><span>91%</span></div>
+              <div class="skill-progress-track"><div class="skill-progress-fill" style="width: 91%;"></div></div>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="skill-matrix-card">
+            <div class="skill-icon-wrap">📐</div>
+            <h3 class="skill-cat-title">Architecture &amp; UX</h3>
+            <div class="skill-bar-item">
+              <div class="skill-bar-top"><span>Design Tokens &amp; Figma</span><span>94%</span></div>
+              <div class="skill-progress-track"><div class="skill-progress-fill" style="width: 94%;"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-bar-top"><span>CI/CD &amp; Docker DevOps</span><span>86%</span></div>
+              <div class="skill-progress-track"><div class="skill-progress-fill" style="width: 86%;"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-bar-top"><span>Core Web Vitals &amp; A11y</span><span>97%</span></div>
+              <div class="skill-progress-track"><div class="skill-progress-fill" style="width: 97%;"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         SECTION 03: CAREER JOURNEY TIMELINE
+    ======================================================== -->
+    <section class="section-wrap" id="journey">
+      <div class="wrap">
+        <div class="section-header-row">
+          <div>
+            <span class="section-kicker">03 / EXPERIENCE RECORD</span>
+            <h2 class="section-title">
+              Chapters in <em>creative engineering.</em>
+            </h2>
+          </div>
+        </div>
+
+        <div class="timeline-stepper">
+          <div class="timeline-step">
+            <span class="timeline-step-dot"></span>
+            <div class="step-period">2023 — PRESENT</div>
+            <h3 class="step-role">Lead Creative Technologist &amp; Independent Consultant</h3>
+            <div class="step-company">Worldwide / Select Global Clients</div>
+            <p class="step-desc">
+              Partnering with high-growth technology studios, VC firms, and frontier brands to design, prototype, and build production WebGL 3D experiences, spatial interfaces, and web platforms.
+            </p>
+          </div>
+
+          <div class="timeline-step">
+            <span class="timeline-step-dot"></span>
+            <div class="step-period">2021 — 2023</div>
+            <h3 class="step-role">Senior Frontend Engineer</h3>
+            <div class="step-company">Aura Interactive Labs</div>
+            <p class="step-desc">
+              Spearheaded design system architecture and complex canvas visualizations. Improved Core Web Vitals across 12 product lines and mentored junior engineers on WebGL performance tuning.
+            </p>
+          </div>
+
+          <div class="timeline-step">
+            <span class="timeline-step-dot"></span>
+            <div class="step-period">2019 — 2021</div>
+            <h3 class="step-role">Frontend &amp; Creative Technologist</h3>
+            <div class="step-company">Hyperion Studio</div>
+            <p class="step-desc">
+              Authored award-winning microsites, Web Audio API interactive synthesizers, and real-time shader graphics for international product launches.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         SECTION 04: INTERACTIVE CYBER CONTACT TERMINAL
+    ======================================================== -->
+    <section class="section-wrap" id="terminal">
+      <div class="wrap">
+        <div style="text-align: center; margin-bottom: 40px;">
+          <span class="section-kicker">04 / ESTABLISH UPLINK</span>
+          <h2 class="section-title">
+            Ready to build something <em>legendary</em>?
+          </h2>
+        </div>
+
+        <div class="terminal-window">
+          <div class="terminal-header">
+            <div class="code-dots">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <span style="font-family: var(--font-mono); font-size: 11px; color: #94A3B8; margin-left: auto;">
+              vineet@uplink:~ (bash)
+            </span>
+          </div>
+
+          <div class="terminal-body">
+            <div class="terminal-prompt-line">
+              <span>vineet@uplink:~$</span> initiate-contact --protocol=secure-v2
+            </div>
+            <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 20px;">
+              Transmit a project brief, collaboration inquiry, or say hello directly:
+            </p>
+
+            <form id="terminal-form">
+              <div class="terminal-input-row">
+                <span style="color: var(--neon-blue); font-family: var(--font-mono); font-size: 12px;">NAME:</span>
+                <input class="terminal-input" required placeholder="Alex Morgan" />
+              </div>
+              <div class="terminal-input-row">
+                <span style="color: var(--neon-blue); font-family: var(--font-mono); font-size: 12px;">EMAIL:</span>
+                <input class="terminal-input" required type="email" placeholder="alex@company.com" />
+              </div>
+              <div class="terminal-input-row">
+                <span style="color: var(--neon-blue); font-family: var(--font-mono); font-size: 12px;">SCOPE:</span>
+                <input class="terminal-input" required placeholder="Tell me about your 3D or web vision..." />
+              </div>
+
+              <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 14px;">
+                <span>Execute Dispatch</span>
+                <span>⚡</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
-  <script>
-    const menuButton=document.querySelector('#menu-toggle'),navigation=document.querySelector('#navigation');
-    menuButton.addEventListener('click',()=>{const open=navigation.classList.toggle('open');menuButton.setAttribute('aria-expanded',String(open));menuButton.setAttribute('aria-label',open?'Close menu':'Open menu')});
-    navigation.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{navigation.classList.remove('open');menuButton.setAttribute('aria-expanded','false')}));
-    document.querySelector('#light-toggle').addEventListener('click',()=>{document.body.classList.toggle('ambient');document.body.style.setProperty('--ambient',document.body.classList.contains('ambient')?'1':'0');document.querySelector('.page').style.background=document.body.classList.contains('ambient')?'radial-gradient(ellipse at 74% 45%,rgba(66,112,198,.25),transparent 50%),#0c1d32':'radial-gradient(ellipse at 72% 52%,rgba(20,89,145,.15),transparent 44%),#081525'});
-  </script>
+
+  <!-- ========================================================
+       FOOTER
+  ======================================================== -->
+  <footer class="cyber-footer">
+    <div class="wrap footer-flex">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <span class="brand-badge" style="width: 24px; height: 24px; font-size: 11px;">V.</span>
+        <span>VINEET CREATIVE TECH · 2026</span>
+      </div>
+
+      <div style="display: flex; gap: 20px;">
+        <a href="https://github.com" target="_blank" rel="noreferrer" style="color: var(--neon-blue);">GITHUB ↗</a>
+        <a href="https://linkedin.com" target="_blank" rel="noreferrer" style="color: var(--neon-blue);">LINKEDIN ↗</a>
+        <a href="mailto:hello@vineet.dev" style="color: var(--neon-blue);">EMAIL ↗</a>
+      </div>
+
+      <a href="#home" style="color: var(--text-muted);">BACK TO TOP ↑</a>
+    </div>
+  </footer>
+
+  <!-- ========================================================
+       PROJECT CASE STUDY MODAL
+  ======================================================== -->
+  <div id="project-modal" style="display: none; position: fixed; inset: 0; background: rgba(5, 12, 24, 0.85); backdrop-filter: blur(12px); z-index: 200; align-items: center; justify-content: center; padding: 20px;">
+    <div style="background: rgba(13, 26, 48, 0.95); border: 1px solid var(--border-glow); border-radius: 24px; max-width: 620px; width: 100%; padding: 36px; position: relative; box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8);">
+      <button onclick="closeProjectModal()" style="position: absolute; top: 20px; right: 20px; width: 34px; height: 34px; border-radius: 50%; background: rgba(255, 255, 255, 0.06); color: #FFF; display: grid; place-items: center; font-size: 14px;">✕</button>
+      <span id="modal-cat" style="font-family: var(--font-mono); font-size: 11px; color: var(--neon-blue); letter-spacing: 0.12em; text-transform: uppercase;"></span>
+      <h3 id="modal-title" style="font-size: 30px; font-weight: 800; color: #FFF; margin: 10px 0 16px;"></h3>
+      <p id="modal-desc" style="font-size: 15px; line-height: 1.7; color: var(--text-muted); margin-bottom: 22px;"></p>
+      <div style="background: rgba(255, 255, 255, 0.03); border-radius: 12px; padding: 14px 18px; margin-bottom: 22px; border: 1px solid var(--border-glass);">
+        <div style="font-family: var(--font-mono); font-size: 10px; color: var(--text-dim); margin-bottom: 4px;">SYSTEM METRICS</div>
+        <div id="modal-metrics" style="font-size: 15px; font-weight: 700; color: #34D399;"></div>
+      </div>
+      <div id="modal-tags" style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px;"></div>
+      <button onclick="closeProjectModal()" class="btn-primary" style="width: 100%; justify-content: center;">
+        <span>Return to Portfolio</span>
+      </button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
 </body>
 </html>
