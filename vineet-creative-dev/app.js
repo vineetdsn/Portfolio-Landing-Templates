@@ -136,21 +136,56 @@ if (heroStage && card3D) {
 }
 
 // ========================================================
-// AMBIENT THEME CYCLER
+// THEME & PALETTE SWITCHER
 // ========================================================
-const themeToggleBtn = document.getElementById('theme-toggle-btn');
-const themes = ['', 'theme-cyber', 'theme-matrix'];
-let currentThemeIdx = 0;
+const PALETTE_LIST = [
+  { id: 'theme-gold', label: 'Midnight Tokyo & Amber Gold' },
+  { id: 'theme-titanium', label: 'Minimalist Titanium & Silver Frost' },
+  { id: 'theme-indigo', label: 'Deep Electric Indigo & Lavender' }
+];
 
+let activeTheme = 'theme-gold';
+
+function applyTheme(themeId) {
+  PALETTE_LIST.forEach(p => document.body.classList.remove(p.id));
+  document.body.classList.add(themeId);
+  activeTheme = themeId;
+
+  // Update switcher dot UI
+  const dots = document.querySelectorAll('.palette-dot-btn');
+  dots.forEach(d => {
+    if (d.getAttribute('data-theme') === themeId) {
+      d.classList.add('active');
+    } else {
+      d.classList.remove('active');
+    }
+  });
+
+  const matched = PALETTE_LIST.find(p => p.id === themeId);
+  if (matched) {
+    showToast(`Palette: ${matched.label}`);
+  }
+}
+
+// Initial theme application
+document.body.classList.add('theme-gold');
+
+// Palette dots click handlers
+document.querySelectorAll('.palette-dot-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    playCyberSound('click');
+    const theme = btn.getAttribute('data-theme');
+    applyTheme(theme);
+  });
+});
+
+const themeToggleBtn = document.getElementById('theme-toggle-btn');
 if (themeToggleBtn) {
   themeToggleBtn.addEventListener('click', () => {
     playCyberSound('click');
-    document.body.classList.remove(themes[currentThemeIdx]);
-    currentThemeIdx = (currentThemeIdx + 1) % themes.length;
-    if (themes[currentThemeIdx]) {
-      document.body.classList.add(themes[currentThemeIdx]);
-    }
-    showToast(`Ambient Lighting: ${currentThemeIdx === 0 ? 'Cyber Blue' : currentThemeIdx === 1 ? 'Neon Violet' : 'Emerald Matrix'}`);
+    const curIdx = PALETTE_LIST.findIndex(p => p.id === activeTheme);
+    const nextIdx = (curIdx + 1) % PALETTE_LIST.length;
+    applyTheme(PALETTE_LIST[nextIdx].id);
   });
 }
 
