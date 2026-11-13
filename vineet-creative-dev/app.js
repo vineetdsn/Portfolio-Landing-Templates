@@ -141,7 +141,9 @@ if (heroStage && card3D) {
 const PALETTE_LIST = [
   { id: 'theme-gold', label: 'Midnight Tokyo & Amber Gold' },
   { id: 'theme-titanium', label: 'Minimalist Titanium & Silver Frost' },
-  { id: 'theme-indigo', label: 'Deep Electric Indigo & Lavender' }
+  { id: 'theme-emerald', label: 'Matrix Phosphor & Cyber Emerald' },
+  { id: 'theme-crimson', label: 'Crimson Eclipse & Tokyo Blood Moon' },
+  { id: 'theme-glacier', label: 'Tron Glacier & Arctic Cyan' }
 ];
 
 let activeTheme = 'theme-gold';
