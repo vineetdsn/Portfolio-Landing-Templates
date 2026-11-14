@@ -4,41 +4,41 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.m
 const scenes = [
   {
     name: 'workspace',
-    label: '01 — THE EVERYDAY RITUAL',
+    label: '01 · The everyday ritual',
     title: 'Beyond the',
-    line: 'Screen.',
-    desc: 'Thoughtful developer workstation with responsive 3D parallax, luminous code canvas and tactile mechanics.',
-    note: 'Spring damped physics · 600ms ease-out'
+    line: 'screen.',
+    desc: 'Thoughtful developer workstation with responsive 3D parallax, luminous code canvas, and tactile mechanics.',
+    note: 'Spring damped physics · 500ms ease'
   },
   {
     name: 'hardware',
-    label: '02 — UNDER THE SURFACE',
+    label: '02 · Under the surface',
     title: 'Built to',
-    line: 'Perform.',
-    desc: 'Exploded architecture showing multi-fan cooling array, motherboard traces and gold contact pins.',
+    line: 'perform.',
+    desc: 'Exploded architecture showing multi-fan cooling array, motherboard traces, and gold contact pins.',
     note: 'Exploded array assembly · Staggered ease'
   },
   {
     name: 'development',
-    label: '03 — IDEAS IN MOTION',
+    label: '03 · Ideas in motion',
     title: 'Ideas into',
-    line: 'Interfaces.',
-    desc: 'Focused design engineering workbench featuring live code terminal, syntax glow and 120 FPS telemetry.',
+    line: 'interfaces.',
+    desc: 'Focused design engineering workbench featuring live code terminal, syntax glow, and 120 FPS telemetry.',
     note: 'Code terminal elevation · 120 FPS compositing'
   },
   {
     name: 'creative',
-    label: '04 — PLAY IS A PRACTICE',
-    title: 'Create Something',
-    line: 'Different.',
-    desc: 'Graphic design tablet with warm sunset palette, floating metallic icosahedrons and precision stylus.',
+    label: '04 · Play is a practice',
+    title: 'Create something',
+    line: 'different.',
+    desc: 'Graphic design tablet with warm sunset palette, floating metallic icosahedrons, and precision stylus.',
     note: 'Warm sunset chromatic shift · Spring float'
   },
   {
     name: 'experiments',
-    label: '05 — CURIOSITY UNBOXED',
+    label: '05 · Curiosity unboxed',
     title: 'Curiosity,',
-    line: 'Unboxed.',
+    line: 'unboxed.',
     desc: 'Generative polyhedra and torus knot modules with floating procedural animation and prism glow.',
     note: 'Floating generative geometry · Continuous orbit'
   }
@@ -79,7 +79,7 @@ renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.25;
 
 const scene = new THREE.Scene();
-scene.fog = new THREE.Fog(0x0c0d12, 14, 32);
+scene.fog = new THREE.Fog(0x181818, 14, 32);
 
 const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 60);
 camera.position.set(0, 5.2, 13.8);
@@ -414,7 +414,7 @@ function makeHeadphones(parent) {
 }
 
 // Floor
-const floor = new THREE.Mesh(new THREE.PlaneGeometry(200, 200), mat('#11131a', 0.05, 0.72));
+const floor = new THREE.Mesh(new THREE.PlaneGeometry(200, 200), mat('#181818', 0.05, 0.72));
 floor.rotation.x = -Math.PI / 2;
 floor.position.y = 0.19;
 floor.receiveShadow = true;
@@ -707,29 +707,52 @@ if (viewToggle) {
   });
 }
 
-// Details Drawer Toggle
+// Details Drawer Toggle (Immersive Full Studio Mode)
 const detailsToggle = document.querySelector('#detailsToggle');
 if (detailsToggle) {
   detailsToggle.addEventListener('click', () => {
     document.body.classList.toggle('details-hidden');
     const hidden = document.body.classList.contains('details-hidden');
-    detailsToggle.querySelector('span').textContent = hidden ? 'Show details' : 'Details';
-    playChime(500, 'sine', 0.1);
+    detailsToggle.querySelector('span').textContent = hidden ? 'Show details' : 'Full studio';
+    playChime(hidden ? 480 : 560, 'sine', 0.1);
+    setTimeout(resize, 320);
   });
 }
 
-// Dark / Light Theme Toggle
+// Dark / Light Theme Toggle (Rule B8 Sentence Case & Rule B4 Colors)
 const themeToggle = document.querySelector('#themeToggle');
 if (themeToggle) {
   themeToggle.addEventListener('click', () => {
     const current = document.body.dataset.theme || 'dark';
     const next = current === 'dark' ? 'light' : 'dark';
     document.body.dataset.theme = next;
-    themeToggle.querySelector('.theme-label').textContent = next === 'dark' ? 'DARK STUDIO' : 'LIGHT PORCELAIN';
-    floor.material.color.setHex(next === 'dark' ? 0x11131a : 0xeceaf2);
-    scene.fog.color.setHex(next === 'dark' ? 0x0c0d12 : 0xf1edfb);
+    themeToggle.querySelector('.theme-label').textContent = next === 'dark' ? 'Dark studio' : 'Light porcelain';
+    floor.material.color.setHex(next === 'dark' ? 0x181818 : 0xf4f3ef);
+    scene.fog.color.setHex(next === 'dark' ? 0x181818 : 0xf4f3ef);
     playChime(next === 'dark' ? 440 : 660, 'sine', 0.15);
   });
+}
+
+// Tagline Reveal Animation (Rule B11: Word-by-word scroll reveal)
+const taglineWords = document.querySelectorAll('#taglineReveal .word');
+if (taglineWords.length > 0) {
+  const taglineObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        taglineWords.forEach((word, index) => {
+          setTimeout(() => {
+            word.classList.add('revealed');
+          }, index * 60);
+        });
+        taglineObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+
+  const taglineSection = document.querySelector('#philosophy');
+  if (taglineSection) {
+    taglineObserver.observe(taglineSection);
+  }
 }
 
 // Mouse Pointer Tracking on 3D Showcase
